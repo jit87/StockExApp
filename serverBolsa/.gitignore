@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Config files
+.env
+*.env
+config.json
+*.config.js
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Compiled files
+*.out
+*.o
+
+# Public/Dist directories (if you're building and deploying static assets)
+dist/
+build/
+public/
+
+# Temporary files
+tmp/
+temp/
+*.tmp

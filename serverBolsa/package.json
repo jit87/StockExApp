@@ -1,0 +1,22 @@
+{
+  "name": "serverbolsa",
+  "version": "1.0.0",
+  "description": "backend de StockApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ."
+  },
+  "type": "module",
+  "author": "Ignacio",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
+    "moongose": "^1.0.0"
+  }
+}
