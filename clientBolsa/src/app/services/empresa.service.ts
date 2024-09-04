@@ -40,6 +40,10 @@ export class EmpresaService {
     localStorage.setItem('Acciones', JSON.stringify(this.listEmpresas));
   }
 
+  editarAccion() {
+    
+  }
+
 
 
 

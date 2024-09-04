@@ -21,7 +21,7 @@
           <td>{{ Empresa.invertido }}</td>
           <td>{{ Empresa.industria }}</td>
           <td>
-            <button class="btn btn-primary btn-sm" style="margin-right: 5px;">Editar</button>
+            <button class="btn btn-primary btn-sm"  [routerLink]="['modificar-accion']" (click)="mostrarFormulario2()" style="margin-right: 5px;">Editar</button>
             <button class="btn btn-danger btn-sm" (click)="eliminarAccion(Empresa);">Eliminar</button>
           </td>
         </tr>
@@ -41,5 +41,7 @@
     </div>
   </div>
   
+  <!--Formularios-->
   <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()"></app-editar-acciones>
+  <app-modificar-accion *ngIf="mostrarFormularioEdicion2"  (cerrarFormulario2)="cerrarFormulario2()"></app-modificar-accion>
  

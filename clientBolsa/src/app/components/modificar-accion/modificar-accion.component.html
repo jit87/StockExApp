@@ -1,0 +1,29 @@
+<form class="formModificarAccion" 
+    style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
+    <br>
+    <div
+        style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px;background-color:#343a40;">
+        <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrar()">X</button>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre de la acción</label>
+            <input formControlName="nombre" type="text" class="form-control"
+                #buscarTexto >
+            <small  class="text-danger">Debe introducir el nombre</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ticker</label>
+            <input formControlName="ticker" type="text" class="form-control">
+            <small  class="text-danger">Debe introducir el ticker</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Número de acciones</label>
+            <input formControlName="numero" type="number" class="form-control" type="acciones">
+            <small  class="text-danger">Debe introducir al menos 1 acción</small>
+        </div>
+        <button class="btn btn-primary">Añadir</button>
+
+    </div>
+</form>

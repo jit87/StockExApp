@@ -5,9 +5,6 @@ import { Empresa } from '../../interfaces/Empresa';
 import { StockService } from '../../services/stock.service';
 import { lastValueFrom } from 'rxjs';
 import { ViewChild } from '@angular/core';
-import { ContenidoComponent } from '../contenido/contenido.component';
-import { FormControl } from '@angular/forms';
-import { catchError, switchMap,debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 

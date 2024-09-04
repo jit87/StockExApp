@@ -5,11 +5,13 @@ import { ContenidoComponent } from "./components/contenido/contenido.component";
 import { BuscadorEmpresaComponent } from "./components/buscador-empresa/buscador-empresa.component";
 import { PerfilComponent } from "./components/perfil/perfil.component";
 import { AuthGuard } from "@auth0/auth0-angular";
+import { ModificarAccionComponent } from './components/modificar-accion/modificar-accion.component';
 
 
 const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent },
     { path:'editar-acciones', component: EditarAccionesComponent },
+    { path:'modificar-accion', component: ModificarAccionComponent },
     { path:'buscar/:ticker', component: BuscadorEmpresaComponent },
     { path:'perfil', component: PerfilComponent, canActivate: [ AuthGuard] },
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }

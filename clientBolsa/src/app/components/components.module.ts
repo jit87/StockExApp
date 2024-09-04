@@ -10,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_ROUTING } from '../app.routes';
+import { ModificarAccionComponent } from './modificar-accion/modificar-accion.component';
 
 
 
@@ -20,7 +21,8 @@ import { APP_ROUTING } from '../app.routes';
     BuscadorEmpresaComponent,
     NavbarComponent,
     PerfilComponent,
-    FooterComponent
+    FooterComponent,
+    ModificarAccionComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { APP_ROUTING } from '../app.routes';
     BuscadorEmpresaComponent,
     NavbarComponent,
     PerfilComponent,
-    FooterComponent
+    FooterComponent,
+    ModificarAccionComponent
   ]
 })
 export class ComponentsModule { }

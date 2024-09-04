@@ -23,15 +23,14 @@ export class ContenidoComponent implements OnInit  {
     private stockService: StockService,
     public empresaService: EmpresaService,
     private router: Router
-  ) {
-   
-  }
+  ) {}
 
   chart: any;
   sectorData: { label: string; value: number }[] = [];
 
   // Variable para controlar la visibilidad del formulario de edición
   mostrarFormularioEdicion: boolean = false;
+  mostrarFormularioEdicion2: boolean = false;
 
   
 
@@ -59,6 +58,9 @@ export class ContenidoComponent implements OnInit  {
   }
 
 
+  editarAccion() {}
+
+
 
   calcularTotalInvertido(){
     var empresas = this.empresaService.getListEmpresas(); 
@@ -78,19 +80,26 @@ export class ContenidoComponent implements OnInit  {
   }
   
 
-
   cerrarFormulario() {
     this.mostrarFormularioEdicion = false;
   }
+
+
+  mostrarFormulario2() {
+    this.mostrarFormularioEdicion2 = true; 
+  }
+
+  cerrarFormulario2() {
+    this.mostrarFormularioEdicion2 = false;
+  }
+
 
 
 
   //CONSULTAS
   
   getInfoEmpresa(ticker:string){
-  
     this.router.navigate(['/buscar',ticker]);
-
   }
 
 
