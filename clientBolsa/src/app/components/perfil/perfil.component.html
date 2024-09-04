@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container">
+        <br>
+        <div *ngIf="auth.user$ | async as user" class="mx-auto rounded">
+            <h2 class="text-justify mb-4">Perfil de Usuario:</h2>
+            <br>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">Nombre:</div>
+                <div class="col-sm-9"><code>{{ user.name }}</code></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">Correo:</div>
+                <div class="col-sm-9"><code>{{ user.email }}</code></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">Nick:</div>
+                <div class="col-sm-9"><code>{{ user.nickname }}</code></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">Actualización:</div>
+                <div class="col-sm-9"><code>{{ user.updated_at }}</code></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">Usuario verificado:</div>
+                <div class="col-sm-9"><code>{{ user.email_verified }}</code></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3 font-weight-bold">ID:</div>
+                <div class="col-sm-9"><code>{{ user.sub }}</code></div>
+            </div>
+            <br>
+            <br>
+            <h2 class="text-justify mb-4">Inversiones:</h2>
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th style="font-weight: bold;">Nombre</th>
+                            <th style="font-weight: bold;">Ticker</th>
+                            <th style="font-weight: bold;">Precio</th>
+                            <th style="font-weight: bold;">Número de acciones</th>
+                            <th style="font-weight: bold;">Capital invertido</th>
+                            <th style="font-weight: bold;">Industria</th>
+                            <th style="font-weight: bold;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let Empresa of listEmpresas">
+                            <td>{{ Empresa.nombre }}</td>
+                            <td>{{ Empresa.ticker | uppercase}}</td>
+                            <td>{{ Empresa.precio }}</td>
+                            <td>{{ Empresa.acciones }}</td>
+                            <td>{{ Empresa.invertido }}</td>
+                            <td>{{ Empresa.industria }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="container mt-4 mb-4" style="display: flex; flex-direction: column; position: relative;">
+  <div class="table-responsive" style="position: sticky; top: 0; background-color: #343a40; z-index: 1;">
+    <table class="table table-hover table-dark">
+      <thead>
+        <tr>
+          <th style="font-weight: bold;">Nombre</th>
+          <th style="font-weight: bold;">Ticker</th>
+          <th style="font-weight: bold;">Precio</th>
+          <th style="font-weight: bold;">Número de acciones</th>
+          <th style="font-weight: bold;">Capital invertido</th>
+          <th style="font-weight: bold;">Industria</th>
+          <th style="font-weight: bold;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Empresa of listEmpresas">
+          <td (click)="getInfoEmpresa(Empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">{{ Empresa.nombre }}</td>
+          <td>{{ Empresa.ticker | uppercase}}</td>
+          <td>{{ Empresa.precio }}</td>
+          <td>{{ Empresa.acciones }}</td>
+          <td>{{ Empresa.invertido }}</td>
+          <td>{{ Empresa.industria }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" style="margin-right: 5px;">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarAccion(Empresa);">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-right" style="margin-top: 20px; margin-right: 20px;">
+    <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones }}</h5>
+  </div>
+
+    <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
+      <h5 style="color: white;">No hay acciones introducidas</h5>
+    </div> 
+    <div>
+      <button class="btn btn-primary btn-sm mt-3" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()">Añadir acción</button>
+    </div>
+  </div>
+  
+  <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()"></app-editar-acciones>
+ 

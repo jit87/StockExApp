@@ -1,0 +1,12 @@
+h2,p {
+    color: white; 
+}
+
+h1 {
+    text-align: left;
+}
+
+.mx-auto {
+   background-color: #343a40;
+   padding: 50px;
+}

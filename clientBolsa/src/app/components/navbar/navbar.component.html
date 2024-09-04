@@ -1,0 +1,25 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img [src]="img1" alt="Logo" width="50" height="40">&nbsp;&nbsp;MI CARTERA
+      </a>
+      &nbsp;
+      <a *ngIf="auth.isAuthenticated$ | async" class="navbar-brand" [routerLink]="['perfil']" >
+        Mi perfil
+      </a>
+    </div>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+        <button class="btn btn-danger" (click)="auth.logout()">Salir</button>
+      </li>
+    </ul>
+    <ng-template #loggedOut>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button class="btn btn-tertiary" (click)="auth.loginWithRedirect()">Iniciar sesión</button>
+        </li>
+      </ul>
+    </ng-template>
+  </div>
+</nav>

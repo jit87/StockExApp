@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de la Empresa</title>
+    <!-- Incluye Bootstrap aquí -->
+</head>
+<body>
+    <p class="loading-text" *ngIf="Cargado === 0" style="margin-top: 50px;">Cargando...</p>
+    <div class="container mt-4 mb-4" *ngIf="Cargado !== 0"> 
+        <button class="btn btn-outline-secondary" (click)="regresar()">Volver</button>
+        <br>
+        <br>
+        <h2>Información de la empresa:</h2>
+        <img class="logo" [src]="logo"  alt="Company Logo" class="rounded">
+        <h2 class="mt-3">{{ name }}</h2>
+        <p><strong>Símbolo:</strong> {{ symbol }}</p>
+        <p><strong>Industria:</strong> {{ industry }}</p>
+        <p><strong>Sector:</strong> {{ sector }}</p>
+        <p><strong>Bolsa:</strong> {{ bolsa }}</p>
+        <p><strong>CEO:</strong> {{ CEO }}</p>
+        <p><strong>Empleados:</strong> {{ employees }}</p>
+        <p><strong>Market Cap:</strong> {{ marketCap }}</p>
+        <p><strong>Teléfono:</strong> {{ phone }}</p>
+        <p><strong>Web: </strong> <a [href]="website" target="_blank">{{ website }}</a></p>
+        <p><strong>Dirección:</strong> {{ address }}</p>
+        <p><strong>Descripción:</strong> {{ description }}</p>
+        <p class="tags"><strong>Tags:</strong> {{ tags }}</p>
+
+        <div class="similar-companies">
+            <p><strong>Empresas Similares:</strong> {{ similarCompanies }}</p>
+        </div>
+        <h2 style="margin-top:50px;">Últimas noticias: </h2>
+       
+        <div *ngFor="let article of data" class="news-container">
+            <div class="caja-noticia">
+                <h4><a [href]="article.url" target="_blank">{{ article.title }}</a></h4>
+                <p class="overflow-auto text-sm">{{ article.descr }}</p>
+                <p style="font-size: small;">By {{ article.author }}</p>
+                <p style="font-size: small;"><em>{{ article.date | date:'mediumDate'}}</em></p>
+            </div>
+            <div class="image-container">
+                <img *ngIf="article.image" [src]="article.image" alt="Article Image" class="rounded">
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
