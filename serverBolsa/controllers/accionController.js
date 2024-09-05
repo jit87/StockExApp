@@ -48,15 +48,19 @@ export async function obtenerAcciones(req, res) {
 
 
 export async function actualizarAccion(req, res) {
+
     try {
         
-        const { nombre, ticker, precio, cantidad, capitalInvertido, industria  } = req.body;
+        const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
+
+        //Busca la acción por id y la guarda en elem
         let elem = await Accion.findById(req.params.id);
 
         if (!elem) {
             res.status(404).json({ msg:'No esiste esta acción' })
         }
 
+        //Actualizamos las propiedades de la acción
         elem.nombre = nombre;
         elem.ticker = ticker;
         elem.precio = precio;
@@ -64,6 +68,7 @@ export async function actualizarAccion(req, res) {
         elem.capitalInvertido = capitalInvertido;
         elem.industria = industria; 
 
+        //Actualizamos en la BBDD de mongoDB la accion en función del Id, el 2º parametro (elem) carga la información en la BBDD 
         elem = await Accion.findOneAndUpdate(
             { _id: req.params.id },
             elem,
@@ -75,6 +80,28 @@ export async function actualizarAccion(req, res) {
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: error.message });
-        }
+    }
+    
 }
 
+
+
+export async function eliminarAccion(req, res) {
+    try {
+
+        let elem = await Accion.findById(req.params.id);
+        
+        if (!elem) {
+            res.status(404).json({ msg: 'No existe la acción' }); 
+        }
+
+        await Accion.findByIdAndDelete({ _id: req.params.id });
+        res.json({ msg: 'Acción eliminada' });
+        
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: error.message });
+    }
+    
+}
