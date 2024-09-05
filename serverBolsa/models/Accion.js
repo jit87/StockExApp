@@ -25,4 +25,5 @@ const AccionSchema = new Schema({
     }
 });
 
-export default model('Accion', AccionSchema); 
+//Le paso el 3º parámetro porque si no mongoose crearia una coleccion pluralizando accion, es decir, con el nombre accions
+export default model('Accion', AccionSchema, 'acciones'); 
