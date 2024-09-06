@@ -1,6 +1,8 @@
 // empresa.service.ts
 import { Injectable } from '@angular/core';
 import { Empresa } from '../interfaces/Empresa';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 
@@ -12,32 +14,37 @@ export class EmpresaService {
 
   private listEmpresas: Empresa[] = [];
 
+  url: string = "http://localhost:4000/empresas"; 
+  
+
+
   //Actualizamos el valor de listEmpresas al cargar.
-  constructor() {
+  constructor(private http: HttpClient) {
     const storedData = localStorage.getItem('Acciones');
     if (storedData) {
       this.listEmpresas = JSON.parse(storedData);
     }
   }
 
-  getListEmpresas(): Empresa[] {
-    return this.listEmpresas;
+  //Obtenemos las empresas guardades en mongoDB
+  getListEmpresas(): Observable<any> {
+    return this.http.get(this.url);
   }
 
 
-  //Añadimos la empresa al vector de empresas y luego al LocalStorage. 
-  //Sustituir por backend en caso de utilizar BBDD.
-  addEmpresa(empresa: Empresa) {
-    this.listEmpresas.push(empresa);
-    localStorage.setItem("Acciones", JSON.stringify(this.listEmpresas));
+  //Añadimos la empresa al vector de empresas y luego a la BBDD de mongoDB. 
+  addEmpresa(empresa: Empresa): Observable<any> {
+     this.listEmpresas.push(empresa);
+     return this.http.post(this.url, empresa); 
   }
 
 
   //Quitamos la empresa del vector de empresas y luego actualizamos el LocalStorage.
-  deleteEmpresa(empresa: Empresa) {
+  deleteEmpresa(empresa: Empresa): Observable<any> {
     var index =  this.listEmpresas.indexOf(empresa);
     this.listEmpresas.splice(index, 1);
-    localStorage.setItem('Acciones', JSON.stringify(this.listEmpresas));
+    return this.http.delete(this.url + "/" + empresa); 
+   
   }
 
   editarAccion() {

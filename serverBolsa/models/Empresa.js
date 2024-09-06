@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const AccionSchema = new Schema({
+const EmpresaSchema = new Schema({
     nombre: {
         type: String,
         required: true
@@ -9,16 +9,14 @@ const AccionSchema = new Schema({
         type: String
     },
     precio: {
-        type: Number,
-        required: true
+        type: Number
     },
     cantidad: {
         type: Number,
         required: true
     },
     capitalInvertido: {
-        type: Number,
-        required: true
+        type: Number
     },
     industria: {
         type: String
@@ -26,4 +24,4 @@ const AccionSchema = new Schema({
 });
 
 //Le paso el 3º parámetro porque si no mongoose crearia una coleccion pluralizando accion, es decir, con el nombre accions
-export default model('Accion', AccionSchema, 'acciones'); 
+export default model('Empresa', EmpresaSchema, 'empresas'); 

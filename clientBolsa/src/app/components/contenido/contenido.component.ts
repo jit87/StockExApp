@@ -3,6 +3,9 @@ import { StockService } from '../../services/stock.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 
 @Component({
@@ -15,7 +18,7 @@ export class ContenidoComponent implements OnInit  {
   stockQuote: any;
   StockPrice: number | undefined;
   total: number | undefined; 
-  listEmpresas: Empresa[] = []
+  listEmpresas: any[] = [];
   totalAcciones: number | undefined;
   Empresa: Empresa | undefined; 
   
@@ -23,7 +26,9 @@ export class ContenidoComponent implements OnInit  {
     private stockService: StockService,
     public empresaService: EmpresaService,
     private router: Router
-  ) {}
+  ) {
+    this.getEmpresas();
+  }
 
   chart: any;
   sectorData: { label: string; value: number }[] = [];
@@ -34,47 +39,54 @@ export class ContenidoComponent implements OnInit  {
 
   
 
-  ngOnInit(): void {
-    this.listEmpresas = this.empresaService.getListEmpresas();
-    // Verifica si el Ticker está presente antes de obtener el precio
-    if (this.symbol) {
-      // Obtiene y asigna el precio a StockPrice
-      this.stockService.getPrice(this.symbol).subscribe((data: any) => {
-        this.StockPrice = data.price;
-      });
-    }
-    this.calcularTotalInvertido();
+  async ngOnInit(): Promise<void> {
+    this.getEmpresas();
   }
 
 
    
   //ACCIONES Y CALCULOS
 
-  eliminarAccion(empresa: Empresa) {
+  async getEmpresas(): Promise<void>{
+     await this.empresaService.getListEmpresas().subscribe(
+      (resp:any) => {
+        this.listEmpresas = resp;  
+       })
+       ;
+  }
+
+  async eliminarAccion(empresa: Empresa) {
     this.empresaService.deleteEmpresa(empresa);
-    this.listEmpresas = this.empresaService.getListEmpresas();
+    await this.empresaService.getListEmpresas().subscribe(
+      (resp:any) => {
+        this.listEmpresas = resp;  
+      }
+    ), (error: any) => {
+      console.log(error);
+    };
     //Si eliminamos una empresa volvemos a calcular el total invertido
-    this.calcularTotalInvertido();
+   // this.calcularTotalInvertido();
   }
 
 
   editarAccion() {}
 
 
-
-  calcularTotalInvertido(){
-    var empresas = this.empresaService.getListEmpresas(); 
+/*
+  async calcularTotalInvertido(){
+    var empresas = await this.empresaService.getListEmpresas(); 
     var total = 0;
   
     empresas.forEach(element => {
-        total = total + element.invertido; 
+        total = total + element.capitalInvertido; 
     });
-  
     return this.totalAcciones = total; 
-  }
+  }*/
+  
+  
+  
+  //FORMULARIOS
 
-  
-  
   mostrarFormulario() {
      this.mostrarFormularioEdicion = true;
   }
@@ -93,6 +105,13 @@ export class ContenidoComponent implements OnInit  {
     this.mostrarFormularioEdicion2 = false;
   }
 
+
+  //Recepción de datos del hijo forumulario de edición
+  recibirValor(siAgregada: boolean) {
+    if (siAgregada) {
+      this.getEmpresas(); 
+    }
+  }
 
 
 

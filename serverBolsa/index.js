@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import routerAccion from './routes/accion.js'; 
+import routerEmpresa from './routes/empresa.js'; 
 import cors from 'cors'; 
 
 // Crear servidor
@@ -34,7 +34,7 @@ async function main() {
 
         
         //Ruta de la gestión de acciones
-        app.use('/acciones', routerAccion); 
+        app.use('/empresas', routerEmpresa); 
 
 
         //Iniciar servidor en el puerto 4000

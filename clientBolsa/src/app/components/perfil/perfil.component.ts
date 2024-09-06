@@ -21,8 +21,12 @@ export class PerfilComponent {
   }
   
 
-  getEmpresas() {
-     this.listEmpresas = this.empresaService.getListEmpresas();
+  async getEmpresas() {
+     await this.empresaService.getListEmpresas().subscribe(
+      (resp:any) => {
+        this.listEmpresas = resp;  
+      }
+    );
   }
 
 

@@ -3,16 +3,16 @@ import { Observable } from 'rxjs';
 
 
 export interface Empresa{
+    id?: string;
     nombre: string;
     ticker: string;
     precio: number | Observable<number>;
-    acciones: number;
+    cantidad: number;
     //per: number; 
-    invertido: number; 
+    capitalInvertido: number; 
     industria: string; 
     // yield: number;
     // dividendos: number; 
-
 }
 
 

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthModule, provideAuth0 } from '@auth0/auth0-angular';
 
+
 //Rutas
 import { APP_ROUTING } from './app.routes';
 

@@ -19,9 +19,12 @@ export class EditarAccionesComponent  implements OnInit {
   per: number | undefined;
   industria: string | undefined;  
   @ViewChild('buscarTexto') buscarTexto: HTMLInputElement | undefined;
+  @Output() empresaAgregada = new EventEmitter<boolean>();
+  
+  //Variable para comunicar al padre (contenido.component) que se ha agregado una empresa en el hijo (formulario)
+  siAgregada: boolean = true; 
 
-  //loading = false;
-
+ 
 
   constructor(private fb: FormBuilder, private empresaService: EmpresaService, private stockService: StockService) {
     this.agregarAccion = this.fb.group({
@@ -52,7 +55,6 @@ export class EditarAccionesComponent  implements OnInit {
     if (this.agregarAccion.valid) {
       try {
         const ticker = this.agregarAccion.get('ticker')?.value;
-
         const precioObservable = this.stockService.getPrice(ticker);
         const precio = await lastValueFrom(precioObservable);
         const industriaObservable = this.stockService.getIndustry(ticker);
@@ -65,17 +67,25 @@ export class EditarAccionesComponent  implements OnInit {
           nombre: this.agregarAccion.get('nombre')?.value,
           ticker: ticker,
           precio: precio,
-          acciones: this.agregarAccion.get('numero')?.value || 0,
+          cantidad: this.agregarAccion.get('numero')?.value || 0,
           //per: this.per,
-          invertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
+          capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
           industria: this.industria
         };
-
-        this.empresaService.addEmpresa(nuevaEmpresa);
+        
+        //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos
+        this.empresaService.addEmpresa(nuevaEmpresa).subscribe(
+          (resp: any) => {
+            console.log(resp); 
+          },
+          (error) => {
+            console.log(error); 
+          }
+        );
 
         // Reinicia el formulario después de agregar una acción con éxito
         this.agregarAccion.reset();
-
+        this.empresaAgregada.emit(this.siAgregada);
         
       } catch (error) {
         console.error('Error al obtener el precio de la acción', error);    

@@ -9,7 +9,8 @@
 <body>
     <p class="loading-text" *ngIf="Cargado === 0" style="margin-top: 50px;">Cargando...</p>
     <div class="container mt-4 mb-4" *ngIf="Cargado !== 0"> 
-        <button class="btn btn-outline-secondary" (click)="regresar()">Volver</button>
+        <button class="btn btn-outline-secondary" (click)="regresar()"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+      
         <br>
         <br>
         <h2>Información de la empresa:</h2>

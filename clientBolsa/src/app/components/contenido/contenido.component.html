@@ -17,12 +17,12 @@
           <td (click)="getInfoEmpresa(Empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">{{ Empresa.nombre }}</td>
           <td>{{ Empresa.ticker | uppercase}}</td>
           <td>{{ Empresa.precio }}</td>
-          <td>{{ Empresa.acciones }}</td>
-          <td>{{ Empresa.invertido }}</td>
+          <td>{{ Empresa.cantidad }}</td>
+          <td>{{ Empresa.capitalInvertido }}</td>
           <td>{{ Empresa.industria }}</td>
           <td>
-            <button class="btn btn-primary btn-sm"  [routerLink]="['modificar-accion']" (click)="mostrarFormulario2()" style="margin-right: 5px;">Editar</button>
-            <button class="btn btn-danger btn-sm" (click)="eliminarAccion(Empresa);">Eliminar</button>
+            <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;"  [routerLink]="['modificar-accion']" (click)="mostrarFormulario2()" ></i>
+            <i class="fa-solid fa-trash"  style="cursor:pointer;"  (click)="eliminarAccion(Empresa);"></i>
           </td>
         </tr>
       </tbody>
@@ -30,18 +30,18 @@
   </div>
 
   <div class="text-right" style="margin-top: 20px; margin-right: 20px;">
-    <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones }}</h5>
+    <!-- <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones }}</h5> -->
   </div>
 
     <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
       <h5 style="color: white;">No hay acciones introducidas</h5>
     </div> 
     <div>
-      <button class="btn btn-primary btn-sm mt-3" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()">Añadir acción</button>
+      <button class="btn btn-primary btn-sm mt-3" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()"><i class="fa-solid fa-plus"></i> Añadir acción</button>
     </div>
   </div>
   
   <!--Formularios-->
-  <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()"></app-editar-acciones>
+  <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
   <app-modificar-accion *ngIf="mostrarFormularioEdicion2"  (cerrarFormulario2)="cerrarFormulario2()"></app-modificar-accion>
  
