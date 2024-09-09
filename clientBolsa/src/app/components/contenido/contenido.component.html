@@ -13,16 +13,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let Empresa of listEmpresas;" >
-          <td (click)="getInfoEmpresa(Empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">{{ Empresa.nombre }}</td>
-          <td>{{ Empresa.ticker | uppercase}}</td>
-          <td>{{ Empresa.precio }}</td>
-          <td>{{ Empresa.cantidad }}</td>
-          <td>{{ Empresa.capitalInvertido }}</td>
-          <td>{{ Empresa.industria }}</td>
+        <tr *ngFor="let empresa of listEmpresas;">
+          <td (click)="getInfoEmpresa(empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">{{ empresa.nombre }}</td>
+          <td>{{ empresa.ticker | uppercase}}</td>
+          <td>{{ empresa.precio }}</td>
+          <td>{{ empresa.cantidad }}</td>
+          <td>{{ empresa.capitalInvertido }}</td>
+          <td>{{ empresa.industria }}</td>
           <td>
-            <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;"  [routerLink]="['modificar-accion']" (click)="mostrarFormulario2()" ></i>
-            <i class="fa-solid fa-trash"  style="cursor:pointer;"  (click)="eliminarAccion(Empresa._id);"></i>
+            <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;" (click)="mostrarFormulario2(empresa._id)" ></i>
+            <i class="fa-solid fa-trash"  style="cursor:pointer;"  (click)="eliminarAccion(empresa._id);"></i>
           </td>
         </tr>
       </tbody>
@@ -43,5 +43,5 @@
   
   <!--Formularios-->
   <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
-  <app-modificar-accion *ngIf="mostrarFormularioEdicion2"  (cerrarFormulario2)="cerrarFormulario2()"></app-modificar-accion>
+  <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
  

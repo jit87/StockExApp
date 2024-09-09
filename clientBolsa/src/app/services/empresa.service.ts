@@ -39,21 +39,25 @@ export class EmpresaService {
   }
 
 
-  //Quitamos la empresa del vector de empresas y luego actualizamos el LocalStorage.
+  //Quitamos la empresa del vector de empresas 
   deleteEmpresa(empresaId: Empresa): Observable<any> {
-    console.log(empresaId); 
-    //var index =  this.listEmpresas.indexOf(empresaId);
-   // this.listEmpresas.splice(index, 1);
     return this.http.delete(this.url + "/" +  empresaId); 
-   
   }
 
 
   
-
-  editarAccion() {
-    
+  getEmpresaById(_id: string) {
+    return this.http.get(this.url + "/" + _id); 
   }
+
+
+  
+  updateEmpresa(empresa: Empresa, empresaId: String | undefined): Observable<any> {
+    return this.http.put(this.url + "/" + empresaId, empresa);
+  }
+
+
+  
 
 
 

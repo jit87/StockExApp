@@ -1,9 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output} from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,7 +21,19 @@ export class ContenidoComponent  {
   listEmpresas: any[] = [];
   totalAcciones: number | undefined;
   Empresa: Empresa | undefined; 
-  
+  chart: any;
+  sectorData: { label: string; value: number }[] = [];
+
+  // Variable para controlar la visibilidad del formulario de edición
+  mostrarFormularioEdicion: boolean = false;
+  mostrarFormularioEdicion2: boolean = false;
+
+  //Variable para pasarle al hijo el id
+  empresaIdSeleccionada: string | undefined;
+
+
+
+    
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
@@ -31,15 +42,6 @@ export class ContenidoComponent  {
   ) {
     this.getEmpresas();
   }
-
-  chart: any;
-  sectorData: { label: string; value: number }[] = [];
-
-  // Variable para controlar la visibilidad del formulario de edición
-  mostrarFormularioEdicion: boolean = false;
-  mostrarFormularioEdicion2: boolean = false;
-
-  
 
 
    
@@ -75,7 +77,6 @@ async eliminarAccion(empresa: Empresa) {
 
 
 
-editarAccion() {}
 
 
 async calcularTotalInvertido() {
@@ -90,6 +91,7 @@ async calcularTotalInvertido() {
   }
 }
 
+  
 
   
   
@@ -106,8 +108,9 @@ async calcularTotalInvertido() {
   }
 
 
-  mostrarFormulario2() {
-    this.mostrarFormularioEdicion2 = true; 
+  mostrarFormulario2(id: string) {
+    this.empresaIdSeleccionada = id;
+    this.mostrarFormularioEdicion2 = true;
   }
 
   cerrarFormulario2() {
@@ -115,12 +118,13 @@ async calcularTotalInvertido() {
   }
 
 
-  //Recepción de datos del hijo forumulario de edición
+  //Recepción de datos del hijo formulario de edición
   recibirValor(siAgregada: boolean) {
     if (siAgregada) {
       this.getEmpresas(); 
     }
   }
+  
 
 
 

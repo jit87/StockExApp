@@ -20,6 +20,8 @@ export class EditarAccionesComponent  implements OnInit {
   per: number | undefined;
   industria: string | undefined;  
   @ViewChild('buscarTexto') buscarTexto: HTMLInputElement | undefined;
+
+  //Comunicamos al padre (contenido) que se ha agregado la acción
   @Output() empresaAgregada = new EventEmitter<boolean>();
   
   //Variable para comunicar al padre (contenido.component) que se ha agregado una empresa en el hijo (formulario)

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { actualizarEmpresa, agregarEmpresa, eliminarEmpresa, obtenerEmpresas } from '../controllers/empresaController.js';
+import { actualizarEmpresa, agregarEmpresa, eliminarEmpresa, obtenerEmpresas, obtenerEmpresa } from '../controllers/empresaController.js';
 
 const router = Router();
 
@@ -14,6 +14,9 @@ router.put('/:id', actualizarEmpresa);
 
 //Ruta para eliminar una acción
 router.delete('/:id', eliminarEmpresa); 
+
+//Ruta para obtener una empresa por su id
+router.get('/:id', obtenerEmpresa); 
 
 
 export default router;

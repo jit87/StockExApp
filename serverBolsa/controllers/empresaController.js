@@ -87,6 +87,7 @@ export async function actualizarEmpresa(req, res) {
 
 
 export async function eliminarEmpresa(req, res) {
+    
     try {
 
         let elem = await Empresa.findById(req.params.id);
@@ -105,3 +106,21 @@ export async function eliminarEmpresa(req, res) {
     }
     
 }
+
+
+
+
+export async function obtenerEmpresa(req, res) {
+
+    try {
+
+        let elem = await Empresa.findById(req.params.id);
+        res.json(elem);
+        
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: error.message });
+    }
+    
+}
+

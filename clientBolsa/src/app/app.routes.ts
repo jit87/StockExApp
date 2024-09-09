@@ -11,7 +11,6 @@ import { ModificarAccionComponent } from './components/modificar-accion/modifica
 const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent },
     { path:'editar-acciones', component: EditarAccionesComponent },
-    { path:'modificar-accion', component: ModificarAccionComponent },
     { path:'buscar/:ticker', component: BuscadorEmpresaComponent },
     { path:'perfil', component: PerfilComponent, canActivate: [ AuthGuard] },
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
