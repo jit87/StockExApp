@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información de la Empresa</title>
-    <!-- Incluye Bootstrap aquí -->
 </head>
 <body>
     <p class="loading-text" *ngIf="Cargado === 0" style="margin-top: 50px;">Cargando...</p>
@@ -14,8 +13,8 @@
         <br>
         <br>
         <h2>Información de la empresa:</h2>
-        <img class="logo" [src]="logo"  alt="Company Logo" class="rounded">
-        <h2 class="mt-3">{{ name }}</h2>
+        <!-- <img class="logo" [src]="logo"  alt="Company Logo" class="rounded"> -->
+        <h4 class="mt-3">{{ name }}</h4>
         <p><strong>Símbolo:</strong> {{ symbol }}</p>
         <p><strong>Industria:</strong> {{ industry }}</p>
         <p><strong>Sector:</strong> {{ sector }}</p>

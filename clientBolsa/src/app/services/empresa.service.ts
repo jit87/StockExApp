@@ -40,10 +40,11 @@ export class EmpresaService {
 
 
   //Quitamos la empresa del vector de empresas y luego actualizamos el LocalStorage.
-  deleteEmpresa(empresa: Empresa): Observable<any> {
-    var index =  this.listEmpresas.indexOf(empresa);
-    this.listEmpresas.splice(index, 1);
-    return this.http.delete(this.url + "/" + empresa); 
+  deleteEmpresa(empresaId: Empresa): Observable<any> {
+    console.log(empresaId); 
+    /*var index =  this.listEmpresas.indexOf(empresaId);
+    this.listEmpresas.splice(index, 1);*/
+    return this.http.delete(this.url + "/" +  empresaId); 
    
   }
 

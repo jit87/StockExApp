@@ -137,8 +137,7 @@ export class StockService {
           if (polygonError.status === 429) {
             console.error("Error 429: Límite de velocidad alcanzado. Reduce la frecuencia de las solicitudes.");
           }
-        }
-    
+        } 
         return of(''); 
       })
     );
@@ -170,11 +169,13 @@ export class StockService {
             console.error("Error 429: Límite de velocidad alcanzado. Reduce la frecuencia de las solicitudes.");
           }
         }
-    
         return of(''); 
       })
     );
 
+
+
+    
 
 
   }

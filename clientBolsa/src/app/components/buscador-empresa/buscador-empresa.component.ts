@@ -48,7 +48,7 @@ ngOnInit() {
       var news = this.stockService.getNews(params[('ticker')]);
       
       if(data) {
-        data.subscribe((empresaData: any) => {
+        data.subscribe((empresaData: any) => { 
           this.logo = empresaData.logo; 
           this.name = empresaData.name;
           this.symbol = empresaData.symbol;

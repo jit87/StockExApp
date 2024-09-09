@@ -39,7 +39,7 @@ h2 {
     color: #ffffff; 
 }
 
-p {
+p,h4 {
     margin-bottom: 15px; 
     color: lightgrey; 
 }

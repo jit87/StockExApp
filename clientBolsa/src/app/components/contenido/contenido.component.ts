@@ -41,47 +41,61 @@ export class ContenidoComponent implements OnInit  {
 
   async ngOnInit(): Promise<void> {
     this.getEmpresas();
+    this.calcularTotalInvertido(); 
   }
 
 
    
   //ACCIONES Y CALCULOS
 
-  async getEmpresas(): Promise<void>{
-     await this.empresaService.getListEmpresas().subscribe(
-      (resp:any) => {
-        this.listEmpresas = resp;  
-       })
-       ;
-  }
-
-  async eliminarAccion(empresa: Empresa) {
-    this.empresaService.deleteEmpresa(empresa);
-    await this.empresaService.getListEmpresas().subscribe(
-      (resp:any) => {
-        this.listEmpresas = resp;  
-      }
-    ), (error: any) => {
+ async getEmpresas(): Promise<void> {
+  this.empresaService.getListEmpresas().subscribe(
+    (resp: any) => {
+      this.listEmpresas = resp;
+    },
+    (error: any) => {
       console.log(error);
-    };
-    //Si eliminamos una empresa volvemos a calcular el total invertido
-   // this.calcularTotalInvertido();
-  }
+    }
+  );
+}
+
+
+
+
+async eliminarAccion(empresa: Empresa) {
+  this.empresaService.deleteEmpresa(empresa).subscribe(
+    (resp: any) => {
+      this.listEmpresas = resp;  
+    },
+    (error: any) => {
+      console.log(error);
+    }
+  );
+  // this.getEmpresas(); 
+  // Si eliminamos una empresa volvemos a calcular el total invertido
+  // this.calcularTotalInvertido();
+}
+
 
 
   editarAccion() {}
 
 
-/*
-  async calcularTotalInvertido(){
-    var empresas = await this.empresaService.getListEmpresas(); 
-    var total = 0;
-  
-    empresas.forEach(element => {
-        total = total + element.capitalInvertido; 
-    });
-    return this.totalAcciones = total; 
-  }*/
+  async calcularTotalInvertido(): Promise<void>  {
+  this.empresaService.getListEmpresas().subscribe(
+    (empresas: Empresa[]) => {
+      let total = 0;
+      empresas.forEach(element => {
+        total += element.capitalInvertido || 0;
+      });
+      this.totalAcciones = total;
+    },
+    (error: any) => {
+      console.error('Error al obtener las empresas:', error);
+    }
+  );
+}
+
   
   
   
