@@ -5,6 +5,7 @@ import { Empresa } from '../../interfaces/Empresa';
 import { StockService } from '../../services/stock.service';
 import { lastValueFrom } from 'rxjs';
 import { ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -24,9 +25,15 @@ export class EditarAccionesComponent  implements OnInit {
   //Variable para comunicar al padre (contenido.component) que se ha agregado una empresa en el hijo (formulario)
   siAgregada: boolean = true; 
 
+  //Spinner
+  loading: boolean = false; 
+
  
 
-  constructor(private fb: FormBuilder, private empresaService: EmpresaService, private stockService: StockService) {
+  constructor(private fb: FormBuilder,
+              private empresaService: EmpresaService,
+              private stockService: StockService,
+              private toastr: ToastrService) {
     this.agregarAccion = this.fb.group({
       nombre: ['', Validators.required],
       ticker: ['', Validators.required],
@@ -46,6 +53,7 @@ export class EditarAccionesComponent  implements OnInit {
   //ACCIONES Y CALCULOS
 
   async addAccion() {
+     this.loading = true;
 
     //Marca los errores si no se han completado los campos
     if (this.agregarAccion.invalid) {
@@ -86,6 +94,8 @@ export class EditarAccionesComponent  implements OnInit {
         // Reinicia el formulario después de agregar una acción con éxito
         this.agregarAccion.reset();
         this.empresaAgregada.emit(this.siAgregada);
+        this.toastr.success('La acción ha sido añadida', 'Acción añadida');
+        this.loading = false;
         
       } catch (error) {
         console.error('Error al obtener el precio de la acción', error);    

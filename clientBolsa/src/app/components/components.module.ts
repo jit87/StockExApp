@@ -14,6 +14,7 @@ import { ModificarAccionComponent } from './modificar-accion/modificar-accion.co
 
 
 
+
 @NgModule({
   declarations: [
     ContenidoComponent,

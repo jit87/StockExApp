@@ -5,6 +5,7 @@ import { Empresa } from '../../interfaces/Empresa';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -13,7 +14,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
   templateUrl: './contenido.component.html',
 })
 
-export class ContenidoComponent implements OnInit  {
+export class ContenidoComponent  {
   symbol = ''; 
   stockQuote: any;
   StockPrice: number | undefined;
@@ -25,7 +26,8 @@ export class ContenidoComponent implements OnInit  {
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.getEmpresas();
   }
@@ -39,11 +41,6 @@ export class ContenidoComponent implements OnInit  {
 
   
 
-  async ngOnInit(): Promise<void> {
-    this.getEmpresas();
-    this.calcularTotalInvertido(); 
-  }
-
 
    
   //ACCIONES Y CALCULOS
@@ -52,6 +49,7 @@ export class ContenidoComponent implements OnInit  {
   this.empresaService.getListEmpresas().subscribe(
     (resp: any) => {
       this.listEmpresas = resp;
+      this.calcularTotalInvertido();
     },
     (error: any) => {
       console.log(error);
@@ -65,36 +63,33 @@ export class ContenidoComponent implements OnInit  {
 async eliminarAccion(empresa: Empresa) {
   this.empresaService.deleteEmpresa(empresa).subscribe(
     (resp: any) => {
-      this.listEmpresas = resp;  
+      this.listEmpresas = resp;
+      this.getEmpresas(); 
+      this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
     },
     (error: any) => {
       console.log(error);
     }
   );
-  // this.getEmpresas(); 
-  // Si eliminamos una empresa volvemos a calcular el total invertido
-  // this.calcularTotalInvertido();
 }
 
 
 
-  editarAccion() {}
+editarAccion() {}
 
 
-  async calcularTotalInvertido(): Promise<void>  {
-  this.empresaService.getListEmpresas().subscribe(
-    (empresas: Empresa[]) => {
-      let total = 0;
-      empresas.forEach(element => {
-        total += element.capitalInvertido || 0;
-      });
-      this.totalAcciones = total;
-    },
-    (error: any) => {
-      console.error('Error al obtener las empresas:', error);
-    }
-  );
+async calcularTotalInvertido() {
+  try {
+    let total = 0;
+    this.listEmpresas.forEach(element => {
+      total += element.capitalInvertido || 0;
+    });
+    this.totalAcciones = total;
+  } catch (error) {
+    console.error('Error al obtener las empresas:', error);
+  }
 }
+
 
   
   

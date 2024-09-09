@@ -4,6 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthModule, provideAuth0 } from '@auth0/auth0-angular';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 //Rutas
@@ -29,6 +32,8 @@ import { ComponentsModule } from './components/components.module';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule, 
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(), 
     APP_ROUTING,
      AuthModule.forRoot({
       domain: "dev-12csjvjuyvgnl25b.eu.auth0.com",
