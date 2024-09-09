@@ -14,34 +14,36 @@
       </thead>
       <tbody>
         <tr *ngFor="let empresa of listEmpresas;">
-          <td (click)="getInfoEmpresa(empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">{{ empresa.nombre }}</td>
+          <td (click)="getInfoEmpresa(empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">
+            {{ empresa.nombre }}</td>
           <td>{{ empresa.ticker | uppercase}}</td>
           <td>{{ empresa.precio }}</td>
           <td>{{ empresa.cantidad }}</td>
           <td>{{ empresa.capitalInvertido }}</td>
           <td>{{ empresa.industria }}</td>
           <td>
-            <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;" (click)="mostrarFormulario2(empresa._id)" ></i>
-            <i class="fa-solid fa-trash"  style="cursor:pointer;"  (click)="eliminarAccion(empresa._id);"></i>
+            <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;"
+              (click)="mostrarFormulario2(empresa._id)"></i>
+            <i class="fa-solid fa-trash" style="cursor:pointer;" (click)="eliminarAccion(empresa._id);"></i>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="text-right" style="margin-top: 20px; margin-right: 20px;">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-right: 20px;">
+    <button class="btn btn-primary btn-sm" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()">
+      <i class="fa-solid fa-plus"></i> Añadir acción
+    </button>
     <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones }}</h5>
   </div>
 
-    <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
-      <h5 style="color: white;">No hay acciones introducidas</h5>
-    </div> 
-    <div>
-      <button class="btn btn-primary btn-sm mt-3" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()"><i class="fa-solid fa-plus"></i> Añadir acción</button>
-    </div>
+  <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
+    <h5 style="color: white;">No hay acciones introducidas</h5>
   </div>
-  
-  <!--Formularios-->
-  <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
-  <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
- 
+</div>
+
+<!-- Formularios -->
+<app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
+<app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>

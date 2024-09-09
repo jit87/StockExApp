@@ -115,6 +115,7 @@ async calcularTotalInvertido() {
 
   cerrarFormulario2() {
     this.mostrarFormularioEdicion2 = false;
+    this.getEmpresas(); 
   }
 
 

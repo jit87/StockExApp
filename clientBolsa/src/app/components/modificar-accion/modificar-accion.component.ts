@@ -27,11 +27,11 @@ export class ModificarAccionComponent {
   //Creamos una variable para guardar el dato anterior
   id: string = ""; 
 
+  // Evento para notificar el cierre del formulario
+  @Output() cerrarFormulario2 = new EventEmitter<void>();
+
   empresaGuardada: Empresa | undefined; 
   
-
-
-
 
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
@@ -40,8 +40,6 @@ export class ModificarAccionComponent {
               ) {
     this.cargarDatos(); 
   }
-
-
 
 
   //Recibe el valor del padre cuando se produce algún cambio en @Input() empresaId
@@ -55,14 +53,9 @@ export class ModificarAccionComponent {
 
 
 
-
-   // Evento para notificar el cierre del formulario
-  @Output() cerrarFormulario2 = new EventEmitter<void>();
-
   cerrar() {
     this.cerrarFormulario2.emit();
   }
-
 
 
 
@@ -85,7 +78,7 @@ export class ModificarAccionComponent {
 
 
 
-
+  //Comprobamos si está la empresa y después actualizadmos
   actualizarAccion() {
     this.empresaService.getEmpresaById(this.id).subscribe(
       (resp: any) => {
@@ -97,7 +90,8 @@ export class ModificarAccionComponent {
         const empresaActualizada: Empresa = {
             ...this.empresaGuardada!,
             precio: this.modificarAccion.precio,
-            cantidad: this.modificarAccion.numero
+            cantidad: this.modificarAccion.numero,
+            capitalInvertido: this.modificarAccion.precio * this.modificarAccion.numero
         };
         this.empresaService.updateEmpresa(empresaActualizada, this.empresaGuardada._id).subscribe(
           (resp: any) => {
