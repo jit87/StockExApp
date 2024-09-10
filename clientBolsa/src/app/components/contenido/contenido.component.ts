@@ -33,7 +33,6 @@ export class ContenidoComponent  {
 
 
 
-    
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
@@ -62,17 +61,19 @@ export class ContenidoComponent  {
 
 
 
-async eliminarAccion(empresa: Empresa) {
-  this.empresaService.deleteEmpresa(empresa).subscribe(
-    (resp: any) => {
-      this.listEmpresas = resp;
-      this.getEmpresas(); 
-      this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+ async eliminarAccion(empresa: Empresa) {
+    if(confirm("¿Estás seguro de que deseas eliminar esta acción?")){
+      this.empresaService.deleteEmpresa(empresa).subscribe(
+          (resp: any) => {
+            this.listEmpresas = resp;
+            this.getEmpresas(); 
+            this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
+          },
+          (error: any) => {
+            console.log(error);
+          }
+      );
+   } 
 }
 
 

@@ -31,7 +31,8 @@ export class ModificarAccionComponent {
   @Output() cerrarFormulario2 = new EventEmitter<void>();
 
   empresaGuardada: Empresa | undefined; 
-  
+
+
 
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
