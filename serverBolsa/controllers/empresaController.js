@@ -4,28 +4,24 @@ import Empresa from "../models/Empresa.js";
 
 export async function agregarEmpresa(req, res) {
 
-    try {
+  const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
 
-        const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
-        
-        //Creamos la Empresa
-        const nuevaEmpresa = new Empresa({
-            nombre,
-            ticker,
-            precio,
-            cantidad,
-            capitalInvertido,
-            industria
-        });
-
-        //Guargamos la Empresa en la BBDD
-        const resultado = await nuevaEmpresa.save(); 
-        res.status(201).json(resultado);
-        
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ msg: error.msg });
-    }
+  const nuevaEmpresa = new Empresa({
+    nombre,
+    ticker,
+    precio,
+    cantidad,
+    capitalInvertido,
+    industria,
+    usuarioId: req.usuarioId
+  });
+  
+  try {
+    const empresaGuardada = await nuevaEmpresa.save();
+    res.status(201).json(empresaGuardada);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 
 }
 
@@ -34,93 +30,101 @@ export async function agregarEmpresa(req, res) {
 export async function obtenerEmpresas(req, res) {
 
     try {
-
-        const empresas = await Empresa.find(); 
+        const empresas = await Empresa.find({ usuarioId: req.usuarioId }); 
         res.json(empresas); 
 
         } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
-    
+
 }
 
 
 
 export async function actualizarEmpresa(req, res) {
 
-    try {
-        
+     try {
         const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
 
-        //Busca la acción por id y la guarda en elem
-        let elem = await Empresa.findById(req.params.id);
+        //Busca la empresa por ID
+        const empresa = await Empresa.findById(req.params.id);
 
-        if (!elem) {
-            res.status(404).json({ msg:'No esiste esta acción' })
+        if (!empresa) {
+            return res.status(404).json({ msg: 'No existe esta empresa' });
         }
 
-        //Actualizamos las propiedades de la acción
-        elem.nombre = nombre;
-        elem.ticker = ticker;
-        elem.precio = precio;
-        elem.cantidad = cantidad;
-        elem.capitalInvertido = capitalInvertido;
-        elem.industria = industria; 
-
-        //Actualizamos en la BBDD de mongoDB la Empresa en función del Id, el 2º parametro (elem) carga la información en la BBDD 
-        elem = await Empresa.findOneAndUpdate(
-            { _id: req.params.id },
-            elem,
-            { new: true }  
-        ); 
-
-        res.json(elem); 
-
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: error.message });
-    }
-    
-}
-
-
-
-export async function eliminarEmpresa(req, res) {
-    
-    try {
-
-        let elem = await Empresa.findById(req.params.id);
-        
-        if (!elem) {
-            res.status(404).json({ msg: 'No existe la acción' }); 
+        //Verifica si la empresa pertenece al usuario autenticado
+        if (empresa.usuarioId.toString() !== req.usuarioId) {
+            return res.status(403).json({ message: 'No tienes permiso para actualizar esta empresa' });
         }
 
-        await Empresa.findByIdAndDelete({ _id: req.params.id });
-        res.json({ msg: 'Acción eliminada' });
-        
+        //Actualizamos las propiedades de la empresa
+        empresa.nombre = nombre || empresa.nombre;
+        empresa.ticker = ticker || empresa.ticker;
+        empresa.precio = precio || empresa.precio;
+        empresa.cantidad = cantidad || empresa.cantidad;
+        empresa.capitalInvertido = capitalInvertido || empresa.capitalInvertido;
+        empresa.industria = industria || empresa.industria;
 
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: error.message });
+        //Guardamos en BBDD
+        const empresaActualizada = await empresa.save();
+
+        res.json(empresaActualizada);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
     
 }
 
 
 
+export async function eliminarEmpresa (req, res) {
 
-export async function obtenerEmpresa(req, res) {
+   try {
+        
+        //Busca la empresa por ID
+        const empresa = await Empresa.findById(req.params.id);
+        
+        if (!empresa) return res.status(404).json({ message: 'Empresa no encontrada' });
+
+        //Verifica si la empresa pertenece al usuario autenticado
+        if (empresa.usuarioId.toString() !== req.usuarioId) {
+            return res.status(403).json({ message: 'No tienes permiso para eliminar esta empresa' });
+        }
+        
+        //Eliminamos
+        await empresa.remove();
+            res.json({ message: 'Empresa eliminada' });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+    }
+    
+};
+
+
+  
+
+export async function obtenerEmpresa (req, res) {
 
     try {
+      
+        const empresa = await Empresa.findById(req.params.id);
 
-        let elem = await Empresa.findById(req.params.id);
-        res.json(elem);
-        
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: error.message });
+        if (!empresa) return res.status(404).json({ message: 'Empresa no encontrada' });
+
+        // Verifica si la empresa pertenece al usuario autenticado
+        if (empresa.usuarioId.toString() !== req.usuarioId) {
+          return res.status(403).json({ message: 'No tienes permiso para acceder a esta empresa' });
+        }
+
+        res.json(empresa);
+
+      } catch (err) {
+            res.status(500).json({ message: err.message });
     }
     
-}
+};
 

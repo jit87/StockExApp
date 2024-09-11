@@ -2,6 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import routerEmpresa from './routes/empresa.js'; 
 import cors from 'cors'; 
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
 
 // Crear servidor
 const app = express();
@@ -11,6 +14,9 @@ app.use(express.json());
 
 //Para solucionar el problema CORS
 app.use(cors());
+
+//Para las variables de entorno
+dotenv.config();
 
 // URI de conexión
 const uri = "mongodb://localhost:27017/StockExApp";
@@ -42,11 +48,21 @@ async function main() {
             console.log("El servidor está corriendo correctamente en el puerto 4000");
         });
 
+
+        
+
+
+
+
+
+
     } catch (err) {
         console.error(err);
     }
 }
 
 main().catch(console.error);
+
+
 
 

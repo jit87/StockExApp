@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { AuthModule, provideAuth0 } from '@auth0/auth0-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -34,22 +33,9 @@ import { ComponentsModule } from './components/components.module';
     FormsModule, 
     BrowserAnimationsModule,
     ToastrModule.forRoot(), 
-    APP_ROUTING,
-     AuthModule.forRoot({
-      domain: "dev-12csjvjuyvgnl25b.eu.auth0.com",
-      clientId: "P6CZ7LGou5BKdtmuVaXBKTmKQot0cyTb",
-       authorizationParams: {
-         redirect_uri: window.location.origin
-      }
-     })
+    APP_ROUTING
   ],
-  providers: [EmpresaService, StockService, provideAuth0({
-      domain: 'dev-12csjvjuyvgnl25b.eu.auth0.com',
-      clientId: 'P6CZ7LGou5BKdtmuVaXBKTmKQot0cyTb',
-      authorizationParams: {
-        redirect_uri: window.location.origin
-      }
-    })],
+  providers: [EmpresaService, StockService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

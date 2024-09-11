@@ -20,6 +20,11 @@ const EmpresaSchema = new Schema({
     },
     industria: {
         type: String
+    },
+    usuarioId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario', 
+        required: true
     }
 });
 

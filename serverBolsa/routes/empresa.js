@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { actualizarEmpresa, agregarEmpresa, eliminarEmpresa, obtenerEmpresas, obtenerEmpresa } from '../controllers/empresaController.js';
+import authenticate  from '../middlewares/authenticate.js'; 
 
 const router = Router();
+
+//Autenticamos todas las rutas
+router.use(authenticate); 
 
 //Ruta para añadir una acción
 router.post('/', agregarEmpresa); 

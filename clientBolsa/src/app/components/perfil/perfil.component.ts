@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Empresa } from '../../interfaces/Empresa';
 import { EmpresaService } from '../../services/empresa.service';
 
@@ -13,7 +12,7 @@ export class PerfilComponent {
 
   public listEmpresas: Empresa[] = [];
    
-  constructor(public auth: AuthService, public empresaService: EmpresaService) { }
+  constructor( public empresaService: EmpresaService) { }
   
 
   ngOnInit() {

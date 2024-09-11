@@ -12,7 +12,7 @@ const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent },
     { path:'editar-acciones', component: EditarAccionesComponent },
     { path:'buscar/:ticker', component: BuscadorEmpresaComponent },
-    { path:'perfil', component: PerfilComponent, canActivate: [ AuthGuard] },
+    { path:'perfil', component: PerfilComponent},
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
 ];
 
