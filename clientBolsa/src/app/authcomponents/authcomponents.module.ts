@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { AuthcomponentsRoutingModule } from './authcomponents-routing.module';
 
 
 
@@ -16,10 +16,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegistroComponent }
-    ])
+    AuthcomponentsRoutingModule
   ],
   exports: [
     LoginComponent,
