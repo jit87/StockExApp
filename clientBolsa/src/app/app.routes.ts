@@ -12,7 +12,9 @@ const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent },
     { path:'editar-acciones', component: EditarAccionesComponent },
     { path:'buscar/:ticker', component: BuscadorEmpresaComponent },
-    { path:'perfil', component: PerfilComponent},
+    { path: 'perfil', component: PerfilComponent },
+    { path: 'login', loadChildren: () => import('./authcomponents/authcomponents.module').then(m => m.AuthcomponentsModule) },
+    { path: 'register', loadChildren: () => import('./authcomponents/authcomponents.module').then(m => m.AuthcomponentsModule) },
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
 ];
 
