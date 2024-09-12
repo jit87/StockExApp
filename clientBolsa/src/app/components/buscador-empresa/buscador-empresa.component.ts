@@ -35,7 +35,9 @@ data:any[] = [];
 
 //Propiedad de control
 Cargado = 0;
-
+  
+//Disponibilidad del recurso
+disponible: boolean = true; 
 
 constructor(private activatedRoute:ActivatedRoute, private stockService: StockService, private location: Location ){ }
 
@@ -70,6 +72,7 @@ ngOnInit() {
       else 
       {
         console.error('Error al obtener parámetros');
+        this.disponible = false; 
       }
 
       if (news) {
@@ -87,6 +90,7 @@ ngOnInit() {
       else 
       {
         console.error('Error al obtener noticias');
+        this.disponible = false; 
       }
 
     });

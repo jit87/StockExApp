@@ -1,33 +1,22 @@
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="container">
         <br>
-        <!-- <div *ngIf="auth.Usuario | async as Usuario" class="mx-auto rounded">
+          <div *ngIf="usuario" class="mx-auto rounded">
             <h2 class="text-justify mb-4">Perfil de Usuario:</h2>
             <br>
             <div class="row mb-3">
                 <div class="col-sm-3 font-weight-bold">Nombre:</div>
-                <div class="col-sm-9"><code>{{ Usuario }}</code></div>
+                <div class="col-sm-9"><code>{{ usuario.nombre }}</code></div>
             </div>
             <div class="row mb-3">
                 <div class="col-sm-3 font-weight-bold">Correo:</div>
-                <div class="col-sm-9"><code>{{ user.email }}</code></div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">Nick:</div>
-                <div class="col-sm-9"><code>{{ user.nickname }}</code></div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">Actualización:</div>
-                <div class="col-sm-9"><code>{{ user.updated_at }}</code></div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">Usuario verificado:</div>
-                <div class="col-sm-9"><code>{{ user.email_verified }}</code></div>
+                <div class="col-sm-9"><code>{{ usuario.email }}</code></div>
             </div>
             <div class="row mb-3">
                 <div class="col-sm-3 font-weight-bold">ID:</div>
-                <div class="col-sm-9"><code>{{ user.sub }}</code></div>
-            </div> -->
+                <div class="col-sm-9"><code>{{ usuario._id }}</code></div>
+            </div>
+           
             <br>
             <br>
             <h2 class="text-justify mb-4">Inversiones:</h2>

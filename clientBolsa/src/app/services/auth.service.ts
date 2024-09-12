@@ -9,11 +9,12 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = 'http://localhost:4000'; 
+  public authUrl = 'http://localhost:4000'; 
   private tokenKey = 'auth-token';
   
   private userSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   user$: Observable<any> = this.userSubject.asObservable();
+  public usuarioData: any = []; 
 
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -21,23 +22,33 @@ export class AuthService {
 
 
  login(email: string, password: string): Observable<any> {
-  console.log('Attempting login...');
-  return this.http.post<any>(`${this.authUrl}/login`, { email, password }).pipe(
+   
+   console.log('Iniciando login...');
+   
+   return this.http.post<any>(`${this.authUrl}/login`, { email, password }).pipe(
+    
     tap(response => {
-      console.log('Login successful, storing token and navigating...');
+      console.log('Login existoso, guardando token y navegando...');
+
+      //Guardamos el token y el email en el localStorage
       localStorage.setItem(this.tokenKey, response.token);
+      localStorage.setItem('email', email);
       this.userSubject.next(response.user);
+
+      //Accedemos al contenido principal
       this.router.navigate(['/contenido']).then(() => {
-        console.log('Navigation to /contenido successful');
+        console.log('Navegación a /contenido exitosa');
       }).catch(err => {
-        console.error('Navigation error:', err);
+        console.error('Navegacion error:', err);
       });
     }),
+     
     catchError(error => {
-      console.error('Error during login', error);
+      console.error('Error durante login', error);
       return throwError(error); 
     })
-  );
+   );
+   
 }
 
 
@@ -76,6 +87,15 @@ export class AuthService {
   getUserById(id: string): Observable<any> {
     return this.http.get<any>(`${this.authUrl}/${id}`);
   }
+
+
+  getUserByEmail(email: string | null):Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/usuario/${email}`);
+  }
+
+
+
+
 
 
 

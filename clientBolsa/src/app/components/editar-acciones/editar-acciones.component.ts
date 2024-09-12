@@ -6,6 +6,7 @@ import { StockService } from '../../services/stock.service';
 import { lastValueFrom } from 'rxjs';
 import { ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -30,17 +31,24 @@ export class EditarAccionesComponent  implements OnInit {
   //Spinner
   loading: boolean = false; 
 
- 
+  id?: string; 
 
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
               private stockService: StockService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private _authService: AuthService) {
     this.agregarAccion = this.fb.group({
       nombre: ['', Validators.required],
       ticker: ['', Validators.required],
       numero: [0, [Validators.required, Validators.minLength(1), Validators.min(1)]] 
     });
+
+    //this.id;
+    this._authService.getToken(); 
+
+    console.log(this._authService.getToken()); 
+    
   }
 
 
@@ -80,7 +88,8 @@ export class EditarAccionesComponent  implements OnInit {
           cantidad: this.agregarAccion.get('numero')?.value || 0,
           //per: this.per,
           capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
-          industria: this.industria
+          industria: this.industria,
+          usuarioId: ''
         };
         
         //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos

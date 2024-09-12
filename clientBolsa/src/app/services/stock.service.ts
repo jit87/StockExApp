@@ -9,7 +9,8 @@ export class StockService {
 
   // Claves
   private readonly alphaVantageApiKey = '22CEAEX0ALRYWVGC';
-  private readonly polygonApiKey = 'RyUZfnDxPi7qX9OqVAoTFiwIKwzkr8U0';
+  private readonly polygonApiKey = 'hBGe43bus6XD4lEyv3tsmw46d4p7Y8u4';
+                                    
 
 
 

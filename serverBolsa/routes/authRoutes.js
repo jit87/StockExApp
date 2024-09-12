@@ -64,4 +64,23 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+//Ruta para obtener usuario en función del email
+router.get('/usuario/:email', async (req, res) => {
+
+     try {
+        const email = req.params.email;
+        const user = await Usuario.findOne({ email: email }).exec();
+
+        if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error en el servidor', error });
+    }
+    
+});
+
 export default router;

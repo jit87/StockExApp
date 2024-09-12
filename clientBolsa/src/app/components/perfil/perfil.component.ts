@@ -33,12 +33,13 @@ export class PerfilComponent {
   }
 
   getUsuario() {
-     this._authService.user$.subscribe(
+    var email = localStorage.getItem('email'); 
+    console.log(email); 
+    this._authService.getUserByEmail(email).subscribe(
       (resp: any) => {
-        console.log(resp); 
+        this.usuario = resp; 
       }
-    ); 
-    //console.log(usuario); 
+    )
   }
 
 

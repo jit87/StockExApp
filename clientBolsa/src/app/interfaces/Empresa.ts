@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 
 export interface Empresa{
+    usuarioId?: string; 
     _id?: string;
     nombre: string;
     ticker: string;

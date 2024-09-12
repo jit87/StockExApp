@@ -6,6 +6,7 @@
     <title>Información de la Empresa</title>
 </head>
 <body>
+    <p class="error" *ngIf="!disponible"> Información no disponible </p>
     <p class="loading-text" *ngIf="Cargado === 0" style="margin-top: 50px;">Cargando...</p>
     <div class="container mt-4 mb-4" *ngIf="Cargado !== 0"> 
         <button class="btn btn-outline-secondary" (click)="regresar()"><i class="fa-solid fa-arrow-left"></i> Volver</button>
