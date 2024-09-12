@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_ROUTING } from '../app.routes';
 import { ModificarAccionComponent } from './modificar-accion/modificar-accion.component';
+import { AuthService } from '../services/auth.service';
+
 
 
 
@@ -40,6 +42,9 @@ import { ModificarAccionComponent } from './modificar-accion/modificar-accion.co
     PerfilComponent,
     FooterComponent,
     ModificarAccionComponent
+  ],
+  providers: [
+     AuthService
   ]
 })
 export class ComponentsModule { }

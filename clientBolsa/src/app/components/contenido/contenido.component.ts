@@ -23,14 +23,14 @@ export class ContenidoComponent {
   chart: any;
   sectorData: { label: string; value: number }[] = [];
 
-  // Variable para controlar la visibilidad del formulario de edición
+  //Variable para controlar la visibilidad del formulario de edición
   mostrarFormularioEdicion: boolean = false;
   mostrarFormularioEdicion2: boolean = false;
 
-  // Variable para pasarle al hijo el id
+  //Variable para pasarle al hijo el id
   empresaIdSeleccionada: string | undefined;
 
-  // Variable para controlar si mostramos el contenido en función de la autenticación
+  //Variable para controlar si mostramos el contenido en función de la autenticación
   autenticado: boolean = false; 
 
   constructor(
@@ -38,7 +38,7 @@ export class ContenidoComponent {
     public empresaService: EmpresaService,
     private router: Router,
     private toastr: ToastrService,
-    private _authService: AuthService // Usa tu servicio personalizado
+    private _authService: AuthService 
   ) {
     this.getEmpresas();
   }
@@ -46,16 +46,18 @@ export class ContenidoComponent {
   // ACCIONES Y CALCULOS
 
   async getEmpresas(): Promise<void> {
-    // Si está autenticado, solicitamos sus datos de empresas
-    if (this._authService.isAuthenticated()) { // Usa el método correcto
+    //Si está autenticado mostramos las acciones que tiene
+    if (this._authService.isAuthenticated()) { 
       this.autenticado = true; 
       this.empresaService.getListEmpresas().subscribe(
         (resp: any) => {
           this.listEmpresas = resp;
           this.calcularTotalInvertido();
         },
+        //Si no mostramos el error y redirigimos al login
         (error: any) => {
           console.log(error);
+          this.router.navigate(['/login']);
         }
       );
     }  
