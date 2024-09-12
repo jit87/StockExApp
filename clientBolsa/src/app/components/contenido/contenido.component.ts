@@ -33,6 +33,9 @@ export class ContenidoComponent {
   //Variable para controlar si mostramos el contenido en función de la autenticación
   autenticado: boolean = false; 
 
+  //Variable para almacenar usuario logueado
+  usuario: any; 
+
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
@@ -40,8 +43,11 @@ export class ContenidoComponent {
     private toastr: ToastrService,
     private _authService: AuthService 
   ) {
-    this.getEmpresas();
+    this.getUsuario();
+    this.getEmpresas(); 
   }
+
+
 
   // ACCIONES Y CALCULOS
 
@@ -49,8 +55,11 @@ export class ContenidoComponent {
     //Si está autenticado mostramos las acciones que tiene
     if (this._authService.isAuthenticated()) { 
       this.autenticado = true; 
-      this.empresaService.getListEmpresas().subscribe(
+
+      const usuarioId: any = localStorage.getItem('id'); 
+      this.empresaService.getListEmpresas(usuarioId).subscribe(
         (resp: any) => {
+          console.log(resp); 
           this.listEmpresas = resp;
           this.calcularTotalInvertido();
         },
@@ -65,6 +74,7 @@ export class ContenidoComponent {
 
   async eliminarAccion(empresa: Empresa) {
     if (confirm("¿Estás seguro de que deseas eliminar esta acción?")) {
+      console.log(empresa); 
       this.empresaService.deleteEmpresa(empresa).subscribe(
         (resp: any) => {
           this.listEmpresas = resp;
@@ -122,4 +132,23 @@ export class ContenidoComponent {
   getInfoEmpresa(ticker: string) {
     this.router.navigate(['/buscar', ticker]);
   }
+
+
+  getUsuario() {
+    var email = localStorage.getItem('email'); 
+    this._authService.getUserByEmail(email).subscribe(
+      (resp: any) => {
+        this.usuario = resp; 
+        localStorage.setItem('id', this.usuario._id); 
+      }
+    )
+  }
+
+
+
+
+
+
+
+
 }

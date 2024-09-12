@@ -4,7 +4,7 @@ import Empresa from "../models/Empresa.js";
 
 export async function agregarEmpresa(req, res) {
 
-  const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
+  const { nombre, ticker, precio, cantidad, capitalInvertido, industria, usuarioId } = req.body;
 
   const nuevaEmpresa = new Empresa({
     nombre,
@@ -13,7 +13,7 @@ export async function agregarEmpresa(req, res) {
     cantidad,
     capitalInvertido,
     industria,
-    usuarioId: req.usuarioId
+    usuarioId
   });
   
   try {
@@ -96,7 +96,7 @@ export async function eliminarEmpresa (req, res) {
         }
         
         //Eliminamos
-        await empresa.remove();
+         await Empresa.deleteOne({ _id: req.params.id });
             res.json({ message: 'Empresa eliminada' });
         } catch (err) {
             res.status(500).json({ message: err.message });

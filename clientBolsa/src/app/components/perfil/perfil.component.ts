@@ -25,7 +25,7 @@ export class PerfilComponent {
   
 
   async getEmpresas() {
-     await this.empresaService.getListEmpresas().subscribe(
+     await this.empresaService.getListEmpresas(this.usuario._id).subscribe(
       (resp:any) => {
         this.listEmpresas = resp;  
       }

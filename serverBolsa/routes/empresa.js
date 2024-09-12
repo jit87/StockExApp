@@ -11,7 +11,7 @@ router.use(authenticate);
 router.post('/', agregarEmpresa); 
 
 //Ruta para obtener todas las empresas
-router.get('/', obtenerEmpresas); 
+router.get('/todas/:id', obtenerEmpresas); 
 
 //Ruta para actualizar una acción
 router.put('/:id', actualizarEmpresa);

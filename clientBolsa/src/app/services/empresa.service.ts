@@ -16,19 +16,19 @@ export class EmpresaService {
 
   url: string = "http://localhost:4000/empresas"; 
   
-
+  
 
   //Actualizamos el valor de listEmpresas al cargar.
   constructor(private http: HttpClient) {
-    const storedData = localStorage.getItem('Acciones');
-    if (storedData) {
-      this.listEmpresas = JSON.parse(storedData);
-    }
+
   }
 
+  
+
   //Obtenemos las empresas guardades en mongoDB
-  getListEmpresas(): Observable<any> {
-    return this.http.get(this.url);
+  getListEmpresas(usuarioId: string): Observable<any> {
+    console.log(this.url + "/todas/" + usuarioId);
+    return this.http.get(this.url + "/todas/" + usuarioId);
   }
 
 
@@ -58,7 +58,8 @@ export class EmpresaService {
 
 
   
-
+ 
+  
 
 
 

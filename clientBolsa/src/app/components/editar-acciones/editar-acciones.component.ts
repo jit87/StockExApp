@@ -24,6 +24,9 @@ export class EditarAccionesComponent  implements OnInit {
 
   //Comunicamos al padre (contenido) que se ha agregado la acción
   @Output() empresaAgregada = new EventEmitter<boolean>();
+
+  // Evento para notificar el cierre del formulario
+  @Output() cerrarFormulario = new EventEmitter<void>();
   
   //Variable para comunicar al padre (contenido.component) que se ha agregado una empresa en el hijo (formulario)
   siAgregada: boolean = true; 
@@ -31,7 +34,7 @@ export class EditarAccionesComponent  implements OnInit {
   //Spinner
   loading: boolean = false; 
 
-  id?: string; 
+  usuario_Id: any;
 
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
@@ -42,21 +45,17 @@ export class EditarAccionesComponent  implements OnInit {
       nombre: ['', Validators.required],
       ticker: ['', Validators.required],
       numero: [0, [Validators.required, Validators.minLength(1), Validators.min(1)]] 
-    });
+    });  
 
-    //this.id;
-    this._authService.getToken(); 
-
-    console.log(this._authService.getToken()); 
-    
+    this.getUsuario(); 
   }
 
 
   
 
   ngOnInit(): void {
-    
-   }
+     this.getUsuario();
+  }
 
   
 
@@ -89,9 +88,9 @@ export class EditarAccionesComponent  implements OnInit {
           //per: this.per,
           capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
           industria: this.industria,
-          usuarioId: ''
+          usuarioId: this.usuario_Id
         };
-        
+       
         //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos
         this.empresaService.addEmpresa(nuevaEmpresa).subscribe(
           (resp: any) => {
@@ -135,9 +134,6 @@ export class EditarAccionesComponent  implements OnInit {
 
 
 
-  // Evento para notificar el cierre del formulario
-  @Output() cerrarFormulario = new EventEmitter<void>();
-
   cerrar() {
     this.cerrarFormulario.emit();
   }
@@ -161,6 +157,18 @@ export class EditarAccionesComponent  implements OnInit {
       }
     });
   }
+
+
+  getUsuario() {
+    var email = localStorage.getItem('email'); 
+    console.log(email); 
+    this._authService.getUserByEmail(email).subscribe(
+      (resp: any) => {
+        this.usuario_Id = resp._id;  
+      }
+    )
+  }
+
 
 
 
