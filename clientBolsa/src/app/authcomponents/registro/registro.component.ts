@@ -9,12 +9,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegistroComponent {
 
-  registerForm: FormGroup;
+  registroForm: FormGroup;
     constructor(
         private fb: FormBuilder,
         private authService: AuthService
       ) {
-        this.registerForm = this.fb.group({
+        this.registroForm = this.fb.group({
           nombre: ['', [Validators.required]],
           email: ['', [Validators.required, Validators.email]],
           password: ['', [Validators.required]]
@@ -22,9 +22,9 @@ export class RegistroComponent {
       }
 
       onSubmit() {
-        if (this.registerForm.valid) {
-          const { nombre, email, password } = this.registerForm.value;
-          this.authService.register(nombre, email, password).subscribe(
+        if (this.registroForm.valid) {
+          const { nombre, email, password } = this.registroForm.value;
+          this.authService.registro(nombre, email, password).subscribe(
             () => console.log('Registro exitoso'),
             (error) => console.error(error)
           );

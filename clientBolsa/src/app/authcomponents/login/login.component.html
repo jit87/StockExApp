@@ -1,5 +1,5 @@
 <!-- src/app/auth/login/login.component.html -->
-<div class="container">
+<div class="container mt-5">
     <h2>Iniciar Sesión</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -20,5 +20,5 @@
 
         <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
     </form>
-    <p>¿No tienes una cuenta? <a [routerLink]="['/register']">Regístrate aquí</a></p>
+    <p>¿No tienes una cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
 </div>

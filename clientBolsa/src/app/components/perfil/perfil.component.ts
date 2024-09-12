@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Empresa } from '../../interfaces/Empresa';
 import { EmpresaService } from '../../services/empresa.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -11,12 +12,15 @@ import { EmpresaService } from '../../services/empresa.service';
 export class PerfilComponent {
 
   public listEmpresas: Empresa[] = [];
+  usuario: any = []; 
+
    
-  constructor( public empresaService: EmpresaService) { }
+  constructor( public empresaService: EmpresaService, private _authService: AuthService) { }
   
 
   ngOnInit() {
     this.getEmpresas();
+    this.getUsuario(); 
   }
   
 
@@ -26,6 +30,15 @@ export class PerfilComponent {
         this.listEmpresas = resp;  
       }
     );
+  }
+
+  getUsuario() {
+     this._authService.user$.subscribe(
+      (resp: any) => {
+        console.log(resp); 
+      }
+    ); 
+    //console.log(usuario); 
   }
 
 

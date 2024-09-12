@@ -1,19 +1,18 @@
-import { Component, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { Router } from '@angular/router';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
-
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
   selector: 'app-contenido',
   templateUrl: './contenido.component.html',
 })
-
-export class ContenidoComponent  {
+export class ContenidoComponent {
   symbol = ''; 
   stockQuote: any;
   StockPrice: number | undefined;
@@ -28,86 +27,76 @@ export class ContenidoComponent  {
   mostrarFormularioEdicion: boolean = false;
   mostrarFormularioEdicion2: boolean = false;
 
-  //Variable para pasarle al hijo el id
+  // Variable para pasarle al hijo el id
   empresaIdSeleccionada: string | undefined;
 
-
+  // Variable para controlar si mostramos el contenido en función de la autenticación
+  autenticado: boolean = false; 
 
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _authService: AuthService // Usa tu servicio personalizado
   ) {
     this.getEmpresas();
   }
 
+  // ACCIONES Y CALCULOS
 
-   
-  //ACCIONES Y CALCULOS
-
- async getEmpresas(): Promise<void> {
-  this.empresaService.getListEmpresas().subscribe(
-    (resp: any) => {
-      this.listEmpresas = resp;
-      this.calcularTotalInvertido();
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
-}
-
-
-
-
- async eliminarAccion(empresa: Empresa) {
-    if(confirm("¿Estás seguro de que deseas eliminar esta acción?")){
-      this.empresaService.deleteEmpresa(empresa).subscribe(
-          (resp: any) => {
-            this.listEmpresas = resp;
-            this.getEmpresas(); 
-            this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
-          },
-          (error: any) => {
-            console.log(error);
-          }
+  async getEmpresas(): Promise<void> {
+    // Si está autenticado, solicitamos sus datos de empresas
+    if (this._authService.isAuthenticated()) { // Usa el método correcto
+      this.autenticado = true; 
+      this.empresaService.getListEmpresas().subscribe(
+        (resp: any) => {
+          this.listEmpresas = resp;
+          this.calcularTotalInvertido();
+        },
+        (error: any) => {
+          console.log(error);
+        }
       );
-   } 
-}
-
-
-
-
-
-async calcularTotalInvertido() {
-  try {
-    let total = 0;
-    this.listEmpresas.forEach(element => {
-      total += element.capitalInvertido || 0;
-    });
-    this.totalAcciones = total;
-  } catch (error) {
-    console.error('Error al obtener las empresas:', error);
+    }  
   }
-}
 
-  
+  async eliminarAccion(empresa: Empresa) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta acción?")) {
+      this.empresaService.deleteEmpresa(empresa).subscribe(
+        (resp: any) => {
+          this.listEmpresas = resp;
+          this.getEmpresas(); 
+          this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    } 
+  }
 
-  
-  
-  
-  //FORMULARIOS
+  async calcularTotalInvertido() {
+    try {
+      let total = 0;
+      this.listEmpresas.forEach(element => {
+        total += element.capitalInvertido || 0;
+      });
+      this.totalAcciones = total;
+    } catch (error) {
+      console.error('Error al obtener las empresas:', error);
+    }
+  }
+
+  // FORMULARIOS
 
   mostrarFormulario() {
-     this.mostrarFormularioEdicion = true;
+    this.mostrarFormularioEdicion = true;
   }
-  
 
   cerrarFormulario() {
     this.mostrarFormularioEdicion = false;
   }
-
 
   mostrarFormulario2(id: string) {
     this.empresaIdSeleccionada = id;
@@ -119,33 +108,16 @@ async calcularTotalInvertido() {
     this.getEmpresas(); 
   }
 
-
-  //Recepción de datos del hijo formulario de edición
+  // Recepción de datos del hijo formulario de edición
   recibirValor(siAgregada: boolean) {
     if (siAgregada) {
       this.getEmpresas(); 
     }
   }
+
+  // CONSULTAS
   
-
-
-
-  //CONSULTAS
-  
-  getInfoEmpresa(ticker:string){
-    this.router.navigate(['/buscar',ticker]);
+  getInfoEmpresa(ticker: string) {
+    this.router.navigate(['/buscar', ticker]);
   }
-
-
-  
-
- 
-
-
-
-
-
-
-
-
 }

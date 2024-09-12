@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthcomponentsRoutingModule } from './authcomponents-routing.module';
+import { APP_ROUTING } from '../app.routes';
 
 
 
@@ -16,7 +16,7 @@ import { AuthcomponentsRoutingModule } from './authcomponents-routing.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AuthcomponentsRoutingModule
+    APP_ROUTING
   ],
   exports: [
     LoginComponent,

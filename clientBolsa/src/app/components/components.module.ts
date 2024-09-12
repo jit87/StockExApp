@@ -27,7 +27,6 @@ import { ModificarAccionComponent } from './modificar-accion/modificar-accion.co
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule, 

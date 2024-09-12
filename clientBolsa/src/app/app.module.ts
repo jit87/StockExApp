@@ -19,7 +19,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor.interceptor';
 import { EmpresaService } from './services/empresa.service';
 import { StockService } from './services/stock.service';
 import { ComponentsModule } from './components/components.module';
-import { AuthService } from '@auth0/auth0-angular';
+
 
 
 
@@ -39,7 +39,7 @@ import { AuthService } from '@auth0/auth0-angular';
     APP_ROUTING,
     AuthcomponentsModule
   ],
-  providers: [EmpresaService, StockService, AuthService,
+  providers: [EmpresaService, StockService, 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

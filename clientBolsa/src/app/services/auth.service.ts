@@ -1,9 +1,9 @@
 // src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,18 +20,30 @@ export class AuthService {
 
 
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/login`, { email, password }).pipe(
-      tap(response => {
-        localStorage.setItem(this.tokenKey, response.token);
-        this.userSubject.next(response.user);
-      })
-    );
-  }
+ login(email: string, password: string): Observable<any> {
+  console.log('Attempting login...');
+  return this.http.post<any>(`${this.authUrl}/login`, { email, password }).pipe(
+    tap(response => {
+      console.log('Login successful, storing token and navigating...');
+      localStorage.setItem(this.tokenKey, response.token);
+      this.userSubject.next(response.user);
+      this.router.navigate(['/contenido']).then(() => {
+        console.log('Navigation to /contenido successful');
+      }).catch(err => {
+        console.error('Navigation error:', err);
+      });
+    }),
+    catchError(error => {
+      console.error('Error during login', error);
+      return throwError(error); 
+    })
+  );
+}
 
 
-  register(nombre: string, email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/register`, {
+
+  registro(nombre: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/registro`, {
       nombre,
       email,
       password
@@ -57,6 +69,12 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+
+
+   getUserById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.authUrl}/${id}`);
   }
 
 

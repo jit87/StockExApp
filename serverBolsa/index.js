@@ -2,8 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import routerEmpresa from './routes/empresa.js'; 
 import cors from 'cors'; 
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js'
 
 
 // Crear servidor
@@ -38,6 +38,10 @@ async function main() {
         //Permite usar objetos js
         app.use(express.json()); 
 
+
+        //Ruta de autenticación
+        app.use('/', authRoutes);
+
         
         //Ruta de la gestión de acciones
         app.use('/empresas', routerEmpresa); 
@@ -47,10 +51,6 @@ async function main() {
         app.listen(4000, () => {
             console.log("El servidor está corriendo correctamente en el puerto 4000");
         });
-
-
-        
-
 
 
 
