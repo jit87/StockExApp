@@ -27,7 +27,6 @@ export class EmpresaService {
 
   //Obtenemos las empresas guardades en mongoDB
   getListEmpresas(usuarioId: string): Observable<any> {
-    console.log(this.url + "/todas/" + usuarioId);
     return this.http.get(this.url + "/todas/" + usuarioId);
   }
 

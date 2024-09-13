@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
+import { WebSocketService } from '../../services/web-socket-service.service';
 
 
 @Component({
@@ -36,16 +37,31 @@ export class ContenidoComponent {
   //Variable para almacenar usuario logueado
   usuario: any; 
 
+  //Variable para actualizar precios
+  precios: any[] = [];
+
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
     private router: Router,
     private toastr: ToastrService,
-    private _authService: AuthService 
+    private _authService: AuthService,
+    private _webSocketService: WebSocketService
   ) {
     this.getUsuario();
     this.getEmpresas(); 
+    
   }
+
+
+ ngOnInit(): void {
+  this._webSocketService.getPriceUpdates().subscribe(data => {
+    if (data) {
+      console.log(data); 
+      this.actualizarPrecio(data.empresaId, data.nuevoPrecio, data.variacion);
+    }
+  });
+}
 
 
 
@@ -100,6 +116,8 @@ export class ContenidoComponent {
     }
   }
 
+
+
   // FORMULARIOS
 
   mostrarFormulario() {
@@ -127,6 +145,8 @@ export class ContenidoComponent {
     }
   }
 
+
+
   // CONSULTAS
   
   getInfoEmpresa(ticker: string) {
@@ -145,6 +165,21 @@ export class ContenidoComponent {
   }
 
 
+  actualizarPrecio(empresaId: string, nuevoPrecio: number, variacion: string) {
+    console.log('Actualizando precio', empresaId, nuevoPrecio, variacion);
+    const empresa = this.precios.find(e => e._id === empresaId);
+    if (empresa) {
+      empresa.precio = nuevoPrecio;
+      empresa.variacion = variacion;
+    } else {
+      this.precios.push({
+        _id: empresaId,
+        precio: nuevoPrecio,
+        variacion: variacion,
+      });
+    }
+    console.log('Precios actuales', this.precios);
+  }
 
 
 
