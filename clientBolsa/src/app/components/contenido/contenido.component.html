@@ -5,9 +5,9 @@
         <tr>
           <th style="font-weight: bold;">Nombre</th>
           <th style="font-weight: bold;">Ticker</th>
-          <th style="font-weight: bold;">Precio de alta</th>
+          <th style="font-weight: bold;">Precio</th>
           <th style="font-weight: bold;">Número de acciones</th>
-          <th style="font-weight: bold;">Capital invertido</th>
+          <th style="font-weight: bold;">Valor</th>
           <th style="font-weight: bold;">Industria</th>
           <th style="font-weight: bold;"></th>
         </tr>
@@ -30,15 +30,6 @@
       </tbody>
     </table>
   </div>
-  <div *ngIf="precios.length > 0">
-    <h3>Precios:</h3>
-    <ul>
-      <li *ngFor="let precio of precios">
-        Empresa ID: {{ precio._id }} - Precio: {{ precio.precio }} - Variación: {{ precio.variacion }}
-      </li>
-    </ul>
-  </div>
-
 
   <div
     style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-right: 20px;">

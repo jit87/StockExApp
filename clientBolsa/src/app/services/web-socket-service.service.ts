@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { io } from 'socket.io-client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,22 +10,20 @@ export class WebSocketService {
   private url: string = 'http://localhost:4000';
 
   constructor() {
-    this.socket = io(this.url, {
-      transports: ['websocket'],
-      autoConnect: true
-    });
+    this.socket = io(this.url);
+
+    // Enviar el ID del usuario después de la conexión
+    const userId = localStorage.getItem('id');
+    if (userId) {
+      this.socket.emit('setUserId', userId);
+    }
   }
 
-  getPriceUpdates(): Observable<any> {
-    return new Observable(observer => {
+  getPriceUpdates() {
+    return new Observable((observer) => {
       this.socket.on('priceUpdate', (data: any) => {
-        console.log('Datos recibidos de WebSocket', data);
         observer.next(data);
       });
-
-      return () => {
-        this.socket.off('priceUpdate');
-      };
     });
   }
 }

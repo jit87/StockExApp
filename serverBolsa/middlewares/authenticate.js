@@ -21,6 +21,7 @@ const authenticate = (req, res, next) => {
     req.usuarioId = decoded._id;
     next();
   });
+  
 };
 
-export default authenticate;
+export default authenticate; 

@@ -55,13 +55,16 @@ export class ContenidoComponent {
 
 
  ngOnInit(): void {
-  this._webSocketService.getPriceUpdates().subscribe(data => {
-    if (data) {
-      console.log(data); 
-      this.actualizarPrecio(data.empresaId, data.nuevoPrecio, data.variacion);
-    }
-  });
-}
+    this.getUsuario();
+    this.getEmpresas();
+   
+   // Subscribirse a las actualizaciones de precios
+   this._webSocketService.getPriceUpdates().subscribe(
+     (resp: any) => {
+       console.log(resp);
+     }
+   )
+  }
 
 
 
@@ -75,7 +78,6 @@ export class ContenidoComponent {
       const usuarioId: any = localStorage.getItem('id'); 
       this.empresaService.getListEmpresas(usuarioId).subscribe(
         (resp: any) => {
-          console.log(resp); 
           this.listEmpresas = resp;
           this.calcularTotalInvertido();
         },
@@ -163,25 +165,6 @@ export class ContenidoComponent {
       }
     )
   }
-
-
-  actualizarPrecio(empresaId: string, nuevoPrecio: number, variacion: string) {
-    console.log('Actualizando precio', empresaId, nuevoPrecio, variacion);
-    const empresa = this.precios.find(e => e._id === empresaId);
-    if (empresa) {
-      empresa.precio = nuevoPrecio;
-      empresa.variacion = variacion;
-    } else {
-      this.precios.push({
-        _id: empresaId,
-        precio: nuevoPrecio,
-        variacion: variacion,
-      });
-    }
-    console.log('Precios actuales', this.precios);
-  }
-
-
 
 
 
