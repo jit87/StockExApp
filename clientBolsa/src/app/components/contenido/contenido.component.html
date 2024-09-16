@@ -7,9 +7,10 @@
           <th style="font-weight: bold;">Ticker</th>
           <th style="font-weight: bold;">Precio</th>
           <th style="font-weight: bold;">Número de acciones</th>
-          <th style="font-weight: bold;">Valor</th>
+          <th style="font-weight: bold;">Capital invertido</th>
+          <th style="font-weight: bold;">Valoración</th>
           <th style="font-weight: bold;">Industria</th>
-          <th style="font-weight: bold;"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -17,10 +18,16 @@
           <td (click)="getInfoEmpresa(empresa.ticker)" type="text" style="cursor: pointer;text-decoration: underline;">
             {{ empresa.nombre }}</td>
           <td>{{ empresa.ticker | uppercase}}</td>
-          <td>{{ empresa.precio }}</td>
+          <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.precio }}</td>
+          <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.precio }}</td>
+          <td *ngIf="empresa.haSubido===0">{{ empresa.precio }}</td>
           <td>{{ empresa.cantidad }}</td>
           <td>{{ empresa.capitalInvertido }}</td>
+          <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-up"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
+          <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-down"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
+          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracion }} <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
           <td>{{ empresa.industria }}</td>
+
           <td>
             <i class="fa-regular fa-pen-to-square" style="margin-right: 10px;cursor: pointer;"
               (click)="mostrarFormulario2(empresa._id)"></i>
@@ -31,15 +38,24 @@
     </table>
   </div>
 
-  <div
-    style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-right: 20px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-right: 20px;">
     <button class="btn btn-primary btn-sm" [routerLink]="['editar-acciones']" (click)="mostrarFormulario()">
       <i class="fa-solid fa-plus"></i> Añadir acción
     </button>
-    <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones }}</h5>
+    <div>
+        <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido:  {{ this.totalAcciones }} </h5>
+    </div>
   </div>
 
-  <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
+    <br>
+    <div class="float-end">
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===1">Total valoración: <span style="color:green;">{{ this.totalValoracion }} <i class="fa-solid fa-arrow-trend-up"></i></span></h5>
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===-1">Total valoración: <span style="color:red;">{{ this.totalValoracion }} <i class="fa-solid fa-arrow-trend-down"></i></span></h5>
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===0">Total valoración: {{ this.totalValoracion }}
+      </h5>
+    </div>
+
+    <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
     <h5 style="color: white;">No hay acciones introducidas</h5>
   </div>
 </div>
@@ -47,3 +63,4 @@
 <!-- Formularios -->
 <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
 <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
+

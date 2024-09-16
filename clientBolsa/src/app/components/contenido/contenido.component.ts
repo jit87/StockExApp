@@ -40,6 +40,17 @@ export class ContenidoComponent {
   //Variable para actualizar precios
   precios: any[] = [];
 
+  //Variables para controlar si sube el valor de la inversión
+  haSubido: number = 0; 
+  mayorValor: number = 0; 
+
+  //Variable que mide lo que valen las acciones en la actualidad
+  totalValoracion: any; 
+
+
+
+
+
   constructor(
     private stockService: StockService,
     public empresaService: EmpresaService,
@@ -50,6 +61,7 @@ export class ContenidoComponent {
   ) {
     this.getUsuario();
     this.getEmpresas(); 
+
     
   }
 
@@ -57,13 +69,8 @@ export class ContenidoComponent {
  ngOnInit(): void {
     this.getUsuario();
     this.getEmpresas();
+
    
-   // Subscribirse a las actualizaciones de precios
-   this._webSocketService.getPriceUpdates().subscribe(
-     (resp: any) => {
-       console.log(resp);
-     }
-   )
   }
 
 
@@ -79,7 +86,9 @@ export class ContenidoComponent {
       this.empresaService.getListEmpresas(usuarioId).subscribe(
         (resp: any) => {
           this.listEmpresas = resp;
+          console.log(this.listEmpresas);
           this.calcularTotalInvertido();
+          this.calcularValorInvertido(); 
         },
         //Si no mostramos el error y redirigimos al login
         (error: any) => {
@@ -105,18 +114,56 @@ export class ContenidoComponent {
       );
     } 
   }
-
+  
+  //Dinero que costaron las acciones y su valor actual
   async calcularTotalInvertido() {
     try {
       let total = 0;
-      this.listEmpresas.forEach(element => {
-        total += element.capitalInvertido || 0;
+      let totalValoracion = 0; 
+      this.listEmpresas.forEach(empresa => {
+        total += empresa.capitalInvertido || 0;
+        empresa.valoracion = empresa.cantidad * empresa.precio;
+        totalValoracion = totalValoracion + empresa.valoracion; 
       });
       this.totalAcciones = total;
+      this.totalValoracion = totalValoracion; 
+
+      if (this.totalValoracion > this.totalAcciones) {
+        this.mayorValor = 1; 
+      } else if (this.totalValoracion < this.totalAcciones) {
+        this.mayorValor = -1;   
+      } else {
+        this.mayorValor = 0;
+      }
     } catch (error) {
       console.error('Error al obtener las empresas:', error);
     }
   }
+
+
+  //Función que calcula el valor de la inversión de cada acción, la variación del valor y el total de lo que valen las acciones
+  async calcularValorInvertido() {
+    const usuarioId: any = localStorage.getItem('id');
+      this.empresaService.getListEmpresas(usuarioId).subscribe(
+          (resp: any) => {
+            this.listEmpresas.map((empresa: any) => {
+              empresa.valoracion = empresa.cantidad * empresa.precio;
+              if (empresa.valoracion > empresa.capitalInvertido) {
+                empresa.haSubido = 1; 
+                empresa.variacion = ((empresa.valoracion - empresa.capitalInvertido) / empresa.capitalInvertido) * 100;    
+              } else if (empresa.valoracion < empresa.capitalInvertido) {
+                empresa.haSubido = -1; 
+                empresa.variacion = ((empresa.valoracion - empresa.capitalInvertido) / empresa.capitalInvertido) * 100;   
+              } else {
+                empresa.haSubido = 0;  
+                empresa.variacion = 0; 
+              }
+          });
+      });
+  }
+
+
+ 
 
 
 
@@ -165,6 +212,10 @@ export class ContenidoComponent {
       }
     )
   }
+
+
+
+
 
 
 

@@ -14,6 +14,8 @@ export interface Empresa{
     industria: string; 
     // yield: number;
     // dividendos: number; 
+    valoracion?: number; 
+    variacion?: number; 
 }
 
 
