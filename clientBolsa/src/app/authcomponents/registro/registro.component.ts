@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +15,8 @@ export class RegistroComponent {
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService
       ) {
         this.registroForm = this.fb.group({
           nombre: ['', [Validators.required]],
@@ -23,14 +25,21 @@ export class RegistroComponent {
         });
       }
 
-      onSubmit() {
-        if (this.registroForm.valid) {
-          const { nombre, email, password } = this.registroForm.value;
-          this.authService.registro(nombre, email, password).subscribe(
-           () => this.router.navigate(['/contenido'])
-          );
+  onSubmit() {
+    if (this.registroForm.valid) {
+      const { nombre, email, password } = this.registroForm.value;
+      this.authService.registro(nombre, email, password).subscribe(
+        () => {
+          this.router.navigate(['/contenido']);
+          this.toastr.success('Inicie sesión','Registro exitoso'); 
+        },
+        error => {
+          console.error('Error durante el registro:', error);
         }
+      );
+    }
   }
+
   
   
 }

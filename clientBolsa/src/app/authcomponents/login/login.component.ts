@@ -23,11 +23,13 @@ export class LoginComponent {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
-        () => this.router.navigate(['/contenido'])
+        () => {
+          this.router.navigate(['/contenido']); 
+        }
       )}
   }
   

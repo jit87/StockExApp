@@ -16,17 +16,14 @@ export class AuthService {
   user$: Observable<any> = this.userSubject.asObservable();
   public usuarioData: any = []; 
 
+  private authStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   constructor(private http: HttpClient, private router: Router) { }
 
 
-
  login(email: string, password: string): Observable<any> {
-   
    console.log('Iniciando login...');
-   
    return this.http.post<any>(`${this.authUrl}/login`, { email, password }).pipe(
-    
     tap(response => {
       console.log('Login existoso, guardando token y navegando...');
 
@@ -54,12 +51,20 @@ export class AuthService {
 
 
   registro(nombre: string, email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/registro`, {
-      nombre,
-      email,
-      password
-    });
-  }
+  return this.http.post<any>(`${this.authUrl}/registro`, {
+    nombre,
+    email,
+    password
+  }).pipe(
+    tap(response => {
+      console.log('Registro exitoso:', response); 
+    }),
+    catchError(error => {
+      console.error('Error durante el registro:', error);
+      return throwError(error); 
+    })
+  );
+}
 
 
 
@@ -93,6 +98,16 @@ export class AuthService {
     return this.http.get<any>(`${this.authUrl}/usuario/${email}`);
   }
 
+
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('auth-token');
+  }
+
+
+  authStatusListener() {
+    return this.authStatus.asObservable();
+  }
 
 
 

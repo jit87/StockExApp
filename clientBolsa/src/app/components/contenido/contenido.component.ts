@@ -48,29 +48,20 @@ export class ContenidoComponent {
   totalValoracion: any; 
 
 
-
-
-
   constructor(
-    private stockService: StockService,
     public empresaService: EmpresaService,
     private router: Router,
     private toastr: ToastrService,
     private _authService: AuthService,
-    private _webSocketService: WebSocketService
   ) {
     this.getUsuario();
     this.getEmpresas(); 
-
-    
   }
 
 
- ngOnInit(): void {
+  ngOnInit(): void {
     this.getUsuario();
     this.getEmpresas();
-
-   
   }
 
 
