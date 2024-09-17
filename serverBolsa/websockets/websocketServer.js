@@ -78,6 +78,6 @@ export function configureWebSocket(server) {
     }
   }
 
-  // Actualiza cada 50 segundos
+  //Actualiza cada 50 segundos
   setInterval(actualizarPrecios, 30000);
 }

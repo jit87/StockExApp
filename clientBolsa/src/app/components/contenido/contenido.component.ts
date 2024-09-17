@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
-import { WebSocketService } from '../../services/web-socket-service.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
   selector: 'app-contenido',
   templateUrl: './contenido.component.html',
+  styleUrl:'./contenido.component.css'
 })
 export class ContenidoComponent {
   symbol = ''; 
@@ -90,21 +91,44 @@ export class ContenidoComponent {
     }  
   }
 
-  async eliminarAccion(empresa: Empresa) {
-    if (confirm("¿Estás seguro de que deseas eliminar esta acción?")) {
-      console.log(empresa); 
-      this.empresaService.deleteEmpresa(empresa).subscribe(
-        (resp: any) => {
-          this.listEmpresas = resp;
-          this.getEmpresas(); 
-          this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
-    } 
-  }
+
+async eliminarAccion(empresa: Empresa) {
+  Swal.fire({
+    html:
+      `<form id="eliminarAccionForm" style="max-width: 500px; margin: auto; border: solid 1px lightblue; padding: 20px; background-color:#343a40; position: relative;">
+        <div style="color: white; text-align: center;">
+          <p>¿Estás seguro de que deseas eliminar esta acción?</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+          <button id="confirmar" type="button" class="btn btn-primary" style="margin-right: 10px;">Sí, eliminar</button>
+          <button id="cancelar" type="button" class="btn btn-danger">Cancelar</button>
+        </div>
+      </form>`,
+    showConfirmButton: false, 
+    showCancelButton: false,
+    background: 'transparent',
+    customClass: {
+      popup: 'sweet-fade-in', 
+    }
+  });
+  document.getElementById('confirmar')?.addEventListener('click', () => {
+    this.empresaService.deleteEmpresa(empresa).subscribe(
+      (resp: any) => {
+        this.listEmpresas = resp;
+        this.getEmpresas(); 
+        this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
+        Swal.close();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  });
+  document.getElementById('cancelar')?.addEventListener('click', () => {
+    Swal.close();
+  });
+}
+  
   
   //Dinero que costaron las acciones y su valor actual
   async calcularTotalInvertido() {
