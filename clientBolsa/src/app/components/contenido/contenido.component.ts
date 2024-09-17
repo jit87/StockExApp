@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-contenido',
   templateUrl: './contenido.component.html',
-  styleUrl:'./contenido.component.css'
+  styleUrl: './contenido.component.css'
 })
 export class ContenidoComponent {
   symbol = ''; 

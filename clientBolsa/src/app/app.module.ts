@@ -21,9 +21,6 @@ import { StockService } from './services/stock.service';
 import { ComponentsModule } from './components/components.module';
 
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent

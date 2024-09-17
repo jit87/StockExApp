@@ -12,8 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_ROUTING } from '../app.routes';
 import { ModificarAccionComponent } from './modificar-accion/modificar-accion.component';
 import { AuthService } from '../services/auth.service';
-
-
+import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/grafica-sectores.component";
 
 
 
@@ -31,9 +30,10 @@ import { AuthService } from '../services/auth.service';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule, 
-    APP_ROUTING
-  ],
+    FormsModule,
+    APP_ROUTING,
+    GraficaSectoresComponent
+],
   exports: [
     ContenidoComponent,
     EditarAccionesComponent,
