@@ -1,4 +1,14 @@
-<div class="chart-container">
-    <svg id="chart" width="400" height="400" viewBox="0 0 400 400">
-    </svg>
+
+<div class="row"></div>
+<div style="display: flex; justify-content: center; margin-top: 50px;">
+    <br>
+    <ngx-charts-pie-chart 
+            [view]="view" 
+            [scheme]="colorScheme" 
+            [results]="data" 
+            [doughnut]="doughnut" 
+            [legend]="legenda"
+            [labels]="showLabels">
+    </ngx-charts-pie-chart>
 </div>
+<br>

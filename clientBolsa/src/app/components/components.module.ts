@@ -13,7 +13,7 @@ import { APP_ROUTING } from '../app.routes';
 import { ModificarAccionComponent } from './modificar-accion/modificar-accion.component';
 import { AuthService } from '../services/auth.service';
 import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/grafica-sectores.component";
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/gr
     NavbarComponent,
     PerfilComponent,
     FooterComponent,
-    ModificarAccionComponent
+    ModificarAccionComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -32,7 +33,8 @@ import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/gr
     ReactiveFormsModule,
     FormsModule,
     APP_ROUTING,
-    GraficaSectoresComponent
+    GraficaSectoresComponent,
+    NgxChartsModule
 ],
   exports: [
     ContenidoComponent,
@@ -41,7 +43,8 @@ import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/gr
     NavbarComponent,
     PerfilComponent,
     FooterComponent,
-    ModificarAccionComponent
+    ModificarAccionComponent,
+    GraficaSectoresComponent
   ],
   providers: [
      AuthService

@@ -5,7 +5,11 @@ body {
 }
 
 div {
-    color: white;
+    color: white !important;
 }
 
 
+text {
+    fill: #ffffff;
+    
+}

@@ -19,6 +19,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor.interceptor';
 import { EmpresaService } from './services/empresa.service';
 import { StockService } from './services/stock.service';
 import { ComponentsModule } from './components/components.module';
+import { GraficaSectoresComponent } from './alonecomponents/grafica-sectores/grafica-sectores.component';
 
 
 @NgModule({

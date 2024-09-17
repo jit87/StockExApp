@@ -1,12 +1,19 @@
-.chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: auto;
+
+
+ngx-charts-legend {
+    width: 200px;
+
 }
 
-svg {
-    width: 100%;
-    height: auto;
+
+
+
+label {
+    color: white !important;
+}
+
+
+
+text {
+    fill: #ffffff;
 }

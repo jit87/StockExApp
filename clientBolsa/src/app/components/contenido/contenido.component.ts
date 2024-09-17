@@ -78,7 +78,6 @@ export class ContenidoComponent {
       this.empresaService.getListEmpresas(usuarioId).subscribe(
         (resp: any) => {
           this.listEmpresas = resp;
-          console.log(this.listEmpresas);
           this.calcularTotalInvertido();
           this.calcularValorInvertido(); 
         },

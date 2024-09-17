@@ -1,41 +1,89 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import $ from 'jquery';
+import { Component, OnInit } from '@angular/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { EmpresaService } from '../../services/empresa.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-grafica-sectores',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [CommonModule, NgxChartsModule],
   templateUrl: './grafica-sectores.component.html',
-  styleUrl: './grafica-sectores.component.css'
+  styleUrls: ['./grafica-sectores.component.css']
 })
-export class GraficaSectoresComponent implements AfterViewInit {
+export class GraficaSectoresComponent implements OnInit {
 
-  ngAfterViewInit(): void {
-    this.initChart();
+  usuario: any; 
+  listEmpresas: any[] = []; 
+  data: any[] = []; 
+
+  //CONFIGURACIÓN DEL GRÁFICO
+  view: [number, number] = [500, 400];
+  doughnut: boolean = true;
+  colorScheme = 'cool'; 
+  legenda: boolean = true;
+  showLabels: boolean = true;
+  
+  
+
+
+  constructor(
+    public _empresaService: EmpresaService, 
+    public _authService: AuthService
+  ) { }
+
+
+  ngOnInit() {
+    this.getUsuario(); 
+    this.loadData();
   }
 
-  initChart(): void {
-    const circles = [
-      { cx: 200, cy: 200, r: 150, fill: 'lightblue' },
-      { cx: 200, cy: 200, r: 100, fill: 'lightcoral' },
-      { cx: 200, cy: 200, r: 50, fill: 'lightgreen' }
-    ];
 
-    // Seleccionar el elemento SVG
-    const $svg = $('#chart');
+  generarGrafico() {
+    const sectorData: { [key: string]: number } = {};
+    //Procesar datos para el gráfico
+    this.listEmpresas.forEach((empresa: any) => {
+      const sector = empresa.industria;
+      const capitalInvertido = empresa.capitalInvertido;
 
-    // Añadir los círculos al SVG
-    circles.forEach(circle => {
-      $svg.append(
-        `<circle cx="${circle.cx}" cy="${circle.cy}" r="${circle.r}" fill="${circle.fill}" stroke="black" stroke-width="3"></circle>`
-      );
+      if (sectorData[sector]) {
+        sectorData[sector] += capitalInvertido;
+      } else {
+        sectorData[sector] = capitalInvertido;
+      }
     });
 
-    // Añadir un texto opcional en el centro
-    $svg.append(
-      `<text x="200" y="200" text-anchor="middle" stroke="#51c5cf" stroke-width="1px" dy=".3em">Gráfico</text>`
+    //Convertir el objeto sectorData a un array para el gráfico
+    this.data = Object.entries(sectorData).map(([name, value]) => ({
+      name,
+      value
+    }));
+  }
+
+
+
+  //CONSULTAS
+
+  loadData() {
+    this._empresaService.getListEmpresas(this.usuario).subscribe(
+      (resp: any) => {
+        this.listEmpresas = resp;  
+        this.generarGrafico(); 
+      }
     );
   }
- 
+
+  getUsuario() {
+    const email = localStorage.getItem('email'); 
+    this._authService.getUserByEmail(email).subscribe(
+      (resp: any) => {
+        this.usuario = resp; 
+        this.loadData(); 
+      }
+    );
+  }
+
+
+
+
 }

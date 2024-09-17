@@ -7,15 +7,16 @@ import { PerfilComponent } from "./components/perfil/perfil.component";
 import { RegistroComponent } from "./authcomponents/registro/registro.component";
 import { LoginComponent } from "./authcomponents/login/login.component";
 import { AuthGuard } from "./guards/auth.guard";
+import { GraficaSectoresComponent } from "./alonecomponents/grafica-sectores/grafica-sectores.component";
 
 
 const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent, canActivate: [AuthGuard] },
     { path:'editar-acciones', component: EditarAccionesComponent, canActivate: [AuthGuard] },
-    { path:'buscar/:ticker', component: BuscadorEmpresaComponent , canActivate: [AuthGuard]},
+    { path:'buscar/:ticker', component: BuscadorEmpresaComponent , canActivate: [AuthGuard] },
     { path:'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
     { path:'login', component: LoginComponent },
-    { path:'registro', component: RegistroComponent  },
+    { path: 'registro', component: RegistroComponent },
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
 ];
 
