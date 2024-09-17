@@ -17,14 +17,16 @@ export class GraficaSectoresComponent implements OnInit {
   listEmpresas: any[] = []; 
   data: any[] = []; 
 
+  //Propiedades de análisis
+  diversificada: boolean = false; 
+
+
   //CONFIGURACIÓN DEL GRÁFICO
   view: [number, number] = [500, 400];
   doughnut: boolean = true;
   colorScheme = 'cool'; 
   legenda: boolean = true;
   showLabels: boolean = true;
-  
-  
 
 
   constructor(
@@ -58,6 +60,7 @@ export class GraficaSectoresComponent implements OnInit {
       name,
       value
     }));
+
   }
 
 
@@ -81,6 +84,17 @@ export class GraficaSectoresComponent implements OnInit {
         this.loadData(); 
       }
     );
+  }
+
+
+  //OTRAS FUNCIONES
+  
+  comprobarDiversificacion() {
+    if (this.listEmpresas.length < 10) {
+      this.diversificada = false; 
+    } else {
+      this.diversificada = true; 
+    }
   }
 
 
