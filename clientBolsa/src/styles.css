@@ -13,3 +13,8 @@ text {
     fill: #ffffff;
     
 }
+
+
+.legend-labels {
+    width: 300px !important;
+}

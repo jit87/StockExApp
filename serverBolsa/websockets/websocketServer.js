@@ -2,11 +2,13 @@ import { Server as SocketIOServer } from 'socket.io';
 import axios from 'axios';
 import Empresa from '../models/Empresa.js';
 import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
+import sharedsession from 'express-socket.io-session'; 
 
 dotenv.config();
-const { FINNHUB_API_KEY, TOKEN_SECRET } = process.env; 
+const { FINNHUB_API_KEY, TOKEN_SECRET } = process.env;
 
+//Almacena las conexiones de usuario
+const userConnections = new Map(); 
 
 export function configureWebSocket(server) {
   const io = new SocketIOServer(server, {
@@ -19,65 +21,59 @@ export function configureWebSocket(server) {
   });
 
 
-  io.use((socket, next) => {
-    const token = socket.handshake.headers['authorization']?.split(' ')[1];
-
-    if (!token) {
-      return next(new Error('No token provided'));
-    }
-
-    jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
-      if (err) {
-        return next(new Error('Invalid token'));
-      }
-
-      socket.usuarioId = decoded._id; 
-      next();
-    });
-  });
-
-
-
-  io.on('connection', (socket) => {
-    console.log('Nuevo cliente conectado:', socket.id);
-    console.log('ID del usuario:', socket.usuarioId);
-
-    socket.on('disconnect', () => {
-      console.log('Cliente desconectado:', socket.id);
-    });
-
-    socket.on('someEvent', (data) => {
-      console.log('Evento recibido:', data);
-    });
-  });
-
-
-  async function actualizarPrecios() {
+  //Obtener empresas distintas
+  async function obtenerEmpresasDistintas() {
     try {
-      const empresas = await Empresa.find();
-      for (const empresa of empresas) {
+      const empresasDistintas = await Empresa.aggregate([
+        { $group: { _id: "$ticker", empresa: { $first: "$$ROOT" } } },
+        { $replaceRoot: { newRoot: "$empresa" } }
+      ]);
+      return empresasDistintas;
+    } catch (error) {
+      console.error('Error al obtener empresas distintas:', error);
+      return [];
+    }
+  }
+
+
+  //Ajustar la función para actualizar precios basada en los IDs de los usuarios conectados
+  async function actualizarPrecios() {
+
+    try {
+      
+      const empresasDistintas = await obtenerEmpresasDistintas();
+      //const empresas = await Empresa.find();
+
+      for (const empresa of empresasDistintas) {
         const { data } = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${empresa.ticker}&token=${FINNHUB_API_KEY}`);
         const nuevoPrecio = data.c;
-
         console.log(`Nuevo precio para ${empresa.ticker}: ${nuevoPrecio}`);
 
         if (nuevoPrecio !== empresa.precio) {
-          empresa.precio = nuevoPrecio;
-          await empresa.save();
+          //empresa.precio = nuevoPrecio;
+          //await empresa.save();
 
-          //Emite el evento de actualización de precios a todos los clientes
-          io.emit('priceUpdate', {
-            empresaId: empresa._id,
-            nuevoPrecio: empresa.precio,
-            variacion: nuevoPrecio > empresa.precio ? 'up' : 'down'
+          //Actualiza todas las instancias de la empresa con el nuevo precio
+          await Empresa.updateMany({ ticker: empresa.ticker }, { precio: nuevoPrecio });
+
+          //Emitir el evento de actualización de precios solo a los usuarios conectados
+          userConnections.forEach((socketId) => {
+            io.to(socketId).emit('priceUpdate', {
+              empresaId: empresa._id,
+              nuevoPrecio: empresa.precio,
+              variacion: nuevoPrecio > empresa.precio ? 'up' : 'down'
+            });
           });
         }
       }
+      console.log(' --------------------------'); 
+      console.log('| Siguiente actualización  |'); 
+      console.log(' --------------------------'); 
     } catch (error) {
       console.error('Error al actualizar precios:', error);
     }
   }
 
-  //Actualiza cada 50 segundos
+  // Actualiza cada 25 segundos
   setInterval(actualizarPrecios, 30000);
 }

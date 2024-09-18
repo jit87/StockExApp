@@ -5,7 +5,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import http from 'http';
+import session from 'express-session';
+import sharedSession from 'express-socket.io-session';
 import { configureWebSocket } from './websockets/websocketServer.js';
+import { Server as SocketIOServer } from 'socket.io'; 
 
 //Crear servidor
 const app = express();
@@ -25,11 +28,21 @@ app.use(cors(corsOptions));
 //Cargar variables de entorno
 dotenv.config();
 
+//Configuración de la sesión
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET || 'my-secret',
+  resave: true,
+  saveUninitialized: true,
+});
+
+//Aplicar el middleware de sesión
+app.use(sessionMiddleware);
+
 //Crear el servidor HTTP
 const server = http.createServer(app);
 
 //Configuración del servidor de WebSocket. Para peticiones en tiempo real
-configureWebSocket(server);
+configureWebSocket(server, sessionMiddleware);
 
 //URI de conexión de MongoDB
 const uri = process.env.mongoUri || "mongodb://localhost:27017/StockExApp";

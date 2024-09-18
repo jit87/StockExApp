@@ -1,5 +1,5 @@
 <div *ngIf="autenticado" class="container mt-4 mb-4 animate__animated animate__fadeIn" style="display: flex; flex-direction: column; position: relative;">
-  <div class="table-responsive" style="position: sticky; top: 0; background-color: #343a40; z-index: 1;">
+  <div class="table-responsive" style="top: 0; background-color: #343a40; z-index: 1;">
     <table class="table table-hover table-dark">
       <thead>
         <tr>
@@ -58,7 +58,7 @@
     <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
     <h5 style="color: white;">No hay acciones introducidas</h5>
   </div>
-</div>
+
 
 <!-- Formularios -->
 <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
@@ -66,3 +66,8 @@
 
 
 <div><app-grafica-sectores></app-grafica-sectores></div>
+
+
+</div>
+
+

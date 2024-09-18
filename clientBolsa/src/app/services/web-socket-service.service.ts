@@ -10,15 +10,31 @@ export class WebSocketService {
   private url: string = 'http://localhost:4000';
 
   constructor() {
-    this.socket = io(this.url);
+    //Obtener el token JWT y el ID del usuario
+    const token = localStorage.getItem('auth-token');
+    const userId = localStorage.getItem('user-id');
+    const email = localStorage.getItem('email'); 
 
-    // Enviar el ID del usuario después de la conexión
-    const userId = localStorage.getItem('id');
-    if (userId) {
-      this.socket.emit('setUserId', userId);
-    }
+
+    //Conectar con el WebSocket e incluir el token y el ID del usuario
+    this.socket = io(this.url, {
+      transports: ['websocket'],
+      auth: {
+        token: token,
+        userId: userId,
+        email: email
+      }
+    });
+
+    //Manejar la conexión exitosa
+    this.socket.on('connect', () => {
+      console.log('Conectado al WebSocket');
+    });
   }
 
+  
+
+  //Método para obtener actualizaciones de precios
   getPriceUpdates() {
     return new Observable((observer) => {
       this.socket.on('priceUpdate', (data: any) => {
