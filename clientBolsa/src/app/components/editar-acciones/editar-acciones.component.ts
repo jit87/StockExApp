@@ -88,7 +88,8 @@ export class EditarAccionesComponent  implements OnInit {
           //per: this.per,
           capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
           industria: this.industria,
-          usuarioId: this.usuario_Id
+          usuarioId: this.usuario_Id,
+          valoracion: (this.agregarAccion.get('numero')?.value || 0) * precio
         };
        
         //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos

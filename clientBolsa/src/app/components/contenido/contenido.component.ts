@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
@@ -54,6 +54,7 @@ export class ContenidoComponent {
     private router: Router,
     private toastr: ToastrService,
     private _authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     this.getUsuario();
     this.getEmpresas(); 
@@ -167,13 +168,29 @@ async eliminarAccion(empresa: Empresa) {
                 empresa.variacion = ((empresa.valoracion - empresa.capitalInvertido) / empresa.capitalInvertido) * 100;    
               } else if (empresa.valoracion < empresa.capitalInvertido) {
                 empresa.haSubido = -1; 
-                empresa.variacion = ((empresa.valoracion - empresa.capitalInvertido) / empresa.capitalInvertido) * 100;   
+                empresa.variacion = ((empresa.valoracion - empresa.capitalInvertido) / empresa.capitalInvertido) * 100; 
               } else {
                 empresa.haSubido = 0;  
                 empresa.variacion = 0; 
               }
+              //Actualizamos la valoración en la bbdd
+              this.actualizarValorInversion(empresa); 
           });
       });
+  }
+
+
+   actualizarValorInversion(empresa: Empresa) {
+     this.empresaService.updateEmpresa(empresa, empresa._id).subscribe(
+        (resp: any) => {
+          console.log('Valor de la empresa actualizado correctamente:', resp);
+          this.cdr.detectChanges(); 
+        },
+        (error: any) => {
+          console.error('Error al actualizar el valor de la inversión:', error);
+        }
+      ); 
+        this.cdr.detectChanges();
   }
 
 

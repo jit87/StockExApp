@@ -4,7 +4,7 @@ import Empresa from "../models/Empresa.js";
 
 export async function agregarEmpresa(req, res) {
 
-  const { nombre, ticker, precio, cantidad, capitalInvertido, industria, usuarioId } = req.body;
+  const { nombre, ticker, precio, cantidad, capitalInvertido, industria, usuarioId, valoracion } = req.body;
 
   const nuevaEmpresa = new Empresa({
     nombre,
@@ -13,7 +13,8 @@ export async function agregarEmpresa(req, res) {
     cantidad,
     capitalInvertido,
     industria,
-    usuarioId
+    usuarioId,
+    valoracion
   });
   
   try {
@@ -45,7 +46,7 @@ export async function obtenerEmpresas(req, res) {
 export async function actualizarEmpresa(req, res) {
 
      try {
-        const { nombre, ticker, precio, cantidad, capitalInvertido, industria } = req.body;
+        const { nombre, ticker, precio, cantidad, capitalInvertido, industria, valoracion } = req.body;
 
         const empresa = await Empresa.findById(req.params.id);
 
@@ -63,6 +64,8 @@ export async function actualizarEmpresa(req, res) {
         empresa.cantidad = cantidad || empresa.cantidad;
         empresa.capitalInvertido = capitalInvertido || empresa.capitalInvertido;
         empresa.industria = industria || empresa.industria;
+        empresa.valoracion = valoracion || empresa.valoracion; 
+       
 
         const empresaActualizada = await empresa.save();
 

@@ -1,4 +1,6 @@
-<div *ngIf="autenticado" class="container mt-4 mb-4 animate__animated animate__fadeIn" style="display: flex; flex-direction: column; position: relative;">
+<div *ngIf="autenticado" class="container mt-4 mb-4 animate__animated animate__fadeIn" style="display: flex; flex-direction: column; position: relative;margin-top:100px;">
+ <h5 class="mt-4">Activos</h5>
+ <br>
   <div class="table-responsive" style="top: 0; background-color: #343a40; z-index: 1;">
     <table class="table table-hover table-dark">
       <thead>
@@ -61,9 +63,11 @@
 
 
 <!-- Formularios -->
-<app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
-<app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
-
+<div *ngIf="mostrarFormularioEdicion || mostrarFormularioEdicion2"
+  style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 10; display: flex; justify-content: center; align-items: center;">
+  <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
+  <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
+</div>  
 
 <div><app-grafica-sectores></app-grafica-sectores></div>
 

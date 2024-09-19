@@ -1,33 +1,36 @@
 
-<br>
-<div class="container mt-4">
-    <div class="row">
-        <div><h5>Peso de los sectores</h5></div>
-    </div>
-</div>
-
-<div style="display: flex; justify-content: center; margin-top: 50px;">
+<hr style="border: 1px solid #343a40; margin-bottom: 20px;margin-top:50px;">
+<div *ngIf="this.listEmpresas.length > 0">
     <br>
-    <ngx-charts-pie-chart 
-            [view]="view" 
-            [scheme]="colorScheme" 
-            [results]="data" 
-            [doughnut]="doughnut" 
-            [legend]="legenda"
-            [labels]="showLabels">
-    </ngx-charts-pie-chart>
-</div>
-<br>
-
-<div class="container mt-4">
-    <div class="row">
-        <div>
-            <h6 *ngIf="!diversificada">Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, lo ideal es que sean al menos 15.</h6>
-            <h6 *ngIf="diversificada && this.listEmpresas.length < 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, su cartera está algo diversificada por empresas.</h6>
-            <h6 *ngIf="diversificada && this.listEmpresas.length >= 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span>
-                empresas, su empresa cartera está bien diversificada por empresas.</h6>
-        </div>    
+    <div class="container mt-4">
+        <div class="row">
+            <div><h5>Peso de los sectores</h5></div>
+        </div>
     </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 50px;">
+        <br>
+        <ngx-charts-pie-chart 
+                [view]="view" 
+                [scheme]="colorScheme" 
+                [results]="data" 
+                [doughnut]="doughnut" 
+                [legend]="leyenda"
+                [labels]="showLabels">
+        </ngx-charts-pie-chart>
+    </div>
+    <br>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div>
+                <h6 *ngIf="!diversificada">Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, lo ideal es que sean al menos 15.</h6>
+                <h6 *ngIf="diversificada && this.listEmpresas.length < 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, su cartera está algo diversificada por empresas.</h6>
+                <h6 *ngIf="diversificada && this.listEmpresas.length >= 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span>
+                    empresas, su empresa cartera está bien diversificada por empresas.</h6>
+            </div>    
+        </div>
+    </div>
+    <br>
+    <br>  
 </div>
-<br>
-<br>

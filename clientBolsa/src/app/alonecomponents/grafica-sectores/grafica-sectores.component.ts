@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmpresaService } from '../../services/empresa.service';
 import { AuthService } from '../../services/auth.service';
+import $ from 'jquery'; 
 
 @Component({
   selector: 'app-grafica-sectores',
@@ -20,24 +21,34 @@ export class GraficaSectoresComponent implements OnInit {
   //Propiedades de análisis
   diversificada: boolean = false; 
 
+  porcentajes: any[] = []; 
+  totalValoracion: number = 0; 
+
+
 
   //CONFIGURACIÓN DEL GRÁFICO
   view: [number, number] = [500, 400];
   doughnut: boolean = true;
   colorScheme = 'cool'; 
-  legenda: boolean = true;
+  leyenda: boolean = true;
   showLabels: boolean = true;
-
+ 
 
   constructor(
     public _empresaService: EmpresaService, 
     public _authService: AuthService
-  ) { }
+  ) { 
+
+    //$(".chart-legend.legend-title.legend-title-text").html("Leyenda");
+
+  }
 
 
   ngOnInit() {
     this.getUsuario(); 
     this.loadData();
+    this.getPorcentajes(); 
+   // this.getTotalValoracion(); 
   }
 
 
@@ -47,20 +58,18 @@ export class GraficaSectoresComponent implements OnInit {
     this.listEmpresas.forEach((empresa: any) => {
       const sector = empresa.industria;
       const capitalInvertido = empresa.capitalInvertido;
-
+ 
       if (sectorData[sector]) {
         sectorData[sector] += capitalInvertido;
       } else {
         sectorData[sector] = capitalInvertido;
       }
     });
-
     //Convertir el objeto sectorData a un array para el gráfico
     this.data = Object.entries(sectorData).map(([name, value]) => ({
       name,
       value
     }));
-
   }
 
 
@@ -86,6 +95,33 @@ export class GraficaSectoresComponent implements OnInit {
     );
   }
 
+  getPorcentajes() {
+     this._empresaService.getListEmpresas(this.usuario).subscribe(
+      (resp: any) => {
+         this.listEmpresas = resp;  
+         console.log(this.listEmpresas); 
+         this.listEmpresas.map(
+           (empresa: any) => {
+            // var porcentaje =  / empresa.valoracion;
+            // this.porcentajes.push();
+           }
+         )
+      }
+    );
+  }
+
+ /* getTotalValoracion() {
+    this._empresaService.getListEmpresas(this.usuario).subscribe(
+      (resp: any) => {
+        this.totalValoracion += resp.valoracion; 
+        console.log(this.totalValoracion); 
+      },
+      (err) => { 
+        console.log("Error al obtener la valoración", err); 
+     }
+    )
+  }*/
+
 
   //OTRAS FUNCIONES
   
@@ -96,6 +132,7 @@ export class GraficaSectoresComponent implements OnInit {
       this.diversificada = true; 
     }
   }
+
 
 
 

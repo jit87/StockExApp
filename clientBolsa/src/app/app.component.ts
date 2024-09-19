@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import $ from 'jquery'; 
 
 
 
@@ -12,6 +13,8 @@ import { RouterModule } from '@angular/router';
 export class AppComponent {
   title = 'appBolsa';
 
-  constructor() { }
+  constructor() {
+  
+   }
   
 }
