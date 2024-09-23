@@ -18,3 +18,7 @@ text {
 .legend-labels {
     width: 300px !important;
 }
+
+.chart-legend {
+    margin-top: 40px;
+}

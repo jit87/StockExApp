@@ -2,6 +2,9 @@
 <div class="container mt-5  animate__animated animate__fadeIn" style="width:20%;">
     <h2>Iniciar Sesión</h2>
     <form class="mt-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()" style="background-color: #343a40; padding: 20px;border-radius: 5px;">
+        <div *ngIf="error" class="text-danger">
+            <p>El nombre o la contraseña no es correcto</p>
+        </div>
         <div class="form-group">
             <label for="email">Correo Electrónico</label>
             <input id="email" type="email" formControlName="email" class="form-control" />

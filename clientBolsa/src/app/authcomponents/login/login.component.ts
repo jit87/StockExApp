@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  error: boolean = false; 
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +30,10 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe(
         () => {
           this.router.navigate(['/contenido']); 
+        },
+        error => {
+          console.error('Error durante el login:', error);
+          this.error = true;
         }
       )}
   }

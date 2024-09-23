@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistroComponent {
 
   registroForm: FormGroup;
+  error: boolean = false; 
+
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
@@ -23,8 +25,9 @@ export class RegistroComponent {
           email: ['', [Validators.required, Validators.email]],
           password: ['', [Validators.required]]
         });
-      }
-
+  }
+  
+  
   onSubmit() {
     if (this.registroForm.valid) {
       const { nombre, email, password } = this.registroForm.value;
@@ -35,6 +38,7 @@ export class RegistroComponent {
         },
         error => {
           console.error('Error durante el registro:', error);
+          this.error = true; 
         }
       );
     }
