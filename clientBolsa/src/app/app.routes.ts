@@ -8,6 +8,7 @@ import { RegistroComponent } from "./authcomponents/registro/registro.component"
 import { LoginComponent } from "./authcomponents/login/login.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { GraficaSectoresComponent } from "./alonecomponents/grafica-sectores/grafica-sectores.component";
+import { DividendosComponent } from "./components/dividendos/dividendos.component";
 
 
 const APP_ROUTES: Routes = [
@@ -17,6 +18,7 @@ const APP_ROUTES: Routes = [
     { path:'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
     { path:'login', component: LoginComponent },
     { path: 'registro', component: RegistroComponent },
+    { path: 'dividendos', component:DividendosComponent, canActivate: [AuthGuard] },
     { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
 ];
 

@@ -14,6 +14,7 @@ import { ModificarAccionComponent } from './modificar-accion/modificar-accion.co
 import { AuthService } from '../services/auth.service';
 import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/grafica-sectores.component";
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DividendosComponent } from './dividendos/dividendos.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     PerfilComponent,
     FooterComponent,
     ModificarAccionComponent,
+    DividendosComponent
     
   ],
   imports: [
@@ -44,7 +46,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     PerfilComponent,
     FooterComponent,
     ModificarAccionComponent,
-    GraficaSectoresComponent
+    GraficaSectoresComponent,
+    DividendosComponent
   ],
   providers: [
      AuthService

@@ -21,7 +21,10 @@ export class NavbarComponent {
     if(this._authService.isAuthenticated()) {
       this.autenticado = true;
     }
+     this.checkAuthentication();
   }
+
+  ngOnInit(){}
 
 
   ngDoCheck(): void {
@@ -31,6 +34,9 @@ export class NavbarComponent {
   checkAuthentication() {
     const token = localStorage.getItem('auth-token');
     this.isAuthenticated = !!token; 
+    if (this.isAuthenticated) {
+      this.autenticado = true; 
+    }
   }
 
   
