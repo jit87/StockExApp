@@ -22,9 +22,9 @@
                     <td>{{ dividendo.ticker }}</td>
                     <td>{{ dividendo.cash_amount }}</td>
                     <td>{{ dividendo.currency }}</td>
-                    <td>{{ dividendo.declaration_date }}</td>
-                    <td>{{ dividendo.ex_dividend_date }}</td>
-                    <td>{{ dividendo.pay_date }}</td>
+                    <td>{{ dividendo.declaration_date | date:'dd/M/yy' }}</td>
+                    <td>{{ dividendo.ex_dividend_date | date:'dd/M/yy' }}</td>
+                    <td>{{ dividendo.pay_date | date:'dd/M/yy' }}</td>
                     <td>{{ dividendo.frequency }}</td>
                     <td>{{ dividendo.dividend_type }}</td>
                 </tr>

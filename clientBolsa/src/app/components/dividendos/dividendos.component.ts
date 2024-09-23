@@ -47,17 +47,15 @@ async getEmpresas(): Promise<void> {
             async (resp: any) => {
                 this.listEmpresas = resp;
 
-                // Llamar a getDividendos para cada empresa usando Promise.all
+                //Llamar a getDividendos para cada empresa usando Promise.all
                 const dividendosPromises = this.listEmpresas.map((empresa: any) => this.getDividendos(empresa.ticker));
 
-                // Esperar a que todas las promesas se resuelvan
+                //Esperar a que todas las promesas se resuelvan
                 const allDividendos = await Promise.all(dividendosPromises);
 
-                // Acumular todos los dividendos
+                //Acumular todos los dividendos
                 this.dividendos = allDividendos.flat();
                 this.disponible = this.dividendos.length > 0;
-
-                console.log("Todos los dividendos:", this.dividendos);
             },
             (error: any) => {
                 console.log(error);
@@ -79,7 +77,7 @@ getDividendos(ticker: string): Promise<any> {
             },
             (err) => {
                 console.log(`Ha fallado para el ticker ${ticker}`, err);
-                resolve([]); // Resolver con array vacío en caso de error para continuar con los demás
+                resolve([]); 
             }
         );
     });

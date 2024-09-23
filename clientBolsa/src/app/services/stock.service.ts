@@ -124,14 +124,16 @@ export class StockService {
   
 
 
-getDividends(ticker: string): Observable<any> {
-  const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=2024-12-31&limit=2&apiKey=${this.polygonApiKey}`;
-  return this.http.get<any>(polygonUrl).pipe(
-    catchError(error => {
-      console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
-      return of({ results: [] }); 
-    })
-  );
+  getDividends(ticker: string): Observable<any> {
+    const currentYear = new Date().getFullYear();
+    const lastDayOfYear = `${currentYear}-12-31`;
+    const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&limit=2&sort=pay_date&apiKey=${this.polygonApiKey}`;
+    return this.http.get<any>(polygonUrl).pipe(
+      catchError(error => {
+        console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
+        return of({ results: [] }); 
+      })
+    );
 }
 
 //Función para obtener los dividendos de varios tickers secuencialmente
