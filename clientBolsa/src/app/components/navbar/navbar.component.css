@@ -1,0 +1,20 @@
+.active {
+    font-weight: bold;  
+    position: relative; 
+    text-decoration: none;  
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    height: 4px;
+    background-color: white;
+    transition: width 0.3s ease;  
+}
+
+.active:hover::after {
+    width: 100%;
+}

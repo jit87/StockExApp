@@ -38,7 +38,10 @@ Cargado = 0;
   
 //Disponibilidad del recurso
 disponible: boolean = true; 
-
+  
+//Disponibilidad noticias
+newsDisponibles: boolean = true; 
+  
 constructor(private activatedRoute:ActivatedRoute, private stockService: StockService, private location: Location ){ }
 
 
@@ -67,6 +70,7 @@ ngOnInit() {
           this.tags = empresaData.tags.join(', '); 
           this.similarCompanies = empresaData.similar.join(', '); 
           this.Cargado = 1;
+          console.log(empresaData); 
         });
       } 
       else 
@@ -91,6 +95,7 @@ ngOnInit() {
       {
         console.error('Error al obtener noticias');
         this.disponible = false; 
+        this.newsDisponibles = false; 
       }
 
     });

@@ -5,16 +5,16 @@
         <img [src]="img1" alt="Logo" width="50" height="40" routerLink='/contenido'>&nbsp;&nbsp;StockExApp
       </a>
       &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='/contenido'>
+      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='/contenido' routerLinkActive="active">
         Cartera</a>
       &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='noticias'>
+      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='noticias' routerLinkActive="active">
         Noticias</a>
       &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='dividendos'>
+      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='dividendos' routerLinkActive="active">
         Dividendos</a>
       &nbsp;
-      <a class="navbar-brand"  *ngIf="autenticado" [routerLink]="['perfil']" >
+      <a class="navbar-brand" *ngIf="autenticado" [routerLink]="['perfil']" routerLinkActive="active">
         Perfil
       </a>
     </div>

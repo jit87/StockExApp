@@ -9,6 +9,8 @@
 
 
 <div class="container mt-4 mb-4 animate__animated animate__fadeIn" *ngIf="Cargado !== 0">
+    <h5>Noticias de mercado</h5>
+    <br>
     <div *ngFor="let article of data" class="news-container">
         <div class="caja-noticia">
             <h4><a [href]="article.url" target="_blank">{{ article.title }}</a></h4>

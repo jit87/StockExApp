@@ -2,24 +2,24 @@
     <div class="container">
         <br>
           <div *ngIf="usuario" class="mx-auto rounded">
-            <h2 class="text-justify mb-4" >Perfil de Usuario:</h2>
+            <h5 class="text-justify mb-3" >Datos de usuario</h5>
+            <table style="border-collapse: collapse; width: 100%;">
+                <tr>
+                    <td style="padding: 8px 0; width: 25%;">Nombre:</td>
+                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.nombre }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; width: 25%;">Correo:</td>
+                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.email }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; width: 25%;">ID:</td>
+                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario._id }}</td>
+                </tr>
+            </table>
             <br>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">Nombre:</div>
-                <div class="col-sm-9"><code style="color:rgb(194, 120, 22);">{{ usuario.nombre }}</code></div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">Correo:</div>
-                <div class="col-sm-9"><code style="color:rgb(194, 120, 22);">{{ usuario.email }}</code></div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">ID:</div>
-                <div class="col-sm-9"><code style="color:rgb(194, 120, 22);">{{ usuario._id }}</code></div>
-            </div>
-           
             <br>
-            <br>
-            <h2 class="text-justify mb-4">Inversiones:</h2>
+            <h5 class="text-justify mb-4">Inversiones</h5>
                 <table class="table table-hover table-dark">
                     <thead>
                         <tr>

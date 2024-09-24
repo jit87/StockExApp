@@ -10,6 +10,7 @@ export class StockService {
   //Claves
   private readonly alphaVantageApiKey = '22CEAEX0ALRYWVGC';
   private readonly polygonApiKey = 'hBGe43bus6XD4lEyv3tsmw46d4p7Y8u4';
+  private readonly marketstackApiKey = '2d204649fba461a7a08e13e49037a6c5'
   private readonly tiingoToken = '0338741793be8c2ea6c88b200364aa193ba45adf'; 
   private readonly fmpApiKey = 'DWYjYIL0ZShj4QzL5hQyAqwOfztp8X8w'; 
                                     
@@ -111,19 +112,25 @@ getGeneralNews(): Observable<any> {
 
   
 getDividends(ticker: string): Observable<any> {
-    const currentDate = new Date();
-    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
-    const currentYear = currentDate.getFullYear();
-    const lastDayOfYear = `${currentYear}-12-31`;
+  const currentDate = new Date();
+  const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+  const currentYear = currentDate.getFullYear();
+  const lastDayOfYear = `${currentYear}-12-31`;
+  const limit = 1; 
 
-    const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&pay_date.gte=${formattedCurrentDate}&limit=2&order=desc&sort=pay_date&apiKey=${this.polygonApiKey}`;
+  const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&pay_date.gte=${formattedCurrentDate}&limit=${limit}&order=desc&sort=pay_date&apiKey=${this.polygonApiKey}`;
+  const marketstackUrl = `https://api.marketstack.com/v1/dividends?access_key=${this.marketstackApiKey}&symbols=${ticker}&date_from=${formattedCurrentDate}&date_to=${lastDayOfYear}&limit=${limit}`;
 
-    return this.http.get<any>(polygonUrl).pipe(
+  return this.http.get<any>(polygonUrl).pipe(
       catchError(error => {
           console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
-          return of({ results: [] }); 
-    })
-  );
+          return this.http.get<any>(marketstackUrl).pipe(
+          catchError(error => {
+              console.error(`Error al obtener dividendos de ${ticker} en Marketstack`, error);
+              return of({ results: [] }); 
+        })
+      );
+  }))
 }
   
 
