@@ -16,6 +16,7 @@ import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/gr
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DividendosComponent } from './dividendos/dividendos.component';
 import { NoticiasComponent } from './noticias/noticias.component';
+import { DatepickerComponent } from '../alonecomponents/datepicker/datepicker.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { NoticiasComponent } from './noticias/noticias.component';
     FormsModule,
     APP_ROUTING,
     GraficaSectoresComponent,
-    NgxChartsModule
+    NgxChartsModule,
+    DatepickerComponent
 ],
   exports: [
     ContenidoComponent,
