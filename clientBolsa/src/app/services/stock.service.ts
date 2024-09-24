@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, concatMap, map, switchMap, toArray } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
+import { environment } from '../environments/environment'; 
+
 
 @Injectable()
 export class StockService {
 
-
-  //Claves
-  private readonly alphaVantageApiKey = '22CEAEX0ALRYWVGC';
-  private readonly polygonApiKey = 'hBGe43bus6XD4lEyv3tsmw46d4p7Y8u4';
-  private readonly marketstackApiKey = '2d204649fba461a7a08e13e49037a6c5'
-  private readonly tiingoToken = '0338741793be8c2ea6c88b200364aa193ba45adf'; 
-  private readonly fmpApiKey = 'DWYjYIL0ZShj4QzL5hQyAqwOfztp8X8w'; 
-                                    
+  //Claves API
+  private readonly alphaVantageApiKey = environment.alphaVantageApiKey;
+  private readonly polygonApiKey = environment.polygonApiKey;
+  private readonly marketstackApiKey = environment.marketstackApiKey;
+  private readonly tiingoToken = environment.tiingoToken;
+  private readonly fmpApiKey = environment.fmpApiKey;
 
 
   constructor(private http: HttpClient) { }
-  
 
 
-  //Método general para manejar errores
   private handleError<T>(error: HttpErrorResponse, message: string, fallbackValue: T): Observable<T> {
     console.error(message, error);
     if (error.status === 429) {
@@ -29,9 +27,6 @@ export class StockService {
     return of(fallbackValue);
   }
 
-
-
-  //Método genérico para obtener datos de Polygon.io
   private getFromPolygon<T>(url: string, errorMessage: string, fallbackValue: T): Observable<T> {
     return this.http.get<T>(url).pipe(
       catchError(error => this.handleError(error, errorMessage, fallbackValue))
@@ -39,8 +34,6 @@ export class StockService {
   }
 
 
-
-  //Obtener precio de acción
   getPrice(ticker: string): Observable<number> {
     if (!ticker) return of(0);
 
@@ -59,8 +52,6 @@ export class StockService {
   }
 
 
-
-  //Obtener industria de la acción
   getIndustry(ticker: string): Observable<string> {
     if (!ticker) return of('');
 
@@ -71,8 +62,6 @@ export class StockService {
   }
 
 
-
-  //Obtener nombre de la acción
   getName(nombre: string): Observable<string> {
     if (nombre.length < 3) return of('');
 
@@ -83,68 +72,57 @@ export class StockService {
   }
 
 
-
-
-  //Obtener datos de la acción
   getData(ticker: string): Observable<any> {
     const polygonUrl = `https://api.polygon.io/v1/meta/symbols/${ticker}/company?apiKey=${this.polygonApiKey}`;
     return this.getFromPolygon<any>(polygonUrl, 'Error al obtener los datos desde Polygon.io', {});
   }
 
 
+  getNews(ticker: string): Observable<any> {
+    const limit = 3;
+    const polygonUrl = `https://api.polygon.io/v2/reference/news?ticker=${ticker}&limit=${limit}&apiKey=${this.polygonApiKey}`;
+    return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
+  }
 
 
-//Obtener noticias para un ticker
-getNews(ticker: string): Observable<any> {
-  const limit = 3;
-  const polygonUrl = `https://api.polygon.io/v2/reference/news?ticker=${ticker}&limit=${limit}&apiKey=${this.polygonApiKey}`;
-  return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
-}
+  getGeneralNews(): Observable<any> {
+    const limit = 10;
+    const polygonUrl = `https://api.polygon.io/v2/reference/news?&limit=${limit}&apiKey=${this.polygonApiKey}`;
+    return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
+  }
 
-  
-//https://api.polygon.io/v2/reference/news?limit=10&apiKey=RyUZfnDxPi7qX9OqVAoTFiwIKwzkr8U0
-  
-getGeneralNews(): Observable<any> {
-  const limit = 10;
-  const polygonUrl = `https://api.polygon.io/v2/reference/news?&limit=${limit}&apiKey=${this.polygonApiKey}`;
-  return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
-}
 
-  
-getDividends(ticker: string): Observable<any> {
-  const currentDate = new Date();
-  const formattedCurrentDate = currentDate.toISOString().split('T')[0];
-  const currentYear = currentDate.getFullYear();
-  const lastDayOfYear = `${currentYear}-12-31`;
-  const limit = 1; 
+  getDividends(ticker: string): Observable<any> {
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+    const currentYear = currentDate.getFullYear();
+    const lastDayOfYear = `${currentYear}-12-31`;
+    const limit = 1;
 
-  const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&pay_date.gte=${formattedCurrentDate}&limit=${limit}&order=desc&sort=pay_date&apiKey=${this.polygonApiKey}`;
-  const marketstackUrl = `https://api.marketstack.com/v1/dividends?access_key=${this.marketstackApiKey}&symbols=${ticker}&date_from=${formattedCurrentDate}&date_to=${lastDayOfYear}&limit=${limit}`;
+    const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&pay_date.gte=${formattedCurrentDate}&limit=${limit}&order=desc&sort=pay_date&apiKey=${this.polygonApiKey}`;
+    const marketstackUrl = `https://api.marketstack.com/v1/dividends?access_key=${this.marketstackApiKey}&symbols=${ticker}&date_from=${formattedCurrentDate}&date_to=${lastDayOfYear}&limit=${limit}`;
 
-  return this.http.get<any>(polygonUrl).pipe(
+    return this.http.get<any>(polygonUrl).pipe(
       catchError(error => {
-          console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
-          return this.http.get<any>(marketstackUrl).pipe(
+        console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
+        return this.http.get<any>(marketstackUrl).pipe(
           catchError(error => {
-              console.error(`Error al obtener dividendos de ${ticker} en Marketstack`, error);
-              return of({ results: [] }); 
-        })
-      );
-  }))
-}
-  
+            console.error(`Error al obtener dividendos de ${ticker} en Marketstack`, error);
+            return of({ results: [] });
+          })
+        );
+      })
+    );
+  }
 
-//Función para obtener los dividendos de varios tickers secuencialmente
-getDividendsForTickers(tickers: string[]): Observable<any[]> {
-  return from(tickers).pipe(
-    concatMap(ticker => this.getDividends(ticker)), 
-    toArray()
-  );
-}
-  
-  
-  
-  
-  
 
+  getDividendsForTickers(tickers: string[]): Observable<any[]> {
+    return from(tickers).pipe(
+      concatMap(ticker => this.getDividends(ticker)),
+      toArray()
+    );
+  }
+
+
+  
 }

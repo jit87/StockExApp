@@ -39,10 +39,10 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵlistener
 } from "./chunk-CWHPPC2B.js";
+import "./chunk-SB7K7NPI.js";
 import {
   forkJoin
 } from "./chunk-XLRD4WBL.js";
-import "./chunk-SB7K7NPI.js";
 import {
   Subject,
   from,
