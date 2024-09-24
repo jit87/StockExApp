@@ -1,8 +1,8 @@
 <div *ngIf="autenticado" class="container mt-4 mb-4 animate__animated animate__fadeIn"
     style="display: flex; flex-direction: column; position: relative; margin-top: 100px;">
-    <h5 class="mt-4">Dividendos</h5>
+    <h5 class="mt-4">Próximos dividendos</h5>
     <br>
-    <h5 *ngIf="!disponible">No disponibles, límite de peticiones a la API</h5>
+    <div class="text-danger" *ngIf="!disponible">No disponibles, has alcanzado el límite de peticiones a la API.</div>
     <div *ngIf="disponible" class="table-responsive" style="top: 0; background-color: #343a40; z-index: 1;">
         <table class="table table-hover table-dark">
             <thead>
@@ -24,7 +24,7 @@
                     <td>{{ dividendo.currency }}</td>
                     <td>{{ dividendo.declaration_date | date:'dd/M/yy' }}</td>
                     <td>{{ dividendo.ex_dividend_date | date:'dd/M/yy' }}</td>
-                    <td>{{ dividendo.pay_date | date:'dd/M/yy' }}</td>
+                    <td style="color:rgb(194, 120, 22);">{{ dividendo.pay_date | date:'dd/M/yy' }}</td>
                     <td>{{ dividendo.frequency }}</td>
                     <td>{{ dividendo.dividend_type }}</td>
                 </tr>

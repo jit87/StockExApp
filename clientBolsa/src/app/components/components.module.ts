@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth.service';
 import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/grafica-sectores.component";
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DividendosComponent } from './dividendos/dividendos.component';
+import { NoticiasComponent } from './noticias/noticias.component';
 
 
 @NgModule({
@@ -26,8 +27,8 @@ import { DividendosComponent } from './dividendos/dividendos.component';
     PerfilComponent,
     FooterComponent,
     ModificarAccionComponent,
-    DividendosComponent
-    
+    DividendosComponent,
+    NoticiasComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +48,8 @@ import { DividendosComponent } from './dividendos/dividendos.component';
     FooterComponent,
     ModificarAccionComponent,
     GraficaSectoresComponent,
-    DividendosComponent
+    DividendosComponent,
+    NoticiasComponent
   ],
   providers: [
      AuthService

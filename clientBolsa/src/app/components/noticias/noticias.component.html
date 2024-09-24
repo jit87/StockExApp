@@ -1,0 +1,25 @@
+
+<body>
+    <p class="error" *ngIf="!disponible"> Información no disponible </p>
+<div class="mt-4" *ngIf="Cargado === 0" style="text-align: center;">
+    <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
+    <p style="color: white;">Cargando...</p>
+</div>
+
+
+
+<div class="container mt-4 mb-4 animate__animated animate__fadeIn" *ngIf="Cargado !== 0">
+    <div *ngFor="let article of data" class="news-container">
+        <div class="caja-noticia">
+            <h4><a [href]="article.url" target="_blank">{{ article.title }}</a></h4>
+            <p class="overflow-auto text-sm">{{ article.descr }}</p>
+            <p style="font-size: small;">By {{ article.author }}</p>
+            <p style="font-size: small;"><em>{{ article.date | date:'mediumDate'}}</em></p>
+        </div>
+        <div class="image-container">
+            <img *ngIf="article.image" [src]="article.image" alt="Article Image" class="rounded">
+        </div>
+    </div>
+</div>
+
+</body>

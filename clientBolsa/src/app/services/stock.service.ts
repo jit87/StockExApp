@@ -93,48 +93,39 @@ export class StockService {
 
 
 
-  //Obtener noticias
-  getNews(ticker: string): Observable<any> {
-    const limit = 3;
-    const polygonUrl = `https://api.polygon.io/v2/reference/news?ticker=${ticker}&limit=${limit}&apiKey=${this.polygonApiKey}`;
-    return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
-  }
+//Obtener noticias para un ticker
+getNews(ticker: string): Observable<any> {
+  const limit = 3;
+  const polygonUrl = `https://api.polygon.io/v2/reference/news?ticker=${ticker}&limit=${limit}&apiKey=${this.polygonApiKey}`;
+  return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
+}
 
   
-
- //Obtener dividendos históricos
-/*getDividends(ticker: string): Observable<any> {
-  if (!ticker) return of('');
-
-  const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&limit=10&apiKey=${this.polygonApiKey}`;
-  const fmodelingUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/${ticker}?apikey=DWYjYIL0ZShj4QzL5hQyAqwOfztp8X8w`;
+//https://api.polygon.io/v2/reference/news?limit=10&apiKey=RyUZfnDxPi7qX9OqVAoTFiwIKwzkr8U0
   
-  return this.http.get<any>(polygonUrl).pipe(
-    catchError(error => {
-      console.error('Error al obtener dividendos desde Polygon.io', error);
-      return this.http.get<any>(fmodelingUrl).pipe(
-        catchError(error => {
-          console.error('Error al obtener dividendos de FMP', error);
-          return of({ results: [] });
-        })
-      );
-    })
-  );
-  }*/
+getGeneralNews(): Observable<any> {
+  const limit = 10;
+  const polygonUrl = `https://api.polygon.io/v2/reference/news?&limit=${limit}&apiKey=${this.polygonApiKey}`;
+  return this.getFromPolygon<any>(polygonUrl, 'Error al obtener noticias desde Polygon.io', {});
+}
+
   
-
-
-  getDividends(ticker: string): Observable<any> {
-    const currentYear = new Date().getFullYear();
+getDividends(ticker: string): Observable<any> {
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+    const currentYear = currentDate.getFullYear();
     const lastDayOfYear = `${currentYear}-12-31`;
-    const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&limit=2&sort=pay_date&apiKey=${this.polygonApiKey}`;
+
+    const polygonUrl = `https://api.polygon.io/v3/reference/dividends?ticker=${ticker}&pay_date.lte=${lastDayOfYear}&pay_date.gte=${formattedCurrentDate}&limit=2&order=desc&sort=pay_date&apiKey=${this.polygonApiKey}`;
+
     return this.http.get<any>(polygonUrl).pipe(
       catchError(error => {
-        console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
-        return of({ results: [] }); 
-      })
-    );
+          console.error(`Error al obtener dividendos de ${ticker} en Polygon.io`, error);
+          return of({ results: [] }); 
+    })
+  );
 }
+  
 
 //Función para obtener los dividendos de varios tickers secuencialmente
 getDividendsForTickers(tickers: string[]): Observable<any[]> {

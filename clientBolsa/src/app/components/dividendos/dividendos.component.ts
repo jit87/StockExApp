@@ -19,6 +19,7 @@ listEmpresas: any[] = [];
 dividendos: any[] = [];
 disponible: boolean = true;   
 
+
 constructor(
   private _authService: AuthService,
   private _empresaService: EmpresaService,
@@ -45,16 +46,27 @@ async getEmpresas(): Promise<void> {
         const usuarioId: any = localStorage.getItem('id'); 
         this._empresaService.getListEmpresas(usuarioId).subscribe(
             async (resp: any) => {
-                this.listEmpresas = resp;
-
-                //Llamar a getDividendos para cada empresa usando Promise.all
+            this.listEmpresas = resp;
+            
+            if (localStorage.getItem("dividendos")) {
+              
+            } else {
+               //Llama a getDividendos para cada empresa usando Promise.all
                 const dividendosPromises = this.listEmpresas.map((empresa: any) => this.getDividendos(empresa.ticker));
 
-                //Esperar a que todas las promesas se resuelvan
+                //Espera a que todas las promesas se resuelvan
                 const allDividendos = await Promise.all(dividendosPromises);
 
-                //Acumular todos los dividendos
-                this.dividendos = allDividendos.flat();
+                //Acumula todos los dividendos y se asegurar de que sean fechas válidas
+                this.dividendos = allDividendos.flat().sort((a, b) => {
+                    const dateA = new Date(a.pay_date);
+                    const dateB = new Date(b.pay_date); 
+
+                    return dateA.getTime() - dateB.getTime(); 
+                });
+            
+                localStorage.setItem("dividendos", JSON.stringify(this.dividendos));
+            }
                 this.disponible = this.dividendos.length > 0;
             },
             (error: any) => {
@@ -65,14 +77,16 @@ async getEmpresas(): Promise<void> {
     }  
 }
 
+  
+
 getDividendos(ticker: string): Promise<any> {
     return new Promise((resolve, reject) => {
         this._stockService.getDividends(ticker).subscribe(
             (resp: any) => {
                 if (Array.isArray(resp.results)) {
-                    resolve(resp.results);
+                  resolve(resp.results);
                 } else {
-                    resolve([]);
+                  resolve([]);
                 }
             },
             (err) => {
@@ -83,6 +97,8 @@ getDividendos(ticker: string): Promise<any> {
     });
 }
 
+
+  
 
 
 }
