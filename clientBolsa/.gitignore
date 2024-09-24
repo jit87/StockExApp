@@ -37,4 +37,4 @@ config.json
 *.config.js
 
 # Ignorar el archivo environment.ts en el directorio environment
-src/environment/environment.ts
+src/environments/environment.ts
