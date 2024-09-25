@@ -2,7 +2,9 @@
 
 body {
     background-color: #212529;
-    height: 100%
+    height: 100%;
+    position: relative;
+    min-height: 100vh;
 }
 
 div {
@@ -18,6 +20,7 @@ text {
 
 .legend-labels {
     width: 300px !important;
+    background-color: #32383e !important;
 }
 
 .chart-legend {
@@ -30,14 +33,8 @@ text {
 
 
 footer {
-    position: relative;
-    /* Cambiar a relative */
-    bottom: 0 !important;
-    /* Opcional, ya que el footer estará al final del contenido */
+    /* position: absolute; */
+    bottom: 0;
     width: 100%;
-    /* Color de fondo (ajusta según sea necesario) */
-    color: white;
-    /* Color del texto (ajusta según sea necesario) */
-    text-align: center;
- 
+    position:absolute;
 }

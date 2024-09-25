@@ -68,11 +68,13 @@ h3 {
 
 .news-container {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     margin-top: 10px;
     background-color: white;
     border-radius: 5px;
+    padding: 15px;
+    height: auto;
 }
 
 .news-container p {
@@ -80,14 +82,16 @@ h3 {
 }
 
 .caja-noticia {
-    padding: 15px;
     width: 70%;
     float: right;
+    line-height: normal;
+    margin-left: 8px;
+    justify-content: center;
 }
 
 
 .image-container {
-    width: 35%;
+    width: 30%;
     text-align: left;
 }
 
@@ -96,4 +100,5 @@ img {
     height: auto;
     border-radius: 5px;
     padding: 5px;
+    object-fit: cover;
 }

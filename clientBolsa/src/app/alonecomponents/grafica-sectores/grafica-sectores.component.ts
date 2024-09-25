@@ -42,7 +42,7 @@ export class GraficaSectoresComponent implements OnInit {
     public _authService: AuthService
   ) { 
 
-    //$(".chart-legend.legend-title.legend-title-text").html("Leyenda");
+    $(".legend-title-text").html("Leyenda");
 
   }
 
@@ -60,7 +60,7 @@ export class GraficaSectoresComponent implements OnInit {
    let totalCapitalInvertido = 0; 
    let countSectores = 0;  
     
-   //Procesar datos para el gráfico
+   //Procesa datos para el gráfico
    this.listEmpresas.forEach((empresa: any) => {
      const sector = empresa.industria;
      const capitalInvertido = empresa.capitalInvertido;
@@ -72,11 +72,11 @@ export class GraficaSectoresComponent implements OnInit {
        countSectores++; 
      }
 
-     //Sumar al total de capital invertido
+     //Suma al total de capital invertido
      totalCapitalInvertido += capitalInvertido;
    });
 
-   //Convertir el objeto sectorData a un array para el gráfico
+   //Convierte el objeto sectorData a un array para el gráfico
    this.data = Object.entries(sectorData).map(([name, value]) => {
      const porcentaje = totalCapitalInvertido ? ((value / totalCapitalInvertido) * 100).toFixed(2) : 0;
      return {

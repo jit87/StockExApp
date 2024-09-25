@@ -71,7 +71,7 @@ export class EditarAccionesComponent  implements OnInit {
     }
     if (this.agregarAccion.valid) {
       try {
-        const ticker = this.agregarAccion.get('ticker')?.value;
+        const ticker = this.agregarAccion.get('ticker')?.value.toUpperCase();
         const precioObservable = this.stockService.getPrice(ticker);
         const precio = await lastValueFrom(precioObservable);
         const industriaObservable = this.stockService.getIndustry(ticker);

@@ -141,7 +141,6 @@ getDividendos(ticker: string): Promise<any> {
             ticker: empresa.ticker
         });
     });
-     console.log(cantidadesCobro); 
      return cantidadesCobro; 
 }
     
