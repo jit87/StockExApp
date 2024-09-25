@@ -26,6 +26,7 @@
             <tr>
                 <th style="text-align: left; padding: 8px;">Nombre</th>
                 <th style="text-align: justify; padding: 8px;">Industria</th>
+                <th style="text-align: justify; padding: 8px;">Valoración</th>
                 <th style="text-align: right; padding: 8px;">Porcentaje</th>
             </tr>
         </thead>
@@ -36,6 +37,9 @@
                 </td>
                 <td style="text-align:justify; padding: 8px; border-bottom: 1px solid #343a40;">
                     {{ empresa.industria }}
+                </td>
+                <td style="text-align:justify; padding: 8px; border-bottom: 1px solid #343a40;">
+                    {{ empresa.valoracion }}
                 </td>
                 <td style="text-align: right; padding: 8px; border-bottom: 1px solid #343a40;">
                     {{ porcentajes[i] }} %

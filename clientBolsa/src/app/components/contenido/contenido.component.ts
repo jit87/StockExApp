@@ -116,6 +116,7 @@ async eliminarAccion(empresa: Empresa) {
       (resp: any) => {
         this.listEmpresas = resp;
         this.getEmpresas(); 
+        this.eliminarDividendo(empresa.ticker); 
         this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
         Swal.close();
       },
@@ -127,8 +128,20 @@ async eliminarAccion(empresa: Empresa) {
   document.getElementById('cancelar')?.addEventListener('click', () => {
     Swal.close();
   });
-}
+  }
   
+
+  //Elimina los dividendos asociados a una acción
+  eliminarDividendo(ticker: string): void {
+      const dividendosAlmacenados = localStorage.getItem('dividendos');
+      if (dividendosAlmacenados) {
+          const dividendos = JSON.parse(dividendosAlmacenados);
+        const dividendosActualizados = dividendos.filter((dividendo: any) => dividendo.ticker !== ticker);
+          localStorage.removeItem('dividendos'); 
+          localStorage.setItem('dividendos', JSON.stringify(dividendosActualizados));
+      }
+  }
+    
   
   //Dinero que costaron las acciones y su valor actual
   async calcularTotalInvertido() {
