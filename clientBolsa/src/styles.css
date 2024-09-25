@@ -2,6 +2,7 @@
 
 body {
     background-color: #212529;
+    height: 100%
 }
 
 div {
@@ -27,3 +28,16 @@ text {
   color: grey; 
 }
 
+
+footer {
+    position: relative;
+    /* Cambiar a relative */
+    bottom: 0 !important;
+    /* Opcional, ya que el footer estará al final del contenido */
+    width: 100%;
+    /* Color de fondo (ajusta según sea necesario) */
+    color: white;
+    /* Color del texto (ajusta según sea necesario) */
+    text-align: center;
+ 
+}

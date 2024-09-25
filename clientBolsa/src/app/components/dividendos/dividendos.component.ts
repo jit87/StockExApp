@@ -17,8 +17,10 @@ autenticado: boolean = false;
 //Empresas de la BBDD
 listEmpresas: any[] = [];
 dividendos: any[] = [];
-disponible: boolean = true;   
+disponible: boolean = true;  
+cantidadesCobroImprimir: any[] = [{}];
 
+    
 
 constructor(
   private _authService: AuthService,
@@ -31,7 +33,7 @@ constructor(
 
 
 ngOnInit() {
-  this.getEmpresas();
+    this.getDividendosPorEmpresas();
 }
 
 
@@ -40,7 +42,7 @@ ngOnInit() {
 
 //ACCIONES Y CALCULOS
 
-async getEmpresas(): Promise<void> {
+async getDividendosPorEmpresas(): Promise<void> {
     if (this._authService.isAuthenticated()) {
         this.autenticado = true;
         const usuarioId: any = localStorage.getItem('id');
@@ -48,14 +50,34 @@ async getEmpresas(): Promise<void> {
         this._empresaService.getListEmpresas(usuarioId).subscribe(
             async (resp: any) => {
                 this.listEmpresas = resp;
+                //Almacenamos las cantidades de acciones que tenemos de cada empresa
+                var cantidades = this.getCantidad(resp); 
+                console.log(cantidades); 
                 
                 //Obtiene los dividendos almacenados
                 var dividendosAlmacenados = localStorage.getItem('dividendos');
                 
-                //Si hay dividendos almacenados en localStorage y no están vacíos
+                //Comprobamos si hay dividendos almacenados en localStorage y no están vacíos
+                //Usamos localStorage para evitar las limitaciones de la API
                 if (dividendosAlmacenados && dividendosAlmacenados !== '[]') {
                     this.dividendos = JSON.parse(dividendosAlmacenados); 
                     console.log('Dividendos obtenidos de localStorage:', this.dividendos);
+
+                    //Calculamos la cantidad a cobrar por cada acción
+                    this.dividendos.forEach((dividendo) => {
+
+                        cantidades.forEach(cantidad => {
+                            if ((dividendo.ticker === cantidad.ticker) && cantidad!=undefined && cantidad!=null) {
+
+                                const cantidadImprimir = dividendo.cash_amount * cantidad.cantidad ;
+
+                                this.cantidadesCobroImprimir.push({
+                                    cantidad: cantidadImprimir,
+                                    ticker: cantidad.ticker
+                                });
+                            }
+                        });
+                    });                                
                 } else {
                     //Llama a getDividendos para cada empresa
                     const dividendosPromises = this.listEmpresas.map((empresa: any) => this.getDividendos(empresa.ticker));
@@ -74,6 +96,7 @@ async getEmpresas(): Promise<void> {
                     //Guarda los dividendos en localStorage
                     localStorage.setItem('dividendos', JSON.stringify(this.dividendos));
                     console.log('Dividendos obtenidos de la API y guardados en localStorage:', this.dividendos);
+
                 }
 
                 this.disponible = this.dividendos.length > 0;
@@ -94,9 +117,9 @@ getDividendos(ticker: string): Promise<any> {
         this._stockService.getDividends(ticker).subscribe(
             (resp: any) => {
                 if (Array.isArray(resp.results)) {
-                  resolve(resp.results);
+                    resolve(resp.results);
                 } else {
-                  resolve([]);
+                    resolve([]);
                 }
             },
             (err) => {
@@ -107,6 +130,21 @@ getDividendos(ticker: string): Promise<any> {
     });
 }
 
+    
+    
+ getCantidad(empresas: any[]) {
+    //Almacenamos pares de valores para cada empresa.
+    let cantidadesCobro: {cantidad: number, ticker: string}[] = [];
+    empresas.forEach((empresa) => {
+        cantidadesCobro.push({
+            cantidad: empresa.cantidad,
+            ticker: empresa.ticker
+        });
+    });
+     console.log(cantidadesCobro); 
+     return cantidadesCobro; 
+}
+    
 
   
 

@@ -43,6 +43,8 @@ export class NavbarComponent {
   logout() {
     this._authService.logout(); 
     this.autenticado = false; 
+    //Eliminamos los datos guardados en el navegador
+    localStorage.clear();
   }
   
   
