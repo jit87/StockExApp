@@ -3,6 +3,9 @@ import { Empresa } from '../../interfaces/Empresa';
 import { EmpresaService } from '../../services/empresa.service';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
+import $ from 'jquery'
 
 
 @Component({
@@ -20,25 +23,27 @@ export class PerfilComponent {
   //Propiedades de la contraseña
   actualPassword: string = "";
   nuevaPassword: string = ""; 
+  password: string = ""; 
+  show: boolean = false;
+
 
   //Prodiedades de formulario
   mostrarFormulario: boolean = false; 
 
   //Spinner
   loading: boolean = false; 
-  toastr: any;
 
    
   constructor(public empresaService: EmpresaService,
               private _authService: AuthService,
-              private http: HttpClient ) { }
+              private http: HttpClient,
+              private toastr: ToastrService) { }
             
   
 
   ngOnInit() {
     this.getEmpresas();
     this.getUsuario(); 
-    console.log(); 
   }
   
 
@@ -75,6 +80,7 @@ export class PerfilComponent {
       },
       (err) => {
         console.log(err); 
+        this.toastr.error('La contraseña actual no coincide', 'Error');
       }
     )
   }
@@ -87,6 +93,18 @@ export class PerfilComponent {
 
   abrirFormularioPass() {
     this.mostrarFormulario = true; 
+  }
+
+  visualizarPasswordActual() {
+      $('#actualPassword').attr('type', function(index, attr) {
+        return attr == 'text' ? 'password' : 'text';
+      })
+  }
+
+  visualizarPasswordNueva() {
+      $('#nuevaPassword').attr('type', function(index, attr) {
+        return attr == 'text' ? 'password' : 'text';
+      })
   }
 
 

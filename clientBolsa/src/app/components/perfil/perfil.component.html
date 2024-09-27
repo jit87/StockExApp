@@ -83,31 +83,53 @@
 
 <!--Formularios-->
 
-<form  class="animate__animated animate__fadeIn" 
-        (ngSubmit)="cambiarPassword()" 
-        *ngIf="mostrarFormulario" 
-        style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
-            <div *ngIf="loading">
-                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
-                <p style="color: white;">Modificando la contraseña, por favor espera...</p>
-            </div>
-            <div style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px;background-color:#343a40;">
-                <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
-                <div class="form-group">
-                    <label for="currentPassword">Contraseña actual</label>
-                    <input type="password" id="actualPassword" [(ngModel)]="actualPassword" class="form-control" required />
+<form class="animate__animated animate__fadeIn" (ngSubmit)="cambiarPassword()" *ngIf="mostrarFormulario"
+    style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
+
+    <div *ngIf="loading">
+        <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
+        <p style="color: white;">Modificando la contraseña, por favor espera...</p>
+    </div>
+
+    <div
+        style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
+        <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
+
+        <!-- Contraseña actual -->
+        <div class="form-group">
+            <label for="actualPassword">Contraseña actual</label>
+            <div class="input-group">
+                <input type="password" id="actualPassword" [(ngModel)]="actualPassword" class="form-control" required />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="visualizarPasswordActual()">
+                        <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                        <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+                    </button>
                 </div>
-            
-                <div class="form-group">
-                    <label for="newPassword">Nueva contraseña</label>
-                    <input type="password" id="nuevaPassword" [(ngModel)]="nuevaPassword" class="form-control" required />
-                </div>
-                <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
             </div>
+        </div>
+
+        <!-- Nueva contraseña -->
+        <div class="form-group">
+            <label for="nuevaPassword">Nueva contraseña</label>
+            <div class="input-group">
+                <input type="password" id="nuevaPassword" [(ngModel)]="nuevaPassword" class="form-control" required />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="visualizarPasswordNueva()">
+                        <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                        <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+    </div>
 </form>
 
 
-<!--------------------------------->
+
+<!-------------Activa el fondo oscurecido al abrirse el formulario-------------------->
 <div *ngIf="mostrarFormulario" class="overlay"
     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
 </div>

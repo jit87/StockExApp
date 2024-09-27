@@ -109,6 +109,7 @@ router.put('/modificar', async (req, res) => {
             usuario.password = hashedPassword;
             await usuario.save();
             console.log("Contraseña modificada"); 
+            res.json({ nuevaPassword: nuevaPassword }); 
     } catch (err) {
         res.status(500).send(err);
     }
