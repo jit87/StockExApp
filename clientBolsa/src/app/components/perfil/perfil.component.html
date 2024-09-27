@@ -1,47 +1,113 @@
 <div class="d-flex justify-content-center align-items-center vh-100 animate__animated animate__fadeIn mb-4">
     <div class="container">
         <br>
-          <div *ngIf="usuario" class="mx-auto rounded">
-            <h5 class="text-justify mb-3" >Datos de usuario</h5>
+        <div *ngIf="usuario" class="mx-auto rounded">
+            <h5 class="text-justify mb-3">Datos de usuario</h5>
             <table style="border-collapse: collapse; width: 100%;">
-                <tr>
-                    <td style="padding: 8px 0; width: 25%;">Nombre:</td>
-                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.nombre }}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px 0; width: 25%;">Correo:</td>
-                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.email }}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px 0; width: 25%;">ID:</td>
-                    <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario._id }}</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px 0; width: 25%;">Nombre:</td>
+                        <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.nombre }}
+                        </td>
+                        <td style="text-align: right;">
+                            <button class="btn  btn-outline-secondary" style="padding: 3px; font-size: small;">Modificar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <hr style="border: 0; border-top: 0.5px solid gray; width: 100%;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; width: 25%;">Correo:</td>
+                        <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.email }}
+                        </td>
+                        <td style="text-align: right;">
+                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;">Modificar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <hr style="border: 0; border-top: 0.5px solid gray; width: 100%;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; width: 25%;">Contraseña:</td>
+                        <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">
+                            <input type="password" [(ngModel)]="usuario.password"
+                                style="color: inherit; background-color: transparent; border: none; outline: none; font-family: consolas;">
+                        </td>
+                        <td style="text-align: right;">
+                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;" (click)="abrirFormularioPass()">Modificar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <hr style="border: 0; border-top: 0.5px solid gray; width: 100%;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; width: 25%;">ID:</td>
+                        <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario._id }}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            <br>
-            <br>
+            <br><br>
             <h5 class="text-justify mb-4">Inversiones</h5>
-                <table class="table table-hover table-dark">
-                    <thead>
-                        <tr>
-                            <th style="font-weight: bold;">Nombre</th>
-                            <th style="font-weight: bold;">Ticker</th>
-                            <th style="font-weight: bold;">Precio</th>
-                            <th style="font-weight: bold;">Número de acciones</th>
-                            <th style="font-weight: bold;">Capital invertido</th>
-                            <th style="font-weight: bold;">Industria</th>
-                            <th style="font-weight: bold;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let Empresa of listEmpresas">
-                            <td>{{ Empresa.nombre }}</td>
-                            <td>{{ Empresa.ticker | uppercase}}</td>
-                            <td>{{ Empresa.precio }}</td>
-                            <td>{{ Empresa.cantidad }}</td>
-                            <td>{{ Empresa.capitalInvertido }}</td>
-                            <td>{{ Empresa.industria }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold;">Nombre</th>
+                        <th style="font-weight: bold;">Ticker</th>
+                        <th style="font-weight: bold;">Precio</th>
+                        <th style="font-weight: bold;">Número de acciones</th>
+                        <th style="font-weight: bold;">Capital invertido</th>
+                        <th style="font-weight: bold;">Industria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Empresa of listEmpresas">
+                        <td>{{ Empresa.nombre }}</td>
+                        <td>{{ Empresa.ticker | uppercase}}</td>
+                        <td>{{ Empresa.precio }}</td>
+                        <td>{{ Empresa.cantidad }}</td>
+                        <td>{{ Empresa.capitalInvertido }}</td>
+                        <td>{{ Empresa.industria }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
+<!--Formularios-->
+
+<form  class="animate__animated animate__fadeIn" 
+        (ngSubmit)="cambiarPassword()" 
+        *ngIf="mostrarFormulario" 
+        style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
+            <div *ngIf="loading">
+                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
+                <p style="color: white;">Modificando la contraseña, por favor espera...</p>
+            </div>
+            <div style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px;background-color:#343a40;">
+                <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
+                <div class="form-group">
+                    <label for="currentPassword">Contraseña actual</label>
+                    <input type="password" id="actualPassword" [(ngModel)]="actualPassword" class="form-control" required />
+                </div>
+            
+                <div class="form-group">
+                    <label for="newPassword">Nueva contraseña</label>
+                    <input type="password" id="nuevaPassword" [(ngModel)]="nuevaPassword" class="form-control" required />
+                </div>
+                <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+            </div>
+</form>
+
+
+<!--------------------------------->
+<div *ngIf="mostrarFormulario" class="overlay"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+</div>

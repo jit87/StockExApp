@@ -10,3 +10,21 @@ h1 {
    background-color: #343a40;
    padding: 50px;
 }
+
+
+
+.sweet-fade-in {
+    animation: fadeInAnimation 0.4s ease-out;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

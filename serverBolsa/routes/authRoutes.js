@@ -83,4 +83,36 @@ router.get('/usuario/:email', async (req, res) => {
     
 });
 
+//Ruta para modificar contraseña
+router.put('/modificar', async (req, res) => {
+
+    try {
+        const { email, actualPassword, nuevaPassword } = req.body;
+
+            //Busca al usuario por email
+            const usuario = await Usuario.findOne({ email });
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            //Verifica que la contraseña actual sea correcta
+            const esValida = await bcrypt.compare(actualPassword, usuario.password);
+            if (!esValida) {
+                return res.status(400).json({ message: 'La contraseña actual es incorrecta' });
+            }
+
+            //Encripta la nueva contraseña
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(nuevaPassword, salt);
+
+            //Actualiza la contraseña
+            usuario.password = hashedPassword;
+            await usuario.save();
+            console.log("Contraseña modificada"); 
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+
 export default router;

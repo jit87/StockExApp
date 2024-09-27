@@ -48,9 +48,7 @@ export class AuthService {
    
 }
 
-
-
-  registro(nombre: string, email: string, password: string): Observable<any> {
+registro(nombre: string, email: string, password: string): Observable<any> {
   return this.http.post<any>(`${this.authUrl}/registro`, {
     nombre,
     email,
@@ -108,6 +106,23 @@ export class AuthService {
   authStatusListener() {
     return this.authStatus.asObservable();
   }
+
+
+  modificarPassword(email: string, actualPassword: string, nuevaPassword: string): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/modificar`, {
+      email,
+      actualPassword,
+      nuevaPassword
+    }).pipe(
+      tap(response => {
+        console.log('Contraseña modificada:', response); 
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(error); 
+      })
+    );
+}
 
 
 
