@@ -84,7 +84,7 @@ router.get('/usuario/:email', async (req, res) => {
 });
 
 //Ruta para modificar contraseña
-router.put('/modificar', async (req, res) => {
+router.put('/modificar-pass', async (req, res) => {
 
     try {
         const { email, actualPassword, nuevaPassword } = req.body;
@@ -110,6 +110,52 @@ router.put('/modificar', async (req, res) => {
             await usuario.save();
             console.log("Contraseña modificada"); 
             res.json({ nuevaPassword: nuevaPassword }); 
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+
+//Ruta para modificar nombre
+router.put('/modificar-nombre', async (req, res) => {
+
+    try {
+        const { email, nuevoNombre } = req.body;
+
+            //Busca al usuario por email
+            const usuario = await Usuario.findOne({ email });
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            //Actualiza la contraseña
+            usuario.nombre = nuevoNombre;
+            await usuario.save();
+            console.log("Nombre modificado"); 
+            res.json({ nuevoNombre: nuevoNombre }); 
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+
+//Ruta para modificar email
+router.put('/modificar-email', async (req, res) => {
+
+    try {
+        const { email, nuevoEmail } = req.body;
+
+            //Busca al usuario por email
+            const usuario = await Usuario.findOne({ email });
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            //Actualiza la contraseña
+            usuario.email = nuevoEmail;
+            await usuario.save();
+            console.log("Nombre modificado"); 
+            res.json({ nuevoEmail: nuevoEmail }); 
     } catch (err) {
         res.status(500).send(err);
     }

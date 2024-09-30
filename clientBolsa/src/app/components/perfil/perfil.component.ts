@@ -26,9 +26,18 @@ export class PerfilComponent {
   password: string = ""; 
   show: boolean = false;
 
+  //Propiedades del nombre
+  nuevoNombre: string = ""; 
+  nombre: string = ""; 
 
-  //Prodiedades de formulario
+  //Propiedades del email
+  nuevoEmail: string = ""; 
+
+
+  //Prodiedades de formularios
   mostrarFormulario: boolean = false; 
+  mostrarFormularioNom: boolean = false; 
+  mostrarFormularioEma: boolean = false; 
 
   //Spinner
   loading: boolean = false; 
@@ -67,8 +76,9 @@ export class PerfilComponent {
   }
 
 
-  //FORMULARIO
+  //FORMULARIOS
 
+ /*Password*/
  cambiarPassword() {
     this.loading = false; 
     this._authService.modificarPassword(this.email, this.actualPassword, this.nuevaPassword).subscribe(
@@ -106,7 +116,62 @@ export class PerfilComponent {
         return attr == 'text' ? 'password' : 'text';
       })
   }
+  
 
+  /*Nombre*/
+  cambiarNombre() {
+    this.loading = false; 
+    this._authService.modificarNombre(this.email, this.nuevoNombre).subscribe(
+      (resp: any) => {
+        if (resp) {
+           console.log("Nombre modificado", resp); 
+           this.toastr.success('El nombre ha sido modificado', 'Nombre modificado');
+        }
+        //Recuperamos el usuario para actualizar los datos en la impresión 
+        this.getUsuario(); 
+      },
+      (err) => {
+        console.log(err); 
+        this.toastr.error('El usuario no existe', 'Error');
+      }
+    )
+  }
+
+  abrirFormularioNom() {
+    this.mostrarFormularioNom = true; 
+  }
+
+  cerrarFormularioNom() {
+    this.mostrarFormularioNom = false; 
+  }
+
+
+  /*Email*/ 
+  cambiarEmail() {
+    this.loading = false; 
+    this._authService.modificarEmail(this.email, this.nuevoEmail).subscribe(
+      (resp: any) => {
+        if (resp) {
+           console.log("Email modificado", resp); 
+           this.toastr.success('El email ha sido modificado', 'Email modificado');
+        }
+        //Recuperamos el usuario para actualizar los datos en la impresión 
+        this.getUsuario(); 
+      },
+      (err) => {
+        console.log(err); 
+        this.toastr.error('El usuario no existe', 'Error');
+      }
+    )
+  }
+
+  abrirFormularioEma() {
+    this.mostrarFormularioEma = true; 
+  }
+
+  cerrarFormularioEma() {
+    this.mostrarFormularioEma = false; 
+  }
 
   
 }

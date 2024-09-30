@@ -109,19 +109,51 @@ registro(nombre: string, email: string, password: string): Observable<any> {
 
 
   modificarPassword(email: string, actualPassword: string, nuevaPassword: string): Observable<any> {
-    return this.http.put<any>(`${this.authUrl}/modificar`, {
+    return this.http.put<any>(`${this.authUrl}/modificar-pass`, {
       email,
       actualPassword,
       nuevaPassword
     }).pipe(
       tap(response => {
-        console.log('Contraseña modificada:', response); 
+        console.log('Contraseña modificada', response); 
       }),
       catchError(error => {
         console.error('Error:', error);
         return throwError(error); 
       })
     );
+  }
+  
+
+  modificarNombre(email: string, nuevoNombre: string): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/modificar-nombre`, {
+      email,
+      nuevoNombre
+    }).pipe(
+      tap(response => {
+        console.log('Nombre modificado', response); 
+      }),
+      catchError(error => {
+        console.error('Error', error);
+        return throwError(error); 
+      })
+  );
+}
+  
+  modificarEmail(email: string, nuevoEmail: string): Observable<any> {
+    return this.http.put<any>(`${this.authUrl}/modificar-email`, {
+      email,
+      nuevoEmail
+    }).pipe(
+      tap(response => {
+        console.log('Email modificado', response); 
+        localStorage.setItem('email', nuevoEmail);
+      }),
+      catchError(error => {
+        console.error('Error', error);
+        return throwError(error); 
+      })
+  );
 }
 
 

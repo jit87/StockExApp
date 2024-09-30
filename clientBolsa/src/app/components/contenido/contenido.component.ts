@@ -68,28 +68,28 @@ export class ContenidoComponent {
 
 
 
-  // ACCIONES Y CALCULOS
+// ACCIONES Y CALCULOS
 
-  async getEmpresas(): Promise<void> {
-    //Si está autenticado mostramos las acciones que tiene
-    if (this._authService.isAuthenticated()) { 
-      this.autenticado = true; 
+async getEmpresas(): Promise<void> {
+  //Si está autenticado mostramos las acciones que tiene
+  if (this._authService.isAuthenticated()) { 
+    this.autenticado = true; 
 
-      const usuarioId: any = localStorage.getItem('id'); 
-      this.empresaService.getListEmpresas(usuarioId).subscribe(
-        (resp: any) => {
-          this.listEmpresas = resp;
-          this.calcularTotalInvertido();
-          this.calcularValorInvertido(); 
-        },
-        //Si no mostramos el error y redirigimos al login
-        (error: any) => {
-          console.log(error);
-          this.router.navigate(['/login']);
-        }
-      );
-    }  
-  }
+    const usuarioId: any = localStorage.getItem('id'); 
+    this.empresaService.getListEmpresas(usuarioId).subscribe(
+      (resp: any) => {
+        this.listEmpresas = resp;
+        this.calcularTotalInvertido();
+        this.calcularValorInvertido(); 
+      },
+      //Si no mostramos el error y redirigimos al login
+      (error: any) => {
+        console.log(error);
+        this.router.navigate(['/login']);
+      }
+    );
+  }  
+}
 
 
 async eliminarAccion(empresa: Empresa) {
@@ -256,8 +256,6 @@ async eliminarAccion(empresa: Empresa) {
       }
     )
   }
-
-
 
 
 

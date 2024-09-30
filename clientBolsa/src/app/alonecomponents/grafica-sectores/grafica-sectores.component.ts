@@ -36,7 +36,6 @@ export class GraficaSectoresComponent implements OnInit {
   showLabels: boolean = true;
 
 
-
   constructor(
     public _empresaService: EmpresaService, 
     public _authService: AuthService
@@ -100,6 +99,7 @@ export class GraficaSectoresComponent implements OnInit {
       }
     );
   }
+  
 
   getUsuario() {
     const email = localStorage.getItem('email'); 
