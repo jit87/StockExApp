@@ -27,7 +27,7 @@
           <td>{{ empresa.capitalInvertido }}</td>
           <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-up"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
           <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-down"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
-          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracion }} <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
+          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracion }} <br> <span class="end">{{ empresa.variacion }} %</span></td>
           <td>{{ empresa.industria }}</td>
 
           <td>

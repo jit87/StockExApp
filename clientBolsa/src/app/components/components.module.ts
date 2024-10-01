@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ContenidoComponent } from './contenido/contenido.component';
 import { EditarAccionesComponent } from './editar-acciones/editar-acciones.component';
 import { BuscadorEmpresaComponent } from './buscador-empresa/buscador-empresa.component';

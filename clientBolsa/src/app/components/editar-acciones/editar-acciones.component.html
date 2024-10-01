@@ -9,16 +9,24 @@
         <p style="color: white;">Añadiendo acción, por favor espera...</p>
       </div>
       
-      <div class="mb-3">
-        <label class="form-label">Nombre de la acción</label>
-        <input formControlName="nombre" 
-               type="text" 
-               class="form-control" 
-               (keyup)="searchEmpresa(buscarTexto.value)" 
-               #buscarTexto
-               [class.is-invalid]="nombreNoValido">
-       <small *ngIf="nombreNoValido" class="text-danger">Debe introducir el nombre</small>
-      </div>
+    <div class="mb-3 position-relative">
+      <label class="form-label">Nombre de la acción</label>
+      <input formControlName="nombre" 
+            type="text" 
+            class="form-control" 
+            (keyup)="searchEmpresa(buscarTexto.value)"
+            #buscarTexto>
+      <ul class="list-group position-absolute w-100" *ngIf="empresasFiltradas.length > 0 && isOpen" style="z-index: 1000;">
+        <li *ngFor="let empresa of empresasFiltradas" 
+             (click)="updateInput(empresa);"
+             class="list-group-item list-group-item-action" style="cursor: pointer;"
+             (blur)="toggle()">
+          {{ empresa }}
+        </li>
+      </ul>
+      <small *ngIf="nombreNoValido" class="text-danger">Debe introducir el nombre</small>
+    </div>
+
 
       <div class="mb-3">
         <label class="form-label">Ticker</label>

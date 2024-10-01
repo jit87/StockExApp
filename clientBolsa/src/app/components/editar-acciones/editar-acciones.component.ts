@@ -36,6 +36,11 @@ export class EditarAccionesComponent  implements OnInit {
 
   usuario_Id: any;
 
+  //Variable para guardar empresas filtradas en el buscador
+  empresasFiltradas: string[] = []; 
+
+  isOpen = false;
+
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
               private stockService: StockService,
@@ -102,7 +107,7 @@ export class EditarAccionesComponent  implements OnInit {
           }
         );
 
-        // Reinicia el formulario después de agregar una acción con éxito
+        //Reinicia el formulario después de agregar una acción con éxito
         this.agregarAccion.reset();
         this.empresaAgregada.emit(this.siAgregada);
         this.toastr.success('La acción ha sido añadida', 'Acción añadida');
@@ -115,7 +120,7 @@ export class EditarAccionesComponent  implements OnInit {
       console.error('Formulario no válido. No se puede proceder.');  
     }
 
-    // Evita que el formulario se envíe automáticamente
+    //Evita que el formulario se envíe automáticamente
     return false;
   }
 
@@ -123,13 +128,7 @@ export class EditarAccionesComponent  implements OnInit {
 
 
   updateInput(nombreEmpresa: string): void {
-    const nombreActual = this.agregarAccion?.get('nombre')?.value;
-
-    // Actualiza el valor solo si el campo está vacío
-    if (!nombreActual) {
-      this.agregarAccion?.get('nombre')?.setValue(nombreEmpresa);
-    }
-
+     this.agregarAccion?.get('nombre')?.setValue(nombreEmpresa, { emitEvent: false });
   }
 
 
@@ -146,11 +145,14 @@ export class EditarAccionesComponent  implements OnInit {
   //CONSULTAS
 
   searchEmpresa(nombre: string): void {
+    if (nombre.length < 3) {
+      this.empresasFiltradas = [];
+      return;
+    }
     this.stockService.getName(nombre).subscribe({
       next: resultado => {
-        console.log(resultado);
-        if (nombre === (this.buscarTexto?.value || '')) {
-          this.updateInput(resultado);
+        if (resultado) {
+          this.empresasFiltradas = [resultado];
         }
       },
       error: error => {
@@ -158,6 +160,14 @@ export class EditarAccionesComponent  implements OnInit {
       }
     });
   }
+
+
+
+  toggle(){
+      this.isOpen = !this.isOpen;
+  };
+ 
+
 
 
   getUsuario() {
