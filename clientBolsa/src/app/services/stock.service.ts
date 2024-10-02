@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, concatMap, map, switchMap, toArray } from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
 import { environment } from '../environments/environment'; 
 
@@ -12,6 +12,7 @@ export class StockService {
   private readonly alphaVantageApiKey = environment.alphaVantageApiKey;
   private readonly polygonApiKey = environment.polygonApiKey;
   private readonly marketstackApiKey = environment.marketstackApiKey;
+  private readonly finnhubApiKey = environment.finnhubApiKey;
   private readonly tiingoToken = environment.tiingoToken;
   private readonly fmpApiKey = environment.fmpApiKey;
 
@@ -27,7 +28,14 @@ export class StockService {
     return of(fallbackValue);
   }
 
+
   private getFromPolygon<T>(url: string, errorMessage: string, fallbackValue: T): Observable<T> {
+    return this.http.get<T>(url).pipe(
+      catchError(error => this.handleError(error, errorMessage, fallbackValue))
+    );
+  }
+
+  private getFromFinnhub<T>(url: string, errorMessage: string, fallbackValue: T): Observable<T> {
     return this.http.get<T>(url).pipe(
       catchError(error => this.handleError(error, errorMessage, fallbackValue))
     );
@@ -66,10 +74,25 @@ export class StockService {
     if (nombre.length < 3) return of('');
 
     const polygonUrl = `https://api.polygon.io/v3/reference/tickers?search=${nombre}&active=true&apiKey=${this.polygonApiKey}`;
+    const finnhubUrl = `https://finnhub.io/api/v1/search?q=${nombre}&count=4&token=${this.finnhubApiKey}`;
+
     return this.getFromPolygon<any>(polygonUrl, 'Error al obtener el nombre desde Polygon.io', {}).pipe(
-      map(response => response?.results?.[0]?.name || '')
+      switchMap(response => {
+        const name = response?.results?.[0]?.name || '';
+        if (name) {
+          return of(name); 
+        }
+        //Si no encontramos un nombre en Polygon, realizamos la búsqueda en Finnhub
+        return this.getFromFinnhub<any>(finnhubUrl, 'Error al obtener el nombre desde Finnhub', {}).pipe(
+          map(finnhubResponse => {
+            console.log('Respuesta de Finnhub:', finnhubResponse); 
+            return finnhubResponse?.result?.[0]?.description || ''; 
+          })
+        );
+      })
     );
   }
+
 
 
   getData(ticker: string): Observable<any> {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
@@ -128,7 +128,8 @@ export class EditarAccionesComponent  implements OnInit {
 
 
   updateInput(nombreEmpresa: string): void {
-     this.agregarAccion?.get('nombre')?.setValue(nombreEmpresa, { emitEvent: false });
+    this.agregarAccion?.get('nombre')?.setValue(nombreEmpresa, { emitEvent: false });
+    this.isOpen = false; 
   }
 
 
@@ -139,26 +140,39 @@ export class EditarAccionesComponent  implements OnInit {
   }
 
 
-
-
-
-  //CONSULTAS
-
   searchEmpresa(nombre: string): void {
     if (nombre.length < 3) {
       this.empresasFiltradas = [];
       return;
     }
+
     this.stockService.getName(nombre).subscribe({
-      next: resultado => {
-        if (resultado) {
-          this.empresasFiltradas = [resultado];
+        next: resultado => {
+          console.log('Resultado de la búsqueda:', resultado); 
+          if (resultado && resultado.length > 0) {
+            this.empresasFiltradas = [resultado]; 
+            this.isOpen = true;
+          } else {
+            this.empresasFiltradas = []; 
+            this.isOpen = false; 
+          }
+        },
+        error: error => {
+          console.error('Error al obtener el nombre de la empresa:', error);
+          this.empresasFiltradas = []; 
+          this.isOpen = false; 
         }
-      },
-      error: error => {
-        console.error('Error al obtener el nombre de la empresa:', error);
+      });
+  }
+
+
+  @HostListener('document:click', ['$event'])
+    onClick(event: MouseEvent) {
+      const target = event.target as HTMLElement;
+
+      if (!target.closest('.mb-3')) {
+        this.isOpen = false; 
       }
-    });
   }
 
 
