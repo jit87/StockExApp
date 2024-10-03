@@ -150,7 +150,7 @@ async eliminarAccion(empresa: Empresa) {
       let totalValoracion = 0; 
       this.listEmpresas.forEach(empresa => {
         total += empresa.capitalInvertido || 0;
-        empresa.valoracion = empresa.cantidad * empresa.precio;
+        empresa.valoracion = (empresa.cantidad * empresa.precio);
         totalValoracion = totalValoracion + empresa.valoracion; 
       });
       this.totalAcciones = total;

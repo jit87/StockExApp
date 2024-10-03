@@ -1,0 +1,53 @@
+<hr style="border: 1px solid #343a40; margin-bottom: 20px;margin-top:50px;">
+<div *ngIf="this.listEmpresas.length > 0">
+    <br>
+    <div class="container mt-4">
+        <div class="row">
+            <div>
+                <h5>Exposición de los sectores</h5>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 50px;">
+        <br>
+        <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="data" [doughnut]="doughnut"
+            [legend]="leyenda" [labels]="showLabels">
+        </ngx-charts-pie-chart>
+    </div>
+    <br>
+
+    <table class="table-hover table-dark" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="text-align: left; padding: 8px;">Nombre</th>
+                <th style="text-align: justify; padding: 8px;">Supersector</th>
+                <th style="text-align: justify; padding: 8px;">Valoración</th>
+                <th style="text-align: right; padding: 8px;">Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let empresa of listEmpresasGrafico; let i = index">
+                <td style="text-align: left; padding: 8px; border-bottom: 1px solid #343a40;">
+                    {{ empresa.nombre }}
+                </td>
+                <td style="text-align:justify; padding: 8px; border-bottom: 1px solid #343a40;">
+                    {{ empresa.supersector }}
+                </td>
+                <td style="text-align:justify; padding: 8px; border-bottom: 1px solid #343a40;">
+                    {{ empresa.valoracion | transforNumber }}
+                </td>
+                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #343a40;">
+                    {{ porcentajes[i] }} %
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div class="container mt-4" style="font-weight: 100;">
+        <div class="row">
+            <div>
+                <h6 *ngIf="this.calcularSensibilidad">Su cartera es predominantemente <span style="color:rgb(194, 120, 22);">{{ mayorSupersector }}</span></h6>
+            </div>
+        </div>
+    </div>

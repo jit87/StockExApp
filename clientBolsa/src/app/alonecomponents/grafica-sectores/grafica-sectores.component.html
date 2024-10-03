@@ -39,7 +39,7 @@
                     {{ empresa.industria }}
                 </td>
                 <td style="text-align:justify; padding: 8px; border-bottom: 1px solid #343a40;">
-                    {{ empresa.valoracion }}
+                    {{ empresa.valoracion | transforNumber }}
                 </td>
                 <td style="text-align: right; padding: 8px; border-bottom: 1px solid #343a40;">
                     {{ porcentajes[i] }} %

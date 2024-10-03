@@ -1,0 +1,40 @@
+ngx-charts-legend {
+    width: 400px;
+
+}
+
+
+label {
+    color: white !important;
+}
+
+
+
+text {
+    fill: #ffffff;
+}
+
+
+
+/*Para la tabla*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #343a40;
+}
+
+th {
+    text-align: left;
+    border-bottom: 2px solid #343a40;
+    border-top: 2px solid #343a40;
+}
+
+td {
+    text-align: right;
+}

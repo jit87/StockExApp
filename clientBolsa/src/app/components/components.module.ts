@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PipeTransform } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { ContenidoComponent } from './contenido/contenido.component';
 import { EditarAccionesComponent } from './editar-acciones/editar-acciones.component';
@@ -17,6 +17,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DividendosComponent } from './dividendos/dividendos.component';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { DatepickerComponent } from '../alonecomponents/datepicker/datepicker.component';
+import { TransforNumberPipe } from '../pipes/transfor-number.pipe';
+import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supersectores/grafica-supersectores.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { DatepickerComponent } from '../alonecomponents/datepicker/datepicker.co
     APP_ROUTING,
     GraficaSectoresComponent,
     NgxChartsModule,
-    DatepickerComponent
+    DatepickerComponent,
+    TransforNumberPipe,
+    GraficaSupersectoresComponent
 ],
   exports: [
     ContenidoComponent,

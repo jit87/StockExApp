@@ -4,12 +4,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmpresaService } from '../../services/empresa.service';
 import { AuthService } from '../../services/auth.service';
 import $ from 'jquery';
+import { TransforNumberPipe } from "../../pipes/transfor-number.pipe";
 
 
 @Component({
   selector: 'app-grafica-sectores',
   standalone: true,
-  imports: [ CommonModule, NgxChartsModule ],
+  imports: [CommonModule, NgxChartsModule, TransforNumberPipe],
   templateUrl: './grafica-sectores.component.html',
   styleUrls: ['./grafica-sectores.component.css']
 })

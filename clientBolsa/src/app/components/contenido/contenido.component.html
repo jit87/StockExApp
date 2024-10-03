@@ -25,9 +25,9 @@
           <td *ngIf="empresa.haSubido===0">{{ empresa.precio }}</td>
           <td>{{ empresa.cantidad }}</td>
           <td>{{ empresa.capitalInvertido }}</td>
-          <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-up"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
-          <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.valoracion }} <i class="fa-solid fa-arrow-trend-down"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
-          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracion }} <br> <span class="end">{{ empresa.variacion }} %</span></td>
+          <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.valoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-up"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
+          <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.valoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-down"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
+          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracio | transforNumber }} <br> <span class="end">{{ empresa.variacion }} %</span></td>
           <td>{{ empresa.industria }}</td>
 
           <td>
@@ -45,15 +45,15 @@
       <i class="fa-solid fa-plus"></i> Añadir acción
     </button>
     <div>
-        <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido:  {{ this.totalAcciones }} </h5>
+        <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido:  {{ this.totalAcciones | transforNumber }} </h5>
     </div>
   </div>
 
     <br>
     <div class="float-end">
-      <h5 style="color: white;float:right" *ngIf="this.mayorValor===1">Total valoración: <span style="color:green;">{{ this.totalValoracion }} <i class="fa-solid fa-arrow-trend-up"></i></span></h5>
-      <h5 style="color: white;float:right" *ngIf="this.mayorValor===-1">Total valoración: <span style="color:red;">{{ this.totalValoracion }} <i class="fa-solid fa-arrow-trend-down"></i></span></h5>
-      <h5 style="color: white;float:right" *ngIf="this.mayorValor===0">Total valoración: {{ this.totalValoracion }}
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===1">Total valoración: <span style="color:green;">{{ this.totalValoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-up"></i></span></h5>
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===-1">Total valoración: <span style="color:red;">{{ this.totalValoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-down"></i></span></h5>
+      <h5 style="color: white;float:right" *ngIf="this.mayorValor===0">Total valoración: {{ this.totalValoracion | transforNumber }}
       </h5>
     </div>
 
@@ -70,6 +70,7 @@
 </div>  
 
 <div><app-grafica-sectores></app-grafica-sectores></div>
+<div><app-grafica-supersectores></app-grafica-supersectores></div>
 
 
 </div>
