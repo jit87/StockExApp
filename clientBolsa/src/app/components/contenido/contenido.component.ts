@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Output, ViewChild } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
@@ -7,6 +7,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { GraficaSectoresComponent } from '../../alonecomponents/grafica-sectores/grafica-sectores.component';
+import { GraficaSupersectoresComponent } from '../../alonecomponents/grafica-supersectores/grafica-supersectores.component';
 
 
 @Component({
@@ -48,6 +50,10 @@ export class ContenidoComponent {
   //Variable que mide lo que valen las acciones en la actualidad
   totalValoracion: any; 
 
+  //Variables para acceder a las gráficas dependientes
+  @ViewChild(GraficaSectoresComponent) graficaSectoresComponent!: GraficaSectoresComponent;
+  @ViewChild(GraficaSupersectoresComponent) graficaSupersectoresComponent!: GraficaSupersectoresComponent;
+
 
   constructor(
     public empresaService: EmpresaService,
@@ -58,12 +64,6 @@ export class ContenidoComponent {
   ) {
     this.getUsuario();
     this.getEmpresas(); 
-  }
-
-
-  ngOnInit(): void {
-    this.getUsuario();
-    this.getEmpresas();
   }
 
 
@@ -119,6 +119,7 @@ async eliminarAccion(empresa: Empresa) {
         this.eliminarDividendo(empresa.ticker); 
         this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
         Swal.close();
+        this.actualizarGraficas();
       },
       (error: any) => {
         console.log(error);
@@ -231,10 +232,19 @@ async eliminarAccion(empresa: Empresa) {
     this.getEmpresas(); 
   }
 
-  // Recepción de datos del hijo formulario de edición
+  //Recepción de datos del hijo formulario de edición
   recibirValor(siAgregada: boolean) {
-    if (siAgregada) {
+    if (siAgregada) { 
       this.getEmpresas(); 
+      this.actualizarGraficas(); 
+    }
+  }
+
+  //Recepción de datos del hijo formulario de modificación
+  recibirValor2(siModificada: boolean) {
+    if (siModificada) { 
+      this.getEmpresas(); 
+      this.actualizarGraficas(); 
     }
   }
 
@@ -257,7 +267,11 @@ async eliminarAccion(empresa: Empresa) {
     )
   }
 
-
+  //Función que actualiza los datos de las gráficas dependientes
+  actualizarGraficas() {
+    this.graficaSectoresComponent.loadData();
+    this.graficaSupersectoresComponent.loadData();
+  }
 
 
 

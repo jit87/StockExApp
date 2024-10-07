@@ -56,7 +56,8 @@ export class GraficaSupersectoresComponent implements OnInit {
 
 
  //Similar al primer gráfico solo que utiliza los supersectores
- generarGrafico() {
+  generarGrafico() {
+   this.listEmpresasGrafico = [];
    const sectorData: { [key: string]: number } = {};
    let totalCapitalInvertido = 0; 
    let countSectores = 0;  
@@ -122,10 +123,10 @@ export class GraficaSupersectoresComponent implements OnInit {
         this.listEmpresas = resp;  
         //Una vez obtenidos los datos en función del usuario generamos el gráfico y los demas datos
         this.generarGrafico(); 
-        this.getPorcentajes(); 
-        this.getTotalValoracion(); 
       }
     );
+    this.getPorcentajes(); 
+    this.getTotalValoracion(); 
   }
 
 
@@ -143,11 +144,8 @@ export class GraficaSupersectoresComponent implements OnInit {
              }
            }
          )
-         console.log(this.porcentajes); 
       }
     );
-    
-
   }
 
   getTotalValoracion() {
@@ -265,12 +263,16 @@ export class GraficaSupersectoresComponent implements OnInit {
   }
  
 
-//Para imprimir el supersector predominante
 calcularSensibilidad(data: any[]) {
   let mayorSector: any[] = [];
   let maxValue = 0;  
+  let todosIguales = true;
 
   for (let i = 0; i < data.length; i++) {
+    if (i > 0 && data[i].value !== data[i - 1].value) {
+      todosIguales = false;
+    }
+
     if (data[i].value > maxValue) {
       maxValue = data[i].value;   
       mayorSector = [data[i]];   
@@ -278,10 +280,13 @@ calcularSensibilidad(data: any[]) {
       mayorSector.push(data[i]); 
     }
   }
-  console.log(mayorSector); 
-  this.mayorSupersector = mayorSector[0].name.toLowerCase(); 
-}
 
+  if (todosIguales) {
+    this.mayorSupersector = "Equilibrada";
+  } else {
+    this.mayorSupersector = mayorSector[0].name.toLowerCase(); 
+  }
+}
 
 
 

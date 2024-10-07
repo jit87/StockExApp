@@ -49,9 +49,6 @@ export class GraficaSectoresComponent implements OnInit {
 
   ngOnInit() {
     this.getUsuario(); 
-    this.loadData();
-    this.getPorcentajes(); 
-    this.getTotalValoracion(); 
   }
 
 
@@ -92,16 +89,6 @@ export class GraficaSectoresComponent implements OnInit {
 
   //CONSULTAS
 
-  loadData() {
-    this._empresaService.getListEmpresas(this.usuario).subscribe(
-      (resp: any) => {
-        this.listEmpresas = resp;  
-        this.generarGrafico(); 
-      }
-    );
-  }
-  
-
   getUsuario() {
     const email = localStorage.getItem('email'); 
     this._authService.getUserByEmail(email).subscribe(
@@ -112,6 +99,17 @@ export class GraficaSectoresComponent implements OnInit {
     );
   }
 
+  loadData() {
+    this._empresaService.getListEmpresas(this.usuario).subscribe(
+      (resp: any) => {
+        this.listEmpresas = resp;  
+        this.generarGrafico(); 
+      }
+    );
+    this.getPorcentajes(); 
+    this.getTotalValoracion(); 
+  }
+  
 
   getPorcentajes() {
     this.getTotalValoracion(); 
@@ -170,8 +168,6 @@ export class GraficaSectoresComponent implements OnInit {
   }
    
  
-
-
 
 
 

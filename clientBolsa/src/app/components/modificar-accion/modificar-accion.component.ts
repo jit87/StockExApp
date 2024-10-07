@@ -32,6 +32,12 @@ export class ModificarAccionComponent {
 
   empresaGuardada: Empresa | undefined; 
 
+  //Evento para notificar que se modifica una empresa
+  @Output() empresaModificada = new EventEmitter<boolean>();
+
+  //Variable para comunicar al padre (contenido.component) que se ha modificado una empresa en el hijo (formulario)
+  siModificada: boolean = true; 
+
 
 
   constructor(private fb: FormBuilder,
@@ -98,6 +104,7 @@ export class ModificarAccionComponent {
           (resp: any) => {
             if(resp)
               this.toastr.success('La acción ha sido actualizada', 'Acción actualizada');
+              this.empresaModificada.emit(this.siModificada);
           }, (error) => {
             this.toastr.error('Se ha producido un error', error);
           }

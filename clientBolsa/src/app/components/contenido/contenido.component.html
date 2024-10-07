@@ -27,7 +27,7 @@
           <td>{{ empresa.capitalInvertido }}</td>
           <td *ngIf="empresa.haSubido===1" style="color:green;">{{ empresa.valoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-up"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
           <td *ngIf="empresa.haSubido===-1" style="color:red;">{{ empresa.valoracion | transforNumber }} <i class="fa-solid fa-arrow-trend-down"></i> <br> <span class="end">{{ empresa.variacion | number:'1.2-2' }} %</span></td>
-          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracio | transforNumber }} <br> <span class="end">{{ empresa.variacion }} %</span></td>
+          <td *ngIf="empresa.haSubido===0">{{ empresa.valoracion | transforNumber }} <br> <span class="end">{{ empresa.variacion }} %</span></td>
           <td>{{ empresa.industria }}</td>
 
           <td>
@@ -66,7 +66,7 @@
 <div *ngIf="mostrarFormularioEdicion || mostrarFormularioEdicion2"
   style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 10; display: flex; justify-content: center; align-items: center;">
   <app-editar-acciones *ngIf="mostrarFormularioEdicion" (cerrarFormulario)="cerrarFormulario()" (empresaAgregada)="recibirValor($event)"></app-editar-acciones>
-  <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()"> </app-modificar-accion>
+  <app-modificar-accion *ngIf="mostrarFormularioEdicion2" [empresaId]="empresaIdSeleccionada" (cerrarFormulario2)="cerrarFormulario2()" (empresaModificada)="recibirValor2($event)"> </app-modificar-accion>
 </div>  
 
 <div><app-grafica-sectores></app-grafica-sectores></div>
