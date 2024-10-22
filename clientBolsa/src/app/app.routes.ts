@@ -13,7 +13,6 @@ import { NoticiasComponent } from "./components/noticias/noticias.component";
 
 const APP_ROUTES: Routes = [
     { path:'contenido', component: ContenidoComponent, canActivate: [AuthGuard] },
-    { path:'editar-acciones', component: EditarAccionesComponent, canActivate: [AuthGuard] },
     { path:'buscar/:ticker', component: BuscadorEmpresaComponent , canActivate: [AuthGuard] },
     { path:'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
     { path:'login', component: LoginComponent },
