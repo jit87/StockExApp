@@ -4,9 +4,9 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 
 ## Funcionalidades
 
-- **Cotizaciones en Tiempo Real**: Visualiza precios actualizados al instante.
-- **Historial de Precios**: Accede a datos históricos de acciones.
-- **Gráficos Interactivos**: Analiza tendencias del mercado con visualizaciones dinámicas.
+- **Cotizaciones en tiempo real**: Visualiza precios actualizados al instante.
+- **Historial de precios**: Accede a datos históricos de acciones.
+- **Gráficos interactivos**: Analiza tendencias del mercado con visualizaciones dinámicas.
 
 ## Tecnologías Utilizadas
 
@@ -31,9 +31,9 @@ Stock market application developed with the MEAN stack (MongoDB, Express, Angula
 
 ## Features
 
-- **Real-Time Quotes**: View live price updates instantly.
-- **Price History**: Access historical stock price data.
-- **Interactive Charts**: Analyze market trends with dynamic visualizations.
+- **Real-Time quotes**: View live price updates instantly.
+- **Price history**: Access historical stock price data.
+- **Interactive charts**: Analyze market trends with dynamic visualizations.
 
 ## Technologies Used
 
