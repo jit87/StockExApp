@@ -5,8 +5,11 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 ## Funcionalidades
 
 - **Cotizaciones en tiempo real**: Visualiza precios actualizados al instante.
-- **Historial de precios**: Accede a datos históricos de acciones.
-- **Gráficos interactivos**: Analiza tendencias del mercado con visualizaciones dinámicas.
+- **Crear cartera de acciones**: Añade acciones para tu portafolio.
+- **Gráficos interactivos**: Se adaptan a tu cartera dinámicamente y ayudan a visualizar los diferentes sectores.
+- **Información sobre dividendos: Proporciona información sobre dividendos a cobrar.
+- **Consejos básicos: En función de tu cartera, da orientaciones básicas sobre diversificación.
+- **Información actualizada: Ultimas noticias del mercado y de las empresas.
 
 ![Captura de Dashboard](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dashboard.png)
 
@@ -149,9 +152,12 @@ Stock market application developed with the MEAN stack (MongoDB, Express, Angula
 
 ## Features
 
-- **Real-Time quotes**: View live price updates instantly.
-- **Price history**: Access historical stock price data.
-- **Interactive charts**: Analyze market trends with dynamic visualizations.
+- **Real-time quotes**: View prices updated instantly.
+- **Create stock portfolio**: Add stocks to your portfolio.
+- **Interactive charts**: Adapt to your portfolio dynamically and help visualize different sectors.
+- **Dividend information**: Provides information about dividends to be received.
+- **Basic tips**: Offers basic guidance on diversification based on your portfolio.
+- **Updated information**: Latest news from the market and companies.
 
 ## Technologies Used
 
