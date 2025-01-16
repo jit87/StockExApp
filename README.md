@@ -75,7 +75,7 @@ Ejecuta el siguiente comando para iniciar el servidor backend:
 npm start
 ```
 
-Por defecto, el servidor se ejecuta en `http://localhost:3000`.
+Por defecto, el servidor se ejecuta en `http://localhost:4000`.
 
 ---
 
@@ -112,7 +112,7 @@ Por defecto, el frontend se ejecuta en `http://localhost:4200`.
 ## **4. Acceso a la Aplicación**
 
 1. Abre tu navegador web.
-2. Asegúrate de que el backend esté corriendo en `http://localhost:3000`.
+2. Asegúrate de que el backend esté corriendo en `http://localhost:4000`.
 3. Ve al frontend en `http://localhost:4200` para usar la aplicación.
 
 ---
