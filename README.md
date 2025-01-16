@@ -154,3 +154,107 @@ Stock market application developed with the MEAN stack (MongoDB, Express, Angula
 - `/clientBolsa`: Frontend built with Angular.
 - `/serverBolsa`: Backend developed with Express and Node.js.
 
+
+# Installation and Running of StockExApp
+
+Follow these steps to install and run the **StockExApp** on your local environment.
+
+---
+
+## **1. Clone the Repository**
+
+Clone the repository from GitHub using the following command:
+
+```bash
+git clone https://github.com/jit87/StockExApp.git
+```
+
+---
+
+## **2. Set Up the Backend**
+
+### **2.1. Go to the Backend Directory**
+
+Navigate to the `serverBolsa` directory:
+
+```bash
+cd StockExApp/serverBolsa
+```
+
+### **2.2. Install Dependencies**
+
+Run the following command to install the necessary dependencies:
+
+```bash
+npm install
+```
+
+### **2.3. Set Up Environment Variables**
+
+Create a `.env` file in the `serverBolsa` directory with the following content, replacing `your_key` with your API keys:
+
+```env
+FINNHUB_API_KEY=your_key
+ALPHA_VANTAGE_API_KEY=your_key
+POLYGON_API_KEY=your_key
+```
+
+### **2.4. Start the Server**
+
+Run the following command to start the backend server:
+
+```bash
+npm start
+```
+
+By default, the server runs on `http://localhost:4000`.
+
+---
+
+## **3. Set Up the Frontend**
+
+### **3.1. Go to the Frontend Directory**
+
+Navigate to the `clientBolsa` directory:
+
+```bash
+cd ../clientBolsa
+```
+
+### **3.2. Install Dependencies**
+
+Run the following command to install the necessary dependencies:
+
+```bash
+npm install
+```
+
+### **3.3. Start the Development Server**
+
+Run the following command to start the frontend server:
+
+```bash
+npm start
+```
+
+By default, the frontend runs on `http://localhost:4200`.
+
+---
+
+## **4. Access the Application**
+
+1. Open your web browser.
+2. Make sure the backend is running on `http://localhost:4000`.
+3. Go to the frontend at `http://localhost:4200` to use the application.
+
+---
+
+## **Additional Notes**
+
+- Make sure you have Node.js installed (version 14 or higher).
+- Install `npm` if it is not available.
+- Ensure you have internet access to fetch data from the APIs.
+
+If you encounter any issues during installation, feel free to open an issue on the repository.
+
+
