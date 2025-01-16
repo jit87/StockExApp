@@ -10,6 +10,10 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 
 ![Captura de Dashboard](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dashboard.png)
 
+![Captura de Dashboard2](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dashboard2.png)
+
+![Captura de Dashboard3](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dashboard3.png)
+
 ![Captura de Noticias](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Noticias.png)
 
 ![Captura de Dividendos](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dividendos.png)
