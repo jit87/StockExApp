@@ -8,6 +8,16 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 - **Historial de precios**: Accede a datos históricos de acciones.
 - **Gráficos interactivos**: Analiza tendencias del mercado con visualizaciones dinámicas.
 
+![Captura de Dashboard](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dashboard.png)
+
+![Captura de Noticias](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Noticias.png)
+
+![Captura de Dividendos](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Dividendos.png)
+
+![Captura de Info](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-InfoAccion.png)
+
+![Captura de Perfil](https://raw.githubusercontent.com/jit87/StockExApp/main/clientBolsa/src/app/assets/Captura-Perfil.png)
+
 ## Tecnologías Utilizadas
 
 - **Frontend**: Angular 12
