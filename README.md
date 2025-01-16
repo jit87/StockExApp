@@ -23,12 +23,7 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 - `/clientBolsa`: Frontend en Angular.
 - `/serverBolsa`: Backend con Express y Node.js.
 
-## Instalación y Ejecución
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/jit87/StockExApp.git
-
+---------------------------------------------------
 
 # StockExApp
 
@@ -55,8 +50,3 @@ Stock market application developed with the MEAN stack (MongoDB, Express, Angula
 - `/clientBolsa`: Frontend built with Angular.
 - `/serverBolsa`: Backend developed with Express and Node.js.
 
-## Installation and Execution
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/jit87/StockExApp.git
