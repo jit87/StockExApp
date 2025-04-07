@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-center align-items-center vh-100 animate__animated animate__fadeIn mb-4">
     <div class="container">
         <br>
-        <div *ngIf="usuario" class="mx-auto rounded">
+        <br>
+        <br>
+        <div *ngIf="usuario" class="mx-auto rounded"  class="table-responsive" style="overflow-x: auto;">
             <h5 class="text-justify mb-3">Datos de usuario</h5>
             <table style="border-collapse: collapse; width: 100%;">
                 <tbody>
@@ -89,8 +91,8 @@
         <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
         <p style="color: white;">Modificando la contraseña, por favor espera...</p>
     </div>
-    <div style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
-        <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
+    <div style="max-width: 500px; margin: 0 auto; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
+        <button class="btn-close" style="margin-left: 95%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
         <div class="form-group">
             <label for="actualPassword">Contraseña actual</label>
             <div class="input-group">
@@ -115,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+        <button class="btn btn-primary" type="submit" style="overflow: hidden;">Cambiar contraseña</button>
     </div>
 </form>
 
@@ -128,7 +130,7 @@
     </div>
     <div
         style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
-        <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioNom()">X</button>
+        <button class="btn-close" style="margin-left: 95%; cursor: pointer;" (click)="cerrarFormularioNom()">X</button>
         <div class="form-group">
             <label for="nuevaPassword">Nuevo nombre</label>
             <div class="input-group">
@@ -148,7 +150,7 @@
     </div>
     <div
         style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
-        <button class="btn" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrarFormularioEma()">X</button>
+        <button class="btn-close" style="margin-left: 95%; cursor: pointer;" (click)="cerrarFormularioEma()">X</button>
         <div class="form-group">
             <label for="nuevoEmail">Nuevo email</label>
             <div class="input-group">

@@ -1,34 +1,42 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        <img [src]="img1" alt="Logo" width="50" height="40" routerLink='/contenido'>&nbsp;&nbsp;StockExApp
-      </a>
-      &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='/contenido' routerLinkActive="active">
-        Cartera</a>
-      &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='noticias' routerLinkActive="active">
-        Noticias</a>
-      &nbsp;
-      <a *ngIf="autenticado" class="navbar-brand" href="#" routerLink='dividendos' routerLinkActive="active">
-        Dividendos</a>
-      &nbsp;
-      <a class="navbar-brand" *ngIf="autenticado" [routerLink]="['perfil']" routerLinkActive="active">
-        Perfil
-      </a>
-    </div>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <button *ngIf="autenticado" class="btn btn-danger" (click)="logout()">Salir</button>
-      </li>
-    </ul>
-    <ng-template #loggedOut>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <button class="btn btn-tertiary">Iniciar sesión</button>
+
+    <a class="navbar-brand" routerLink="/contenido">
+      <img [src]="img1" alt="Logo" width="50" height="40" />
+      &nbsp;&nbsp;StockExApp
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido"
+      aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContenido">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li *ngIf="autenticado" class="nav-item">
+          <a class="nav-link" routerLink="/contenido" routerLinkActive="active">Cartera</a>
+        </li>
+        <li *ngIf="autenticado" class="nav-item">
+          <a class="nav-link" routerLink="/noticias" routerLinkActive="active">Noticias</a>
+        </li>
+        <li *ngIf="autenticado" class="nav-item">
+          <a class="nav-link" routerLink="/dividendos" routerLinkActive="active">Dividendos</a>
+        </li>
+        <li *ngIf="autenticado" class="nav-item">
+          <a class="nav-link" routerLink="/perfil" routerLinkActive="active">Perfil</a>
         </li>
       </ul>
-    </ng-template>
+
+      <!-- visible solo en móvil (d-md-none) -->
+      <div class="nav-item d-md-none mt-2" *ngIf="autenticado">
+        <button class="btn btn-danger btn-block" (click)="logout()">Salir</button>
+      </div>
+
+      <!-- visible solo en escritorio (d-none d-md-block) -->
+      <span class="salir d-none d-md-block">
+        <button *ngIf="autenticado" class="btn btn-danger" (click)="logout()">Salir</button>
+      </span>
+
+    </div>
   </div>
 </nav>

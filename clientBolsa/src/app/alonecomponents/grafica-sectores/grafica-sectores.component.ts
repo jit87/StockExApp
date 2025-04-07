@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LegendPosition, NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmpresaService } from '../../services/empresa.service';
 import { AuthService } from '../../services/auth.service';
 import $ from 'jquery';
@@ -35,6 +35,7 @@ export class GraficaSectoresComponent implements OnInit {
   colorScheme = 'cool'; 
   leyenda: boolean = true;
   showLabels: boolean = true;
+  legendPosition: LegendPosition = LegendPosition.Right;
 
 
   constructor(
@@ -48,8 +49,17 @@ export class GraficaSectoresComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getUsuario(); 
+    this.getUsuario();
+    this.setLegendVisibility();
+    window.addEventListener('resize', this.setLegendVisibility.bind(this));
   }
+
+
+
+  setLegendVisibility(): void {
+    this.leyenda = window.innerWidth > 991;
+  }
+
 
 
  generarGrafico() {

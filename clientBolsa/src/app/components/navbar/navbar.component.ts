@@ -21,10 +21,17 @@ export class NavbarComponent {
     if(this._authService.isAuthenticated()) {
       this.autenticado = true;
     }
-     this.checkAuthentication();
+    this.checkAuthentication();
   }
 
-  ngOnInit(){}
+  ngOnInit() {
+    document.querySelector('.menu-toggle')?.addEventListener('click', function() {
+            const navBrand = document.querySelector('.nav-brand');
+            if (navBrand) {
+                navBrand.classList.toggle('active');
+            }
+    });
+  }
 
 
   ngDoCheck(): void {

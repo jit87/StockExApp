@@ -51,6 +51,14 @@ export class GraficaSupersectoresComponent implements OnInit {
 
   ngOnInit() {
     this.getUsuario(); 
+    this.setLegendVisibility();
+    window.addEventListener('resize', this.setLegendVisibility.bind(this));
+  }
+
+
+  
+  setLegendVisibility(): void {
+    this.leyenda = window.innerWidth > 991;
   }
 
 

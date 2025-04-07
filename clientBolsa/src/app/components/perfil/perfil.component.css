@@ -11,20 +11,11 @@ h1 {
    padding: 50px;
 }
 
-
-
-.sweet-fade-in {
-    animation: fadeInAnimation 0.4s ease-out;
-}
-
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.container {
+    margin-left: 20%;
+    margin: 20px auto;
+    padding: 50px;
+    background-color: #343a40;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

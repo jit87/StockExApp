@@ -18,3 +18,12 @@
 .active:hover::after {
     width: 100%;
 }
+
+
+
+.salir {
+    position: absolute;
+    right: 2%; 
+}
+
+
