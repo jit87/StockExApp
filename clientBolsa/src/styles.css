@@ -42,7 +42,7 @@ footer {
 
 
 form {
-    min-width: fit-content;
+    min-width:fit-content;
 }
 
 
@@ -58,6 +58,11 @@ table {
 }
 
 
+.form-login-registro {
+    width: 20%;
+}
+
+
 
 @media only screen and (max-width: 991px) {
 
@@ -68,14 +73,13 @@ table {
     .active::after {
         display: none;
     }
-}
 
-
-
-@media only screen and (max-width: 991px) {
     .chart-legend {
         display: none !important;
     }
 
+    .form-login-registro{
+        width:50% !important; 
+    }
 }
 
