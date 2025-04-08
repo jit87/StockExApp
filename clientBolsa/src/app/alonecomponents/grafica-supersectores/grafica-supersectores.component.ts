@@ -56,7 +56,7 @@ export class GraficaSupersectoresComponent implements OnInit {
   }
 
 
-  
+  //Se oculta la leyenda para pantallas pequeñas
   setLegendVisibility(): void {
     this.leyenda = window.innerWidth > 991;
   }

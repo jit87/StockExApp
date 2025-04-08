@@ -74,9 +74,9 @@ table {
         display: none;
     }
 
-    .chart-legend {
+   /* .chart-legend {
         display: none !important;
-    }
+    }*/
 
     .form-login-registro{
         width:50% !important; 

@@ -50,12 +50,13 @@ export class GraficaSectoresComponent implements OnInit {
 
   ngOnInit() {
     this.getUsuario();
+    //.bind salta el objeto window y se refiere alobjeto apuntado por setLengendVisibility(), es decir this.leyenda
     this.setLegendVisibility();
     window.addEventListener('resize', this.setLegendVisibility.bind(this));
   }
 
 
-
+  //Se oculta la leyenda para pantallas pequeñas
   setLegendVisibility(): void {
     this.leyenda = window.innerWidth > 991;
   }
