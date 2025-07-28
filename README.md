@@ -27,7 +27,7 @@ Aplicación de bolsa desarrollada con el stack MEAN (MongoDB, Express, Angular, 
 
 ## Tecnologías Utilizadas
 
-- **Frontend**: Angular 12
+- **Frontend**: Angular 18
 - **Backend**: Node.js 14 con Express 4
 - **Base de Datos**: MongoDB
 - **APIs Integradas**:
@@ -161,7 +161,7 @@ Stock market application developed with the MEAN stack (MongoDB, Express, Angula
 
 ## Technologies Used
 
-- **Frontend**: Angular 12
+- **Frontend**: Angular 18
 - **Backend**: Node.js 14 with Express 4
 - **Database**: MongoDB
 - **Integrated APIs**:
