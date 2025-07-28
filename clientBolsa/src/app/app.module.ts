@@ -21,6 +21,7 @@ import { StockService } from './services/stock.service';
 import { ComponentsModule } from './components/components.module';
 import { GraficaSectoresComponent } from './alonecomponents/grafica-sectores/grafica-sectores.component';
 import { DecimalPipe } from '@angular/common';
+import { StockData } from './abstracts/stock-data';
 
 
 @NgModule({
@@ -32,14 +33,22 @@ import { DecimalPipe } from '@angular/common';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule, 
+    FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(),
     APP_ROUTING,
     AuthcomponentsModule
   ],
-  providers: [EmpresaService, StockService, 
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  providers: [EmpresaService, StockService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: StockData,
+      useClass: StockService
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -16,80 +16,79 @@ import $ from 'jquery'
 export class PerfilComponent {
 
   public listEmpresas: Empresa[] = [];
-  usuario: any = []; 
-  email: string | any 
+  usuario: any = [];
+  email: string | any
 
 
   //Propiedades de la contraseña
   actualPassword: string = "";
-  nuevaPassword: string = ""; 
-  password: string = ""; 
+  nuevaPassword: string = "";
+  password: string = "";
   show: boolean = false;
 
   //Propiedades del nombre
-  nuevoNombre: string = ""; 
-  nombre: string = ""; 
+  nuevoNombre: string = "";
+  nombre: string = "";
 
   //Propiedades del email
-  nuevoEmail: string = ""; 
+  nuevoEmail: string = "";
 
 
   //Prodiedades de formularios
-  mostrarFormulario: boolean = false; 
-  mostrarFormularioNom: boolean = false; 
-  mostrarFormularioEma: boolean = false; 
+  mostrarFormulario: boolean = false;
+  mostrarFormularioNom: boolean = false;
+  mostrarFormularioEma: boolean = false;
 
   //Spinner
-  loading: boolean = false; 
+  loading: boolean = false;
 
-   
+
   constructor(public empresaService: EmpresaService,
-              private _authService: AuthService,
-              private http: HttpClient,
-              private toastr: ToastrService) { }
-            
-  
+    private _authService: AuthService,
+    private toastr: ToastrService) { }
+
+
 
   ngOnInit() {
     this.getEmpresas();
-    this.getUsuario(); 
+    this.getUsuario();
   }
-  
+
 
   async getEmpresas() {
-     await this.empresaService.getListEmpresas(this.usuario._id).subscribe(
-      (resp:any) => {
-        this.listEmpresas = resp;  
+    await this.empresaService.getListEmpresas(this.usuario._id).subscribe(
+      (resp: any) => {
+        this.listEmpresas = resp;
       }
     );
   }
 
   getUsuario() {
-    var email = localStorage.getItem('email'); 
+    var email = localStorage.getItem('email');
     this._authService.getUserByEmail(email).subscribe(
       (resp: any) => {
-        this.usuario = resp; 
+        this.usuario = resp;
       }
     )
     //Guardamos el email para usarlo después
-    this.email = email; 
+    this.email = email;
   }
 
 
   //FORMULARIOS
 
- /*Password*/
- cambiarPassword() {
-    this.loading = false; 
+  /*Password*/
+  cambiarPassword() {
+    this.loading = false;
     this._authService.modificarPassword(this.email, this.actualPassword, this.nuevaPassword).subscribe(
       (resp: any) => {
         if (resp) {
-           console.log("Contraseña cambiada", resp); 
-           this.toastr.success('La contraseña ha sido cambiada', 'Contraseña cambiada');
+          console.log("Contraseña cambiada", resp);
+          this.toastr.success('La contraseña ha sido cambiada', 'Contraseña cambiada');
         }
       },
       (err) => {
-        console.log(err); 
+        console.log(err);
         this.toastr.error('La contraseña actual no coincide', 'Error');
       }
     )
@@ -97,81 +96,81 @@ export class PerfilComponent {
 
 
   cerrarFormularioPass() {
-    this.mostrarFormulario = false; 
+    this.mostrarFormulario = false;
   }
- 
+
 
   abrirFormularioPass() {
-    this.mostrarFormulario = true; 
+    this.mostrarFormulario = true;
   }
 
   visualizarPasswordActual() {
-      $('#actualPassword').attr('type', function(index, attr) {
-        return attr == 'text' ? 'password' : 'text';
-      })
+    $('#actualPassword').attr('type', function (index, attr) {
+      return attr == 'text' ? 'password' : 'text';
+    })
   }
 
   visualizarPasswordNueva() {
-      $('#nuevaPassword').attr('type', function(index, attr) {
-        return attr == 'text' ? 'password' : 'text';
-      })
+    $('#nuevaPassword').attr('type', function (index, attr) {
+      return attr == 'text' ? 'password' : 'text';
+    })
   }
-  
+
 
   /*Nombre*/
   cambiarNombre() {
-    this.loading = false; 
+    this.loading = false;
     this._authService.modificarNombre(this.email, this.nuevoNombre).subscribe(
       (resp: any) => {
         if (resp) {
-           console.log("Nombre modificado", resp); 
-           this.toastr.success('El nombre ha sido modificado', 'Nombre modificado');
+          console.log("Nombre modificado", resp);
+          this.toastr.success('El nombre ha sido modificado', 'Nombre modificado');
         }
         //Recuperamos el usuario para actualizar los datos en la impresión 
-        this.getUsuario(); 
+        this.getUsuario();
       },
       (err) => {
-        console.log(err); 
+        console.log(err);
         this.toastr.error('El usuario no existe', 'Error');
       }
     )
   }
 
   abrirFormularioNom() {
-    this.mostrarFormularioNom = true; 
+    this.mostrarFormularioNom = true;
   }
 
   cerrarFormularioNom() {
-    this.mostrarFormularioNom = false; 
+    this.mostrarFormularioNom = false;
   }
 
 
-  /*Email*/ 
+  /*Email*/
   cambiarEmail() {
-    this.loading = false; 
+    this.loading = false;
     this._authService.modificarEmail(this.email, this.nuevoEmail).subscribe(
       (resp: any) => {
         if (resp) {
-           console.log("Email modificado", resp); 
-           this.toastr.success('El email ha sido modificado', 'Email modificado');
+          console.log("Email modificado", resp);
+          this.toastr.success('El email ha sido modificado', 'Email modificado');
         }
         //Recuperamos el usuario para actualizar los datos en la impresión 
-        this.getUsuario(); 
+        this.getUsuario();
       },
       (err) => {
-        console.log(err); 
+        console.log(err);
         this.toastr.error('El usuario no existe', 'Error');
       }
     )
   }
 
   abrirFormularioEma() {
-    this.mostrarFormularioEma = true; 
+    this.mostrarFormularioEma = true;
   }
 
   cerrarFormularioEma() {
-    this.mostrarFormularioEma = false; 
+    this.mostrarFormularioEma = false;
   }
 
-  
+
 }

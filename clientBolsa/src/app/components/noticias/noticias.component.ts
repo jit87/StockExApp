@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StockService } from '../../services/stock.service';
+import { StockData } from '../../abstracts/stock-data';
 
 
 @Component({
@@ -9,42 +9,42 @@ import { StockService } from '../../services/stock.service';
 })
 export class NoticiasComponent {
 
-  constructor(private _stockService: StockService) {
-    this.getNoticias(); 
+  constructor(private _stockService: StockData) {
+    this.getNoticias();
   }
 
-//Propiedad para las noticias
-data: any[] = [];
-  
-//Propiedad de control
-Cargado = 0;
-  
-//Disponibilidad del recurso
-disponible: boolean = true; 
+  //Propiedad para las noticias
+  data: any[] = [];
+
+  //Propiedad de control
+  Cargado = 0;
+
+  //Disponibilidad del recurso
+  disponible: boolean = true;
 
 
 
 
-getNoticias() {
+  getNoticias() {
     this._stockService.getGeneralNews().subscribe(
       (resp: any) => {
-        console.log(resp); 
-          this.data = resp.results.map((element: any) => ({
-                title: element.title,
-                author: element.author,
-                date: element.published_utc,
-                url: element.article_url,
-                image: element.image_url,
-                descr: element.description
-          })); 
-        this.Cargado = 1; 
+        console.log(resp);
+        this.data = resp.results.map((element: any) => ({
+          title: element.title,
+          author: element.author,
+          date: element.published_utc,
+          url: element.article_url,
+          image: element.image_url,
+          descr: element.description
+        }));
+        this.Cargado = 1;
       },
       (err) => {
-        console.log(err); 
-        this.disponible = false; 
-    }
-  )
-}
+        console.log(err);
+        this.disponible = false;
+      }
+    )
+  }
 
 
 

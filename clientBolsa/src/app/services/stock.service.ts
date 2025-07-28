@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, concatMap, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
-import { environment } from '../environments/environment'; 
+import { environment } from '../environments/environment';
+import { StockData } from '../abstracts/stock-data';
 
 
 @Injectable()
-export class StockService {
+export class StockService extends StockData {
 
   //Claves API
   private readonly alphaVantageApiKey = environment.alphaVantageApiKey;
@@ -17,7 +18,7 @@ export class StockService {
   private readonly fmpApiKey = environment.fmpApiKey;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { super(); }
 
 
   private handleError<T>(error: HttpErrorResponse, message: string, fallbackValue: T): Observable<T> {
@@ -80,13 +81,13 @@ export class StockService {
       switchMap(response => {
         const name = response?.results?.[0]?.name || '';
         if (name) {
-          return of(name); 
+          return of(name);
         }
         //Si no encontramos un nombre en Polygon, realizamos la búsqueda en Finnhub
         return this.getFromFinnhub<any>(finnhubUrl, 'Error al obtener el nombre desde Finnhub', {}).pipe(
           map(finnhubResponse => {
-            console.log('Respuesta de Finnhub:', finnhubResponse); 
-            return finnhubResponse?.result?.[0]?.description || ''; 
+            console.log('Respuesta de Finnhub:', finnhubResponse);
+            return finnhubResponse?.result?.[0]?.description || '';
           })
         );
       })
@@ -147,5 +148,5 @@ export class StockService {
   }
 
 
-  
+
 }

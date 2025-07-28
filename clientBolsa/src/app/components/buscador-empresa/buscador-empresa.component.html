@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información de la Empresa</title>
 </head>
+
 <body>
     <p class="text-danger" *ngIf="!disponible">Información no disponible </p>
     <div class="mt-4" *ngIf="Cargado === 0" style="text-align: center;">
         <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
         <p style="color: white;">Cargando...</p>
     </div>
-    <div class="container mt-4 mb-4 animate__animated animate__fadeIn" *ngIf="Cargado !== 0"> 
-        <button class="btn btn-outline-secondary" (click)="regresar()"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+    <div class="container mt-4 mb-4 animate__animated animate__fadeIn" *ngIf="Cargado !== 0">
+        <button class="btn btn-outline-secondary" (click)="regresar()"><i class="fa-solid fa-arrow-left"></i>
+            Volver</button>
         <br>
         <br>
         <h5>Información de la empresa</h5>
@@ -56,7 +59,8 @@
             </tr>
             <tr>
                 <td style="padding: 8px 0;">Web:</td>
-                <td style="padding: 8px 0;font-family: consolas;"><a [href]="website" target="_blank">{{ website }}</a></td>
+                <td style="padding: 8px 0;font-family: consolas;"><a [href]="website" target="_blank">{{ website }}</a>
+                </td>
             </tr>
             <tr>
                 <td style="padding: 8px 0;">Dirección:</td>
@@ -91,4 +95,5 @@
         </div>
     </div>
 </body>
+
 </html>

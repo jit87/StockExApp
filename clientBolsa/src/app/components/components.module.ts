@@ -16,7 +16,6 @@ import { GraficaSectoresComponent } from "../alonecomponents/grafica-sectores/gr
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DividendosComponent } from './dividendos/dividendos.component';
 import { NoticiasComponent } from './noticias/noticias.component';
-import { DatepickerComponent } from '../alonecomponents/datepicker/datepicker.component';
 import { TransforNumberPipe } from '../pipes/transfor-number.pipe';
 import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supersectores/grafica-supersectores.component';
 
@@ -41,10 +40,9 @@ import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supers
     APP_ROUTING,
     GraficaSectoresComponent,
     NgxChartsModule,
-    DatepickerComponent,
     TransforNumberPipe,
     GraficaSupersectoresComponent
-],
+  ],
   exports: [
     ContenidoComponent,
     EditarAccionesComponent,
@@ -58,7 +56,7 @@ import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supers
     NoticiasComponent
   ],
   providers: [
-     AuthService
+    AuthService
   ]
 })
 export class ComponentsModule { }

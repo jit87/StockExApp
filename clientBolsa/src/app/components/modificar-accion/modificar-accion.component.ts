@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { EmpresaService } from '../../services/empresa.service';
-import { StockService } from '../../services/stock.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { ToastrService } from 'ngx-toastr';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -14,7 +13,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 export class ModificarAccionComponent {
 
 
-  modificarAccion:  { nombre: string; ticker: string; precio: number; numero: number } = {
+  modificarAccion: { nombre: string; ticker: string; precio: number; numero: number } = {
     nombre: '',
     ticker: '',
     precio: 0,
@@ -25,27 +24,26 @@ export class ModificarAccionComponent {
   @Input() empresaId: string | undefined;
 
   //Creamos una variable para guardar el dato anterior
-  id: string = ""; 
+  id: string = "";
 
   // Evento para notificar el cierre del formulario
   @Output() cerrarFormulario2 = new EventEmitter<void>();
 
-  empresaGuardada: Empresa | undefined; 
+  empresaGuardada: Empresa | undefined;
 
   //Evento para notificar que se modifica una empresa
   @Output() empresaModificada = new EventEmitter<boolean>();
 
   //Variable para comunicar al padre (contenido.component) que se ha modificado una empresa en el hijo (formulario)
-  siModificada: boolean = true; 
+  siModificada: boolean = true;
 
 
 
   constructor(private fb: FormBuilder,
-              private empresaService: EmpresaService,
-              private stockService: StockService,
-              private toastr: ToastrService
-              ) {
-    this.cargarDatos(); 
+    private empresaService: EmpresaService,
+    private toastr: ToastrService
+  ) {
+    this.cargarDatos();
   }
 
 
@@ -53,7 +51,7 @@ export class ModificarAccionComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['empresaId'] && this.empresaId) {
       console.log('ID recibido:', this.empresaId);
-      this.id = this.empresaId; 
+      this.id = this.empresaId;
       this.cargarDatos();
     }
   }
@@ -70,14 +68,14 @@ export class ModificarAccionComponent {
     this.empresaService.getEmpresaById(this.id).subscribe(
       (resp: any) => {
         this.empresaGuardada = resp;
-         this.modificarAccion = {
+        this.modificarAccion = {
           nombre: resp.nombre,
           ticker: resp.ticker,
           precio: resp.precio,
           numero: resp.cantidad
         };
       },
-       (error) => {
+      (error) => {
         console.error('Error al obtener la empresa:', error);
       }
     );
@@ -94,29 +92,29 @@ export class ModificarAccionComponent {
       }
     );
     if (this.empresaGuardada) {
-        const empresaActualizada: Empresa = {
-            ...this.empresaGuardada!,
-            precio: this.modificarAccion.precio,
-            cantidad: this.modificarAccion.numero,
-            capitalInvertido: this.modificarAccion.precio * this.modificarAccion.numero
-        };
-        this.empresaService.updateEmpresa(empresaActualizada, this.empresaGuardada._id).subscribe(
-          (resp: any) => {
-            if(resp)
-              this.toastr.success('La acción ha sido actualizada', 'Acción actualizada');
-              this.empresaModificada.emit(this.siModificada);
-          }, (error) => {
-            this.toastr.error('Se ha producido un error', error);
-          }
-        )
-    }  
+      const empresaActualizada: Empresa = {
+        ...this.empresaGuardada!,
+        precio: this.modificarAccion.precio,
+        cantidad: this.modificarAccion.numero,
+        capitalInvertido: this.modificarAccion.precio * this.modificarAccion.numero
+      };
+      this.empresaService.updateEmpresa(empresaActualizada, this.empresaGuardada._id).subscribe(
+        (resp: any) => {
+          if (resp)
+            this.toastr.success('La acción ha sido actualizada', 'Acción actualizada');
+          this.empresaModificada.emit(this.siModificada);
+        }, (error) => {
+          this.toastr.error('Se ha producido un error', error);
+        }
+      )
+    }
   }
-     
-     
 
 
 
-  
-     
+
+
+
+
 
 }

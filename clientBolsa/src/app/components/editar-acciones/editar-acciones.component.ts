@@ -2,11 +2,11 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
-import { StockService } from '../../services/stock.service';
 import { lastValueFrom } from 'rxjs';
 import { ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
+import { StockData } from '../../abstracts/stock-data';
 
 
 
@@ -14,12 +14,12 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-editar-acciones',
   templateUrl: './editar-acciones.component.html',
 })
-export class EditarAccionesComponent  implements OnInit {
+export class EditarAccionesComponent implements OnInit {
 
   agregarAccion: FormGroup | any;
   StockPrice: number | undefined;
   per: number | undefined;
-  industria: string | undefined;  
+  industria: string | undefined;
   @ViewChild('buscarTexto') buscarTexto: HTMLInputElement | undefined;
 
   //Comunicamos al padre (contenido) que se ha agregado la acción
@@ -27,47 +27,47 @@ export class EditarAccionesComponent  implements OnInit {
 
   // Evento para notificar el cierre del formulario
   @Output() cerrarFormulario = new EventEmitter<void>();
-  
+
   //Variable para comunicar al padre (contenido.component) que se ha agregado una empresa en el hijo (formulario)
-  siAgregada: boolean = true; 
+  siAgregada: boolean = true;
 
   //Spinner
-  loading: boolean = false; 
+  loading: boolean = false;
 
   usuario_Id: any;
 
   //Variable para guardar empresas filtradas en el buscador
-  empresasFiltradas: string[] = []; 
+  empresasFiltradas: string[] = [];
 
   isOpen = false;
 
   constructor(private fb: FormBuilder,
-              private empresaService: EmpresaService,
-              private stockService: StockService,
-              private toastr: ToastrService,
-              private _authService: AuthService) {
+    private empresaService: EmpresaService,
+    private stockService: StockData,
+    private toastr: ToastrService,
+    private _authService: AuthService) {
     this.agregarAccion = this.fb.group({
       nombre: ['', Validators.required],
       ticker: ['', Validators.required],
-      numero: [0, [Validators.required, Validators.minLength(1), Validators.min(1)]] 
-    });  
+      numero: [0, [Validators.required, Validators.minLength(1), Validators.min(1)]]
+    });
 
-    this.getUsuario(); 
+    this.getUsuario();
   }
 
 
-  
+
 
   ngOnInit(): void {
-     this.getUsuario();
+    this.getUsuario();
   }
 
-  
+
 
   //ACCIONES Y CALCULOS
 
   async addAccion() {
-     this.loading = true;
+    this.loading = true;
 
     //Marca los errores si no se han completado los campos
     if (this.agregarAccion.invalid) {
@@ -82,7 +82,7 @@ export class EditarAccionesComponent  implements OnInit {
         const industriaObservable = this.stockService.getIndustry(ticker);
         this.industria = await lastValueFrom(industriaObservable);
 
-         //const perObservable = this.stockService.getPER(ticker);
+        //const perObservable = this.stockService.getPER(ticker);
         //this.per = await lastValueFrom(perObservable);
 
         const nuevaEmpresa: Empresa = {
@@ -96,14 +96,14 @@ export class EditarAccionesComponent  implements OnInit {
           usuarioId: this.usuario_Id,
           valoracion: (this.agregarAccion.get('numero')?.value || 0) * precio
         };
-       
+
         //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos
         this.empresaService.addEmpresa(nuevaEmpresa).subscribe(
           (resp: any) => {
-            console.log(resp); 
+            console.log(resp);
           },
           (error) => {
-            console.log(error); 
+            console.log(error);
           }
         );
 
@@ -112,12 +112,12 @@ export class EditarAccionesComponent  implements OnInit {
         this.empresaAgregada.emit(this.siAgregada);
         this.toastr.success('La acción ha sido añadida', 'Acción añadida');
         this.loading = false;
-        
+
       } catch (error) {
-        console.error('Error al obtener el precio de la acción', error);    
+        console.error('Error al obtener el precio de la acción', error);
       }
     } else {
-      console.error('Formulario no válido. No se puede proceder.');  
+      console.error('Formulario no válido. No se puede proceder.');
     }
 
     //Evita que el formulario se envíe automáticamente
@@ -129,7 +129,7 @@ export class EditarAccionesComponent  implements OnInit {
 
   updateInput(nombreEmpresa: string): void {
     this.agregarAccion?.get('nombre')?.setValue(nombreEmpresa, { emitEvent: false });
-    this.isOpen = false; 
+    this.isOpen = false;
   }
 
 
@@ -147,49 +147,49 @@ export class EditarAccionesComponent  implements OnInit {
     }
 
     this.stockService.getName(nombre).subscribe({
-        next: resultado => {
-          console.log('Resultado de la búsqueda:', resultado); 
-          if (resultado && resultado.length > 0) {
-            this.empresasFiltradas = [resultado]; 
-            this.isOpen = true;
-          } else {
-            this.empresasFiltradas = []; 
-            this.isOpen = false; 
-          }
-        },
-        error: error => {
-          console.error('Error al obtener el nombre de la empresa:', error);
-          this.empresasFiltradas = []; 
-          this.isOpen = false; 
+      next: resultado => {
+        console.log('Resultado de la búsqueda:', resultado);
+        if (resultado && resultado.length > 0) {
+          this.empresasFiltradas = [resultado];
+          this.isOpen = true;
+        } else {
+          this.empresasFiltradas = [];
+          this.isOpen = false;
         }
-      });
+      },
+      error: error => {
+        console.error('Error al obtener el nombre de la empresa:', error);
+        this.empresasFiltradas = [];
+        this.isOpen = false;
+      }
+    });
   }
 
 
   @HostListener('document:click', ['$event'])
-    onClick(event: MouseEvent) {
-      const target = event.target as HTMLElement;
+  onClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
 
-      if (!target.closest('.mb-3')) {
-        this.isOpen = false; 
-      }
+    if (!target.closest('.mb-3')) {
+      this.isOpen = false;
+    }
   }
 
 
 
-  toggle(){
-      this.isOpen = !this.isOpen;
+  toggle() {
+    this.isOpen = !this.isOpen;
   };
- 
+
 
 
 
   getUsuario() {
-    var email = localStorage.getItem('email'); 
-    console.log(email); 
+    var email = localStorage.getItem('email');
+    console.log(email);
     this._authService.getUserByEmail(email).subscribe(
       (resp: any) => {
-        this.usuario_Id = resp._id;  
+        this.usuario_Id = resp._id;
       }
     )
   }
@@ -200,7 +200,7 @@ export class EditarAccionesComponent  implements OnInit {
 
   //Validación de los datos introducidos en el formulario
   get accionesNoValidas() {
-    return this.agregarAccion.get('numero').invalid && this.agregarAccion.get('numero').touched; 
+    return this.agregarAccion.get('numero').invalid && this.agregarAccion.get('numero').touched;
   }
 
   get tickerNoValido() {

@@ -1,65 +1,67 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Empresa } from '../../interfaces/Empresa';
-import { StockService } from '../../services/stock.service';
 import { Location } from '@angular/common';
+import { StockData } from '../../abstracts/stock-data';
 
 
 @Component({
   selector: 'app-buscador-empresa',
   templateUrl: './buscador-empresa.component.html',
   styleUrls: ['./buscador-empresa.component.css']
-  
+
 })
 export class BuscadorEmpresaComponent implements OnInit {
 
-//Propiedades de la empresa buscada
-logo: string | undefined; 
-name: string | undefined; 
-symbol: string | undefined;  
-industry: string | undefined; 
-sector: string | undefined;
-bolsa: string | undefined;
-CEO: string | undefined;
-employees: number | undefined;
-marketCap: number | undefined;
-phone: number | undefined; 
-website: string | undefined;
-address: string | undefined;
-description: string | undefined; 
-tags: string | undefined; 
-similarCompanies: string | undefined; 
+  //Propiedades de la empresa buscada
+  logo: string | undefined;
+  name: string | undefined;
+  symbol: string | undefined;
+  industry: string | undefined;
+  sector: string | undefined;
+  bolsa: string | undefined;
+  CEO: string | undefined;
+  employees: number | undefined;
+  marketCap: number | undefined;
+  phone: number | undefined;
+  website: string | undefined;
+  address: string | undefined;
+  description: string | undefined;
+  tags: string | undefined;
+  similarCompanies: string | undefined;
 
-//Propiedad para las noticias
-data:any[] = [];
+  //Propiedad para las noticias
+  data: any[] = [];
 
-//Propiedad de control
-Cargado = 0;
-  
-//Disponibilidad del recurso
-disponible: boolean = true; 
-  
-//Disponibilidad noticias
-newsDisponibles: boolean = true; 
-  
-constructor(private activatedRoute:ActivatedRoute, private stockService: StockService, private location: Location ){ }
+  //Propiedad de control
+  Cargado = 0;
+
+  //Disponibilidad del recurso
+  disponible: boolean = true;
+
+  //Disponibilidad noticias
+  newsDisponibles: boolean = true;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private stockService: StockData,
+    private location: Location) { }
 
 
-ngOnInit() {
+  ngOnInit() {
 
-  this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
 
       var data = this.stockService.getData(params[('ticker')]);
       var news = this.stockService.getNews(params[('ticker')]);
-      
-      if(data) {
-        data.subscribe((empresaData: any) => { 
-          this.logo = empresaData.logo; 
+
+      if (data) {
+        data.subscribe((empresaData: any) => {
+          this.logo = empresaData.logo;
           this.name = empresaData.name;
           this.symbol = empresaData.symbol;
           this.industry = empresaData.industry;
           this.sector = empresaData.sector;
-          this.bolsa  = empresaData.exchange;
+          this.bolsa = empresaData.exchange;
           this.CEO = empresaData.ceo;
           this.employees = empresaData.employees;
           this.marketCap = empresaData.marketcap;
@@ -67,16 +69,15 @@ ngOnInit() {
           this.website = empresaData.url;
           this.address = empresaData.hq_address;
           this.description = empresaData.description;
-          this.tags = empresaData.tags.join(', '); 
-          this.similarCompanies = empresaData.similar.join(', '); 
+          this.tags = empresaData.tags.join(', ');
+          this.similarCompanies = empresaData.similar.join(', ');
           this.Cargado = 1;
-          console.log(empresaData); 
+          console.log(empresaData);
         });
-      } 
-      else 
-      {
+      }
+      else {
         console.error('Error al obtener parámetros');
-        this.disponible = false; 
+        this.disponible = false;
       }
 
       if (news) {
@@ -90,12 +91,11 @@ ngOnInit() {
             descr: element.description
           }));
         });
-      } 
-      else 
-      {
+      }
+      else {
         console.error('Error al obtener noticias');
-        this.disponible = false; 
-        this.newsDisponibles = false; 
+        this.disponible = false;
+        this.newsDisponibles = false;
       }
 
     });
@@ -107,10 +107,10 @@ ngOnInit() {
 
 
   regresar() {
-    this.location.back(); 
-    
+    this.location.back();
+
   }
-  
+
 
 
 
