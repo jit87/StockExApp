@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { ToastrService } from 'ngx-toastr';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
 @Component({
   selector: 'app-modificar-accion',
@@ -40,7 +40,7 @@ export class ModificarAccionComponent {
 
 
   constructor(private fb: FormBuilder,
-    private empresaService: EmpresaService,
+    private empresaService: AbstractEmpresaService,
     private toastr: ToastrService
   ) {
     this.cargarDatos();

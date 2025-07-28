@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { StockData } from '../../abstracts/stock-data';
+import { AbstractStockService } from '../../abstracts/AbstractStockService';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class BuscadorEmpresaComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private stockService: StockData,
+    private stockService: AbstractStockService,
     private location: Location) { }
 
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { EmpresaService } from '../../services/empresa.service';
 import { Router } from '@angular/router';
-import { StockData } from '../../abstracts/stock-data';
+import { AbstractStockService } from '../../abstracts/AbstractStockService';
+import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
+import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
 @Component({
   selector: 'app-dividendos',
@@ -21,10 +21,10 @@ export class DividendosComponent implements OnInit {
   totalCobrar: number = 0;
 
   constructor(
-    private authService: AuthService,
-    private empresaService: EmpresaService,
+    private authService: AbstractAuthService,
+    private empresaService: AbstractEmpresaService,
     private router: Router,
-    private stockService: StockData
+    private stockService: AbstractStockService
   ) { }
 
   ngOnInit(): void {

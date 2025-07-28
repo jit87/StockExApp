@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
 
 @Component({
   selector: 'app-registro',
@@ -12,38 +12,38 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistroComponent {
 
   registroForm: FormGroup;
-  error: boolean = false; 
+  error: boolean = false;
 
-    constructor(
-        private fb: FormBuilder,
-        private authService: AuthService,
-        private router: Router,
-        private toastr: ToastrService
-      ) {
-        this.registroForm = this.fb.group({
-          nombre: ['', [Validators.required]],
-          email: ['', [Validators.required, Validators.email]],
-          password: ['', [Validators.required]]
-        });
+  constructor(
+    private fb: FormBuilder,
+    private authService: AbstractAuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
+    this.registroForm = this.fb.group({
+      nombre: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
   }
-  
-  
+
+
   onSubmit() {
     if (this.registroForm.valid) {
       const { nombre, email, password } = this.registroForm.value;
       this.authService.registro(nombre, email, password).subscribe(
         () => {
           this.router.navigate(['/contenido']);
-          this.toastr.success('Inicie sesión','Registro exitoso'); 
+          this.toastr.success('Inicie sesión', 'Registro exitoso');
         },
         error => {
           console.error('Error durante el registro:', error);
-          this.error = true; 
+          this.error = true;
         }
       );
     }
   }
 
-  
-  
+
+
 }

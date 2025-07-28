@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StockData } from '../../abstracts/stock-data';
+import { AbstractStockService } from '../../abstracts/AbstractStockService';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { StockData } from '../../abstracts/stock-data';
 })
 export class NoticiasComponent {
 
-  constructor(private _stockService: StockData) {
+  constructor(private _stockService: AbstractStockService) {
     this.getNoticias();
   }
 

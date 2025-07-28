@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Empresa } from '../../interfaces/Empresa';
-import { EmpresaService } from '../../services/empresa.service';
-import { AuthService } from '../../services/auth.service';
-import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-//import '@fortawesome/fontawesome-free/css/all.min.css';
 import $ from 'jquery'
+import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
+import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
 
 @Component({
@@ -43,10 +41,10 @@ export class PerfilComponent {
   loading: boolean = false;
 
 
-  constructor(public empresaService: EmpresaService,
-    private _authService: AuthService,
+  constructor(
+    public empresaService: AbstractEmpresaService,
+    private _authService: AbstractAuthService,
     private toastr: ToastrService) { }
-
 
 
   ngOnInit() {

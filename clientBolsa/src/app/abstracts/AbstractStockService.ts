@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-export abstract class StockData {
+export abstract class AbstractStockService {
 
     abstract getPrice(ticker: string): Observable<number>
 

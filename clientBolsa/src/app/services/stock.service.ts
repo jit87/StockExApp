@@ -3,11 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, concatMap, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
-import { StockData } from '../abstracts/stock-data';
+import { AbstractStockService } from '../abstracts/AbstractStockService';
 
 
 @Injectable()
-export class StockService extends StockData {
+export class StockService extends AbstractStockService {
 
   //Claves API
   private readonly alphaVantageApiKey = environment.alphaVantageApiKey;

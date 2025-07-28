@@ -1,8 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Injectable } from '@angular/core';
-import { async } from 'rxjs';
+import { Component } from '@angular/core';
+import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
 
 
 @Component({
@@ -17,19 +15,20 @@ export class NavbarComponent {
   isAuthenticated: boolean = false;
 
 
-  constructor(private _authService: AuthService, private cdRef: ChangeDetectorRef) {
-    if(this._authService.isAuthenticated()) {
+  constructor(
+    private _authService: AbstractAuthService) {
+    if (this._authService.isAuthenticated()) {
       this.autenticado = true;
     }
     this.checkAuthentication();
   }
 
   ngOnInit() {
-    document.querySelector('.menu-toggle')?.addEventListener('click', function() {
-            const navBrand = document.querySelector('.nav-brand');
-            if (navBrand) {
-                navBrand.classList.toggle('active');
-            }
+    document.querySelector('.menu-toggle')?.addEventListener('click', function () {
+      const navBrand = document.querySelector('.nav-brand');
+      if (navBrand) {
+        navBrand.classList.toggle('active');
+      }
     });
   }
 
@@ -40,20 +39,20 @@ export class NavbarComponent {
 
   checkAuthentication() {
     const token = localStorage.getItem('auth-token');
-    this.isAuthenticated = !!token; 
+    this.isAuthenticated = !!token;
     if (this.isAuthenticated) {
-      this.autenticado = true; 
+      this.autenticado = true;
     }
   }
 
-  
+
   logout() {
-    this._authService.logout(); 
-    this.autenticado = false; 
+    this._authService.logout();
+    this.autenticado = false;
     //Eliminamos los datos guardados en el navegador
     localStorage.clear();
   }
-  
-  
+
+
 
 }

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../interfaces/Empresa';
 import { lastValueFrom } from 'rxjs';
 import { ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../services/auth.service';
-import { StockData } from '../../abstracts/stock-data';
+import { AbstractStockService } from '../../abstracts/AbstractStockService';
+import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
+import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
 
 
@@ -42,10 +42,10 @@ export class EditarAccionesComponent implements OnInit {
   isOpen = false;
 
   constructor(private fb: FormBuilder,
-    private empresaService: EmpresaService,
-    private stockService: StockData,
+    private empresaService: AbstractEmpresaService,
+    private stockService: AbstractStockService,
     private toastr: ToastrService,
-    private _authService: AuthService) {
+    private _authService: AbstractAuthService) {
     this.agregarAccion = this.fb.group({
       nombre: ['', Validators.required],
       ticker: ['', Validators.required],

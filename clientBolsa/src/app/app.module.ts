@@ -15,13 +15,14 @@ import { APP_ROUTING } from './app.routes';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor.interceptor';
 
-// Servicios
+// Servicios y sus clases abstractas
 import { EmpresaService } from './services/empresa.service';
 import { StockService } from './services/stock.service';
 import { ComponentsModule } from './components/components.module';
-import { GraficaSectoresComponent } from './alonecomponents/grafica-sectores/grafica-sectores.component';
-import { DecimalPipe } from '@angular/common';
-import { StockData } from './abstracts/stock-data';
+import { AbstractStockService } from './abstracts/AbstractStockService';
+import { AbstractAuthService } from './abstracts/AbstractAuthService';
+import { AuthService } from './services/auth.service';
+import { AbstractEmpresaService } from './abstracts/AbstractEmpresaService';
 
 
 @NgModule({
@@ -46,8 +47,16 @@ import { StockData } from './abstracts/stock-data';
       multi: true
     },
     {
-      provide: StockData,
+      provide: AbstractStockService,
       useClass: StockService
+    },
+    {
+      provide: AbstractAuthService,
+      useClass: AuthService
+    },
+    {
+      provide: AbstractEmpresaService,
+      useClass: EmpresaService
     }
   ],
   bootstrap: [AppComponent]
