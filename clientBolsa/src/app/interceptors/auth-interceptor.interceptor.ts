@@ -4,18 +4,20 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { EmpresaService } from '../services/empresa.service';
+import { AbstractAuthService } from '../abstracts/AbstractAuthService';
+import { AbstractEmpresaService } from '../abstracts/AbstractEmpresaService';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService, private empresaService: EmpresaService) { }
+  constructor(private authService: AbstractAuthService, private empresaService: AbstractEmpresaService) { }
 
   //Hay que vigilar siempre que no se añadan encabezados a peticiones que no nos interesan que las lleven
   //Aquí sólo queremos que el iterceptor manipule las peticiones al backend
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
-    const isApiUrl = req.url.startsWith(this.authService.authUrl);
-    const isEmpresaUrl = req.url.startsWith(this.empresaService.url);
+    const isApiUrl = req.url.startsWith(this.authService.getAuthUrl());
+    const isEmpresaUrl = req.url.startsWith(this.empresaService.getEmpresaUrl());
 
     if (token && (isApiUrl || isEmpresaUrl)) {
       req = req.clone({

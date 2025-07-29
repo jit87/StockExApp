@@ -56,7 +56,9 @@ export class EmpresaService extends AbstractEmpresaService {
 
 
 
-
+  getEmpresaUrl() {
+    return this.url;
+  }
 
 
 

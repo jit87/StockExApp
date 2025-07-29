@@ -36,4 +36,6 @@ export abstract class AbstractAuthService {
         nuevoEmail: string
     ): Observable<any>;
 
+    abstract getAuthUrl(): string;
+
 }

@@ -13,4 +13,6 @@ export abstract class AbstractEmpresaService {
 
     abstract updateEmpresa(empresa: Empresa, empresaId: string | undefined): Observable<any>;
 
+    abstract getEmpresaUrl(): string;
+
 }
