@@ -73,7 +73,7 @@ export class GraficaSupersectoresComponent implements OnInit {
     //Procesa datos para el gráfico
     this.listEmpresas.forEach((empresa: any) => {
       const sector = empresa.industria;
-      const capitalInvertido = empresa.capitalInvertido;
+      const capitalInvertido = empresa.valoracion;
 
       //Obtenemos el supersector al que pertenece (Cíclico, Sensible, Defensivo)
       var supersector = this.determinarSupersector(sector);

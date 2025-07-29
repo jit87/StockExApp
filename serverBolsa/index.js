@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import routerEmpresa from './routes/empresa.js';
+import routerEmpresa from './routes/empresaRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
@@ -8,7 +8,7 @@ import http from 'http';
 import session from 'express-session';
 import sharedSession from 'express-socket.io-session';
 import { configureWebSocket } from './websockets/websocketServer.js';
-import { Server as SocketIOServer } from 'socket.io'; 
+import { Server as SocketIOServer } from 'socket.io';
 
 //Crear servidor
 const app = express();

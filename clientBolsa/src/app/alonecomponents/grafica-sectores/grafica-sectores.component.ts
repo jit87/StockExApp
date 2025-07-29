@@ -5,6 +5,7 @@ import { EmpresaService } from '../../services/empresa.service';
 import $ from 'jquery';
 import { TransforNumberPipe } from "../../pipes/transfor-number.pipe";
 import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
+import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class GraficaSectoresComponent implements OnInit {
 
 
   constructor(
-    public _empresaService: EmpresaService,
+    public _empresaService: AbstractEmpresaService,
     public _authService: AbstractAuthService
   ) {
 
@@ -71,7 +72,7 @@ export class GraficaSectoresComponent implements OnInit {
     //Procesa datos para el gráfico
     this.listEmpresas.forEach((empresa: any) => {
       const sector = empresa.industria;
-      const capitalInvertido = empresa.capitalInvertido;
+      const capitalInvertido = empresa.valoracion;
 
       if (sectorData[sector]) {
         sectorData[sector] += capitalInvertido;

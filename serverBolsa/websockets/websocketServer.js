@@ -2,13 +2,13 @@ import { Server as SocketIOServer } from 'socket.io';
 import axios from 'axios';
 import Empresa from '../models/Empresa.js';
 import dotenv from 'dotenv';
-import sharedsession from 'express-socket.io-session'; 
+import sharedsession from 'express-socket.io-session';
 
 dotenv.config();
 const { FINNHUB_API_KEY, TOKEN_SECRET } = process.env;
 
 //Almacena las conexiones de usuario
-const userConnections = new Map(); 
+const userConnections = new Map();
 
 export function configureWebSocket(server) {
   const io = new SocketIOServer(server, {
@@ -40,7 +40,7 @@ export function configureWebSocket(server) {
   async function actualizarPrecios() {
 
     try {
-      
+
       const empresasDistintas = await obtenerEmpresasDistintas();
       //const empresas = await Empresa.find();
 
@@ -66,9 +66,9 @@ export function configureWebSocket(server) {
           });
         }
       }
-      console.log(' --------------------------'); 
-      console.log('| Siguiente actualización  |'); 
-      console.log(' --------------------------'); 
+      console.log(' --------------------------');
+      console.log('| Siguiente actualización  |');
+      console.log(' --------------------------');
     } catch (error) {
       console.error('Error al actualizar precios:', error);
     }
