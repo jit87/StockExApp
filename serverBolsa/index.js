@@ -63,7 +63,7 @@ async function main() {
     app.use('/empresas', routerEmpresa);
 
     //Iniciar el servidor
-    server.listen(process.env.port || 4000, () => {
+    server.listen(process.env.PORT || 4000, () => {
       console.log(`Servidor corriendo en el puerto ${process.env.port || 4000}`);
     });
   } catch (err) {
