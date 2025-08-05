@@ -65,59 +65,48 @@ export class EditarAccionesComponent implements OnInit {
 
 
   //ACCIONES Y CALCULOS
-
   async addAccion() {
     this.loading = true;
-
     //Marca los errores si no se han completado el campo nombre
     if (this.agregarAccion.get('nombre')?.invalid) {
       this.agregarAccion.get('nombre')?.markAsTouched();
       return;
     }
-    if (this.agregarAccion.valid) {
-      try {
-        const ticker = this.agregarAccion.get('ticker')?.value.toUpperCase();
-        const precioObservable = this.stockService.getPrice(ticker);
-        const precio = await lastValueFrom(precioObservable);
-        const industriaObservable = this.stockService.getIndustry(ticker);
-        this.industria = await lastValueFrom(industriaObservable);
+    try {
+      const tickerObservable = this.stockService.getTicker(this.agregarAccion.get('nombre').value);
+      const ticker = this.agregarAccion.get('ticker')?.value.toUpperCase() || await lastValueFrom(tickerObservable);
+      const precioObservable = this.stockService.getPrice(ticker);
+      const precio = await lastValueFrom(precioObservable);
+      const industriaObservable = this.stockService.getIndustry(ticker);
+      const industria = await lastValueFrom(industriaObservable);
 
-        //const perObservable = this.stockService.getPER(ticker);
-        //this.per = await lastValueFrom(perObservable);
+      const nuevaEmpresa: Empresa = {
+        nombre: this.agregarAccion.get('nombre')?.value,
+        ticker: ticker,
+        precio: precio,
+        cantidad: this.agregarAccion.get('numero')?.value || 0,
+        capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
+        industria: industria,
+        usuarioId: this.usuario_Id,
+        valoracion: (this.agregarAccion.get('numero')?.value || 0) * precio
+      };
+      //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos
+      this.empresaService.addEmpresa(nuevaEmpresa).subscribe(
+        (resp: any) => {
+          console.log(resp);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      //Reinicia el formulario después de agregar una acción con éxito
+      this.agregarAccion.reset();
+      this.empresaAgregada.emit(this.siAgregada);
+      this.toastr.success('La acción ha sido añadida', 'Acción añadida');
+      this.loading = false;
 
-        const nuevaEmpresa: Empresa = {
-          nombre: this.agregarAccion.get('nombre')?.value,
-          ticker: ticker,
-          precio: precio,
-          cantidad: this.agregarAccion.get('numero')?.value || 0,
-          //per: this.per,
-          capitalInvertido: (this.agregarAccion.get('numero')?.value || 0) * precio,
-          industria: this.industria,
-          usuarioId: this.usuario_Id,
-          valoracion: (this.agregarAccion.get('numero')?.value || 0) * precio
-        };
-
-        //Siempre hay que suscribirse a los observables para que funcione bien la recepción de datos
-        this.empresaService.addEmpresa(nuevaEmpresa).subscribe(
-          (resp: any) => {
-            console.log(resp);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
-        //Reinicia el formulario después de agregar una acción con éxito
-        this.agregarAccion.reset();
-        this.empresaAgregada.emit(this.siAgregada);
-        this.toastr.success('La acción ha sido añadida', 'Acción añadida');
-        this.loading = false;
-
-      } catch (error) {
-        console.error('Error al obtener el precio de la acción', error);
-      }
-    } else {
-      console.error('Formulario no válido. No se puede proceder.');
+    } catch (err) {
+      console.log(err);
     }
 
     //Evita que el formulario se envíe automáticamente
@@ -140,18 +129,20 @@ export class EditarAccionesComponent implements OnInit {
   }
 
 
+
+
   searchEmpresa(nombre: string): void {
     if (nombre.length < 3) {
       this.empresasFiltradas = [];
       return;
     }
-
     this.stockService.getName(nombre).subscribe({
       next: resultado => {
         console.log('Resultado de la búsqueda:', resultado);
         if (resultado && resultado.length > 0) {
           this.empresasFiltradas = [resultado];
           this.isOpen = true;
+          this.setTicker();
         } else {
           this.empresasFiltradas = [];
           this.isOpen = false;
@@ -164,6 +155,15 @@ export class EditarAccionesComponent implements OnInit {
       }
     });
   }
+
+
+  async setTicker() {
+    const tickerObservable = this.stockService.getTicker(this.agregarAccion.get('nombre').value);
+    const ticker = this.agregarAccion.get('ticker')?.value.toUpperCase() || await lastValueFrom(tickerObservable);
+    this.agregarAccion.get('ticker').setValue(ticker);
+  }
+
+
 
 
   @HostListener('document:click', ['$event'])
@@ -203,9 +203,9 @@ export class EditarAccionesComponent implements OnInit {
     return this.agregarAccion.get('numero').invalid && this.agregarAccion.get('numero').touched;
   }
 
-  get tickerNoValido() {
+  /*get tickerNoValido() {
     return this.agregarAccion.get('ticker').invalid && this.agregarAccion.get('ticker').touched;
-  }
+  }*/
 
   get nombreNoValido() {
     return this.agregarAccion.get('nombre').invalid && this.agregarAccion.get('nombre').touched;

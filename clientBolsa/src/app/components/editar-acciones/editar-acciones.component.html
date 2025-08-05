@@ -10,7 +10,7 @@
     </div>
 
     <div class="mb-3 position-relative">
-      <label class="form-label">Nombre de la acción</label>
+      <label class="form-label">Nombre de la acción*</label>
       <input formControlName="nombre" type="text" class="form-control" (keyup)="searchEmpresa(buscarTexto.value)"
         #buscarTexto>
       <ul class="list-group position-absolute w-100" *ngIf="empresasFiltradas.length > 0 && isOpen"
@@ -25,13 +25,13 @@
 
 
     <div class="mb-3">
-      <label class="form-label">Ticker</label>
+      <label class="form-label">Ticker (opcional)</label>
       <input formControlName="ticker" type="text" class="form-control">
-      <small *ngIf="tickerNoValido" class="text-danger">Debe introducir el ticker</small>
+      <!-- <small *ngIf="tickerNoValido" class="text-danger">Debe introducir el ticker</small> -->
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Número de acciones</label>
+      <label class="form-label">Número de acciones*</label>
       <input formControlName="numero" type="number" class="form-control" type="acciones"
         [class.is-invalid]="accionesNoValidas">
       <small *ngIf="accionesNoValidas" class="text-danger">Debe introducir al menos 1 acción</small>

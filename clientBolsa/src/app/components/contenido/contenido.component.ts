@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { GraficaSectoresComponent } from '../../alonecomponents/grafica-sectores/grafica-sectores.component';
-import { GraficaSupersectoresComponent } from '../../alonecomponents/grafica-supersectores/grafica-supersectores.component';
 import { AbstractAuthService } from '../../abstracts/AbstractAuthService';
 import { AbstractEmpresaService } from '../../abstracts/AbstractEmpresaService';
 
@@ -49,9 +47,8 @@ export class ContenidoComponent {
   //Variable que mide lo que valen las acciones en la actualidad
   totalValoracion: any;
 
-  //Variables para acceder a las gráficas dependientes
-  //@ViewChild(GraficaSectoresComponent) graficaSectoresComponent!: GraficaSectoresComponent;
-  //@ViewChild(GraficaSupersectoresComponent) graficaSupersectoresComponent!: GraficaSupersectoresComponent;
+  //Variable que mide lo que ha aumentado el valor de la cartera
+  gananciaTotal: number = 0;
 
 
   constructor(
@@ -67,7 +64,7 @@ export class ContenidoComponent {
 
 
 
-  // ACCIONES Y CALCULOS
+  // ACCIONES Y CÁLCULOS
 
   async getEmpresas(): Promise<void> {
     //Si está autenticado mostramos las acciones que tiene
@@ -118,7 +115,6 @@ export class ContenidoComponent {
           this.eliminarDividendo(empresa.ticker);
           this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
           Swal.close();
-          // this.actualizarGraficas();
         },
         (error: any) => {
           console.log(error);
@@ -155,6 +151,7 @@ export class ContenidoComponent {
       });
       this.totalAcciones = total;
       this.totalValoracion = totalValoracion;
+      this.gananciaTotal = ((this.totalValoracion - this.totalAcciones) / this.totalAcciones) * 100;
 
       if (this.totalValoracion > this.totalAcciones) {
         this.mayorValor = 1;
@@ -235,7 +232,6 @@ export class ContenidoComponent {
   recibirValor(siAgregada: boolean) {
     if (siAgregada) {
       this.getEmpresas();
-      // this.actualizarGraficas();
     }
   }
 
@@ -243,7 +239,6 @@ export class ContenidoComponent {
   recibirValor2(siModificada: boolean) {
     if (siModificada) {
       this.getEmpresas();
-      //this.actualizarGraficas();
     }
   }
 
@@ -266,11 +261,6 @@ export class ContenidoComponent {
     )
   }
 
-  //Función que actualiza los datos de las gráficas dependientes
-  /*actualizarGraficas() {
-    this.graficaSectoresComponent.loadData();
-    this.graficaSupersectoresComponent.loadData();
-  }*/
 
 
 

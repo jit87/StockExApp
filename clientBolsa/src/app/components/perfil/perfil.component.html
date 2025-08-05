@@ -1,18 +1,19 @@
 <div class="d-flex justify-content-center align-items-center vh-100 animate__animated animate__fadeIn mb-4">
     <div class="container">
-        <br>
-        <br>
-        <br>
-        <div *ngIf="usuario" class="mx-auto rounded"  class="table-responsive" style="overflow-x: auto;">
+        <div *ngIf="usuario" class="mx-auto rounded" class="table-responsive" style="overflow-x: auto;">
             <h5 class="text-justify mb-3">Datos de usuario</h5>
             <table style="border-collapse: collapse; width: 100%;">
                 <tbody>
+                    <td colspan="3">
+                        <hr style="border: 0; border-top: 0.5px solid gray; width: 100%;" />
+                    </td>
                     <tr>
                         <td style="padding: 8px 0; width: 25%;">Nombre:</td>
                         <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.nombre }}
                         </td>
                         <td style="text-align: right;">
-                            <button class="btn  btn-outline-secondary" style="padding: 3px; font-size: small;" (click)="abrirFormularioNom()">Modificar</button>
+                            <button class="btn  btn-outline-secondary" style="padding: 3px; font-size: small;"
+                                (click)="abrirFormularioNom()">Modificar</button>
                         </td>
                     </tr>
                     <tr>
@@ -25,7 +26,8 @@
                         <td style="padding: 8px 0; color:rgb(194, 120, 22);font-family: consolas;">{{ usuario.email }}
                         </td>
                         <td style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;" (click)="abrirFormularioEma()">Modificar</button>
+                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;"
+                                (click)="abrirFormularioEma()">Modificar</button>
                         </td>
                     </tr>
                     <tr>
@@ -40,7 +42,8 @@
                                 style="color: inherit; background-color: transparent; border: none; outline: none; font-family: consolas;">
                         </td>
                         <td style="text-align: right;">
-                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;" (click)="abrirFormularioPass()">Modificar</button>
+                            <button class="btn btn-outline-secondary" style="padding: 3px; font-size: small;"
+                                (click)="abrirFormularioPass()">Modificar</button>
                         </td>
                     </tr>
                     <tr>
@@ -91,7 +94,8 @@
         <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
         <p style="color: white;">Modificando la contraseña, por favor espera...</p>
     </div>
-    <div style="max-width: 500px; margin: 0 auto; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
+    <div
+        style="max-width: 500px; margin: 0 auto; border: solid 1px lightblue; padding: 20px; background-color: #343a40;">
         <button class="btn-close" style="margin-left: 95%; cursor: pointer;" (click)="cerrarFormularioPass()">X</button>
         <div class="form-group">
             <label for="actualPassword">Contraseña actual</label>

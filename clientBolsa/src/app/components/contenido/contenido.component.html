@@ -46,13 +46,13 @@
     </table>
   </div>
 
-  <div
-    style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-right: 20px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
     <button class="btn btn-primary btn-sm" (click)="mostrarFormulario()">
       <i class="fa-solid fa-plus"></i> Añadir acción
     </button>
     <div>
-      <h5 style="color: white;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{ this.totalAcciones |
+      <h5 style="color: white;float:right;" *ngIf="this.calcularTotalInvertido();">Total invertido: {{
+        this.totalAcciones |
         transforNumber }} </h5>
     </div>
   </div>
@@ -68,7 +68,19 @@
     </h5>
   </div>
 
-  <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;">
+  <br>
+  <div class="float-end">
+    <h5 style="color: white;float:right" *ngIf="this.mayorValor===1">Ganancia: <span style="color:green;">{{
+        this.gananciaTotal
+        | transforNumber }} % </span></h5>
+    <h5 style="color: white;float:right" *ngIf="this.mayorValor===-1">Ganancia: <span style="color:red;">{{
+        this.gananciaTotal
+        | transforNumber }}</span> % </h5>
+    <h5 style="color: white;float:right" *ngIf="this.mayorValor===0">Ganancia: {{ this.gananciaTotal
+      | transforNumber }} % </h5>
+  </div>
+
+  <div *ngIf="listEmpresas.length == 0" style="text-align: center; margin-top: 20px; margin-bottom: 50px;float:right">
     <h5 style="color: white;">No hay acciones introducidas</h5>
   </div>
 
