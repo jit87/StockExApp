@@ -1,22 +1,17 @@
-
-<hr style="border: 1px solid #343a40; margin-bottom: 20px;margin-top:50px;">
 <div *ngIf="this.listEmpresas.length > 0">
     <br>
     <div class="container mt-4">
         <div class="row">
-            <div><h5>Peso de los sectores y empresas</h5></div>
+            <div>
+                <h5>Peso de los sectores y empresas</h5>
+            </div>
         </div>
     </div>
 
     <div style="display: flex; justify-content: center; margin-top: 50px;">
         <br>
-        <ngx-charts-pie-chart 
-                [view]="view" 
-                [scheme]="colorScheme" 
-                [results]="data" 
-                [doughnut]="doughnut" 
-                [legend]="leyenda"
-                [labels]="showLabels">
+        <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="data" [doughnut]="doughnut"
+            [legend]="leyenda" [labels]="showLabels">
         </ngx-charts-pie-chart>
     </div>
     <br>
@@ -53,26 +48,33 @@
     <div class="container mt-4" style="font-weight: 100;">
         <div class="row">
             <div>
-                <h6 *ngIf="!diversificada">Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, lo ideal es que sean al menos 15.</h6>
-                <h6 *ngIf="diversificada && this.listEmpresas.length < 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, su cartera está algo diversificada por empresas.</h6>
-                <h6 *ngIf="diversificada && this.listEmpresas.length >= 20"> - Dispone de <span style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span>
+                <h6 *ngIf="!diversificada">Dispone de <span
+                        style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, lo ideal es que
+                    sean al menos 15.</h6>
+                <h6 *ngIf="diversificada && this.listEmpresas.length < 20"> - Dispone de <span
+                        style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span> empresas, su cartera está
+                    algo diversificada por empresas.</h6>
+                <h6 *ngIf="diversificada && this.listEmpresas.length >= 20"> - Dispone de <span
+                        style="color:rgb(194, 120, 22);">{{this.listEmpresas.length}}</span>
                     empresas, su empresa cartera está bien diversificada por número de empresas.</h6>
-            </div>  
+            </div>
         </div>
         <div class="row">
             <div>
-                <h6 *ngIf="!diversificadaPorcentaje">Dispone de al menos una empresa con peso superior al 5% de su cartera, es
+                <h6 *ngIf="!diversificadaPorcentaje">Dispone de al menos una empresa con peso superior al 5% de su
+                    cartera, es
                     recomendable que no exceda ese porcentaje.</h6>
                 <h6 *ngIf="diversificadaPorcentaje">Su cartera está diversificada por peso de empresas</h6>
             </div>
         </div>
         <div class="row">
             <div>
-                <h6 *ngIf="!diversificadaNsectores">Dispone de <span style="color:rgb(194, 120, 22);">{{ this.numeroSectores }}</span> sectores, ser recomienda al menos 8.</h6>
+                <h6 *ngIf="!diversificadaNsectores">Dispone de <span style="color:rgb(194, 120, 22);">{{
+                        this.numeroSectores }}</span> sectores, ser recomienda al menos 8.</h6>
                 <h6 *ngIf="diversificadaPorcentaje">Tiene un nº de sectores adecuado</h6>
             </div>
         </div>
     </div>
     <br>
-    <br>  
+    <br>
 </div>

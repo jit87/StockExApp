@@ -148,5 +148,27 @@ export class StockService extends AbstractStockService {
   }
 
 
+  getTicker(companyName: string): Observable<any> {
+    console.log("Empresa: ", companyName);
+    const polygonUrl = `https://api.polygon.io/v3/reference/tickers?search=${companyName}&active=true&apiKey=${this.polygonApiKey}`;
+    const finnhubUrl = `https://finnhub.io/api/v1/search?q=${companyName}&count=4&token=${this.finnhubApiKey}`;
+    return this.getFromPolygon<any>(polygonUrl, 'Error al obtener el ticker desde Polygon.io', {}).pipe(
+      switchMap(response => {
+        const ticker = response?.results?.[0]?.ticker || '';
+        if (ticker) {
+          return of(ticker);
+        }
+        //Si no encontramos un nombre en Polygon, realizamos la búsqueda en Finnhub
+        return this.getFromFinnhub<any>(finnhubUrl, 'Error al obtener el ticker desde Finnhub', {}).pipe(
+          map(finnhubResponse => {
+            console.log('Respuesta de Finnhub:', finnhubResponse);
+            return finnhubResponse?.result?.[0]?.displaySymbol || '';
+          })
+        );
+      })
+    );
+  }
+
+
 
 }

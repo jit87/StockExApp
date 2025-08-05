@@ -6,8 +6,9 @@
       &nbsp;&nbsp;StockExApp
     </a>
 
-    <button *ngIf="autenticado" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido"
-      aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+    <button *ngIf="autenticado" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -15,6 +16,9 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li *ngIf="autenticado" class="nav-item">
           <a class="nav-link" routerLink="/contenido" routerLinkActive="active">Cartera</a>
+        </li>
+        <li *ngIf="autenticado" class="nav-item">
+          <a class="nav-link" routerLink="/analisis" routerLinkActive="active">Análisis</a>
         </li>
         <li *ngIf="autenticado" class="nav-item">
           <a class="nav-link" routerLink="/noticias" routerLinkActive="active">Noticias</a>

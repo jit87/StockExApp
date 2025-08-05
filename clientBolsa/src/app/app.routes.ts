@@ -9,17 +9,19 @@ import { LoginComponent } from "./authcomponents/login/login.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { DividendosComponent } from "./components/dividendos/dividendos.component";
 import { NoticiasComponent } from "./components/noticias/noticias.component";
+import { AnalisisComponent } from "./components/analisis/analisis.component";
 
 
 const APP_ROUTES: Routes = [
-    { path:'contenido', component: ContenidoComponent, canActivate: [AuthGuard] },
-    { path:'buscar/:ticker', component: BuscadorEmpresaComponent , canActivate: [AuthGuard] },
-    { path:'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
-    { path:'login', component: LoginComponent },
-    { path:'registro', component: RegistroComponent },
-    { path:'dividendos', component: DividendosComponent, canActivate: [AuthGuard] },
-    { path:'noticias', component: NoticiasComponent, canActivate: [ AuthGuard] },
-    { path:'**', pathMatch: 'full', redirectTo: 'contenido' }
+    { path: 'contenido', component: ContenidoComponent, canActivate: [AuthGuard] },
+    { path: 'buscar/:ticker', component: BuscadorEmpresaComponent, canActivate: [AuthGuard] },
+    { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
+    { path: 'registro', component: RegistroComponent },
+    { path: 'dividendos', component: DividendosComponent, canActivate: [AuthGuard] },
+    { path: 'noticias', component: NoticiasComponent, canActivate: [AuthGuard] },
+    { path: 'analisis', component: AnalisisComponent, canActivate: [AuthGuard] },
+    { path: '**', pathMatch: 'full', redirectTo: 'contenido' }
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES);

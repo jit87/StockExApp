@@ -18,6 +18,7 @@ import { DividendosComponent } from './dividendos/dividendos.component';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { TransforNumberPipe } from '../pipes/transfor-number.pipe';
 import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supersectores/grafica-supersectores.component';
+import { AnalisisComponent } from './analisis/analisis.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supers
     FooterComponent,
     ModificarAccionComponent,
     DividendosComponent,
-    NoticiasComponent
+    NoticiasComponent,
+    AnalisisComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { GraficaSupersectoresComponent } from '../alonecomponents/grafica-supers
     ModificarAccionComponent,
     GraficaSectoresComponent,
     DividendosComponent,
-    NoticiasComponent
+    NoticiasComponent,
+    AnalisisComponent
   ],
   providers: [
     AuthService

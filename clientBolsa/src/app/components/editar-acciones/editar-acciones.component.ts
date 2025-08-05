@@ -69,9 +69,9 @@ export class EditarAccionesComponent implements OnInit {
   async addAccion() {
     this.loading = true;
 
-    //Marca los errores si no se han completado los campos
-    if (this.agregarAccion.invalid) {
-      this.agregarAccion.markAllAsTouched();
+    //Marca los errores si no se han completado el campo nombre
+    if (this.agregarAccion.get('nombre')?.invalid) {
+      this.agregarAccion.get('nombre')?.markAsTouched();
       return;
     }
     if (this.agregarAccion.valid) {

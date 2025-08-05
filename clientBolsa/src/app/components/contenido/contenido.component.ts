@@ -50,8 +50,8 @@ export class ContenidoComponent {
   totalValoracion: any;
 
   //Variables para acceder a las gráficas dependientes
-  @ViewChild(GraficaSectoresComponent) graficaSectoresComponent!: GraficaSectoresComponent;
-  @ViewChild(GraficaSupersectoresComponent) graficaSupersectoresComponent!: GraficaSupersectoresComponent;
+  //@ViewChild(GraficaSectoresComponent) graficaSectoresComponent!: GraficaSectoresComponent;
+  //@ViewChild(GraficaSupersectoresComponent) graficaSupersectoresComponent!: GraficaSupersectoresComponent;
 
 
   constructor(
@@ -118,7 +118,7 @@ export class ContenidoComponent {
           this.eliminarDividendo(empresa.ticker);
           this.toastr.info('La acción ha sido eliminada', 'Acción eliminada');
           Swal.close();
-          this.actualizarGraficas();
+          // this.actualizarGraficas();
         },
         (error: any) => {
           console.log(error);
@@ -235,7 +235,7 @@ export class ContenidoComponent {
   recibirValor(siAgregada: boolean) {
     if (siAgregada) {
       this.getEmpresas();
-      this.actualizarGraficas();
+      // this.actualizarGraficas();
     }
   }
 
@@ -243,7 +243,7 @@ export class ContenidoComponent {
   recibirValor2(siModificada: boolean) {
     if (siModificada) {
       this.getEmpresas();
-      this.actualizarGraficas();
+      //this.actualizarGraficas();
     }
   }
 
@@ -267,10 +267,10 @@ export class ContenidoComponent {
   }
 
   //Función que actualiza los datos de las gráficas dependientes
-  actualizarGraficas() {
+  /*actualizarGraficas() {
     this.graficaSectoresComponent.loadData();
     this.graficaSupersectoresComponent.loadData();
-  }
+  }*/
 
 
 

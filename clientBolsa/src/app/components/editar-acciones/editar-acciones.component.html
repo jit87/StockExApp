@@ -1,28 +1,22 @@
+<form [formGroup]="agregarAccion" class="formEditarAccion animate__animated animate__fadeIn" (ngSubmit)="addAccion()"
+  style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
+  <br>
+  <div style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px;background-color:#343a40;">
+    <button class="btn-close" style="margin-left: 92.5%; cursor: pointer;" (click)="cerrar()">X</button>
 
-  <form [formGroup]="agregarAccion" class="formEditarAccion animate__animated animate__fadeIn" 
-        (ngSubmit)="addAccion()"  
-        style="position: absolute; top: 50%; left: 45%; transform: translate(-50%, -50%); z-index: 2; width: 60%;">
-    <br>
-    <div style="max-width: 500px; margin-left: 40%; border: solid 1px lightblue; padding: 20px;background-color:#343a40;">
-      <button class="btn-close" style="margin-left: 92.5%; cursor: pointer;"  (click)="cerrar()">X</button>
+    <div *ngIf="loading" style="text-align: center;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
+      <p style="color: white;">Añadiendo acción, por favor espera...</p>
+    </div>
 
-      <div *ngIf="loading" style="text-align: center;">
-        <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
-        <p style="color: white;">Añadiendo acción, por favor espera...</p>
-      </div>
-      
     <div class="mb-3 position-relative">
       <label class="form-label">Nombre de la acción</label>
-      <input formControlName="nombre" 
-            type="text" 
-            class="form-control" 
-            (keyup)="searchEmpresa(buscarTexto.value)"
-            #buscarTexto>
-      <ul class="list-group position-absolute w-100" *ngIf="empresasFiltradas.length > 0 && isOpen" style="z-index: 1000;">
-        <li *ngFor="let empresa of empresasFiltradas" 
-             (click)="updateInput(empresa);"
-             class="list-group-item list-group-item-action" style="cursor: pointer;"
-             (blur)="toggle()">
+      <input formControlName="nombre" type="text" class="form-control" (keyup)="searchEmpresa(buscarTexto.value)"
+        #buscarTexto>
+      <ul class="list-group position-absolute w-100" *ngIf="empresasFiltradas.length > 0 && isOpen"
+        style="z-index: 1000;">
+        <li *ngFor="let empresa of empresasFiltradas" (click)="updateInput(empresa);"
+          class="list-group-item list-group-item-action" style="cursor: pointer;" (blur)="toggle()">
           {{ empresa }}
         </li>
       </ul>
@@ -30,26 +24,19 @@
     </div>
 
 
-      <div class="mb-3">
-        <label class="form-label">Ticker</label>
-        <input formControlName="ticker" 
-               type="text" 
-               class="form-control"
-               [class.is-invalid]="tickerNoValido">
-        <small *ngIf="tickerNoValido" class="text-danger">Debe introducir el ticker</small>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Número de acciones</label>
-        <input formControlName="numero" 
-               type="number" 
-               class="form-control"   
-               type="acciones"
-               [class.is-invalid]="accionesNoValidas">
-        <small *ngIf="accionesNoValidas" class="text-danger">Debe introducir al menos 1 acción</small>
-      </div>
-      <button class="btn btn-primary" type="submit">Añadir</button>
-
+    <div class="mb-3">
+      <label class="form-label">Ticker</label>
+      <input formControlName="ticker" type="text" class="form-control">
+      <small *ngIf="tickerNoValido" class="text-danger">Debe introducir el ticker</small>
     </div>
-  </form>
 
+    <div class="mb-3">
+      <label class="form-label">Número de acciones</label>
+      <input formControlName="numero" type="number" class="form-control" type="acciones"
+        [class.is-invalid]="accionesNoValidas">
+      <small *ngIf="accionesNoValidas" class="text-danger">Debe introducir al menos 1 acción</small>
+    </div>
+    <button class="btn btn-primary" type="submit">Añadir</button>
+
+  </div>
+</form>

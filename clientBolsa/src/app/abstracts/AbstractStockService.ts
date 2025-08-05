@@ -18,4 +18,6 @@ export abstract class AbstractStockService {
 
     abstract getDividendsForTickers(tickers: string[]): Observable<any[]>
 
+    abstract getTicker(companyName: string): Observable<any>
+
 }
