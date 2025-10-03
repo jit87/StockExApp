@@ -89,7 +89,7 @@ POLYGON_API_KEY=your_key
 Ejecuta el siguiente comando para iniciar el servidor backend:
 
 ```bash
-npm start
+npm run dev
 ```
 
 Por defecto, el servidor se ejecuta en `http://localhost:4000`.
@@ -119,7 +119,7 @@ npm install
 Ejecuta el siguiente comando para iniciar el servidor frontend:
 
 ```bash
-npm start
+npm run dev
 ```
 
 Por defecto, el frontend se ejecuta en `http://localhost:4200`.
@@ -224,7 +224,7 @@ POLYGON_API_KEY=your_key
 Run the following command to start the backend server:
 
 ```bash
-npm start
+npm run dev
 ```
 
 By default, the server runs on `http://localhost:4000`.
@@ -254,7 +254,7 @@ npm install
 Run the following command to start the frontend server:
 
 ```bash
-npm start
+npm run dev
 ```
 
 By default, the frontend runs on `http://localhost:4200`.
