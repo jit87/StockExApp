@@ -50,7 +50,6 @@ export class BuscadorEmpresaComponent implements OnInit {
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {
-
       var data = this.stockService.getData(params[('ticker')]);
       var news = this.stockService.getNews(params[('ticker')]);
 
@@ -79,7 +78,6 @@ export class BuscadorEmpresaComponent implements OnInit {
         console.error('Error al obtener parámetros');
         this.disponible = false;
       }
-
       if (news) {
         news.subscribe((newsData: any) => {
           this.data = newsData.results.map((element: any) => ({
@@ -90,16 +88,18 @@ export class BuscadorEmpresaComponent implements OnInit {
             image: element.image_url,
             descr: element.description
           }));
-        });
+        },
+          (err) => {
+            console.log(err);
+            this.newsDisponibles = false;
+          });
       }
       else {
         console.error('Error al obtener noticias');
         this.disponible = false;
         this.newsDisponibles = false;
       }
-
     });
-
   }
 
 

@@ -16,9 +16,11 @@ export class DividendosComponent implements OnInit {
   //Lista de empresas de la BBDD
   listEmpresas: any[] = [];
   dividendos: any[] = [];
-  disponible: boolean = false;
+  disponible: boolean = true;
   cantidadesCobroImprimir: { cantidad: number, ticker: string }[] = [];
   totalCobrar: number = 0;
+  //Spinner
+  loading: boolean = false;
 
   constructor(
     private authService: AbstractAuthService,
@@ -37,7 +39,7 @@ export class DividendosComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.autenticado = true;
       const usuarioId: any = localStorage.getItem('id');
-
+      this.loading = true;
       this.empresaService.getListEmpresas(usuarioId).subscribe(
         async (empresas: any) => {
           this.listEmpresas = empresas;
@@ -60,10 +62,13 @@ export class DividendosComponent implements OnInit {
           }
 
           this.disponible = this.dividendos.length > 0;
+          this.loading = false;
+          this.disponible = true;
         },
         (error: any) => {
           console.log(error);
-          this.router.navigate(['/login']);
+          this.disponible = false;
+          //this.router.navigate(['/login']);
         }
       );
     }
@@ -83,9 +88,6 @@ export class DividendosComponent implements OnInit {
 
     localStorage.setItem('dividendos', JSON.stringify(this.dividendos));
     console.log('Dividendos obtenidos de la API y guardados en localStorage:', this.dividendos);
-
-
-
   }
 
 

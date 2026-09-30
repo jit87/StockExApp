@@ -2,6 +2,9 @@
     style="display: flex; flex-direction: column; position: relative; margin-top: 100px;">
     <h5 class="mt-4">Próximos dividendos</h5>
     <br>
+    <div *ngIf="loading" style="text-align: center;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: white;"></i>
+    </div>
     <div class="text-danger" *ngIf="!disponible">No disponibles</div>
     <div *ngIf="disponible" class="table-responsive" style="top: 0; background-color: #343a40; z-index: 1;">
         <table class="table table-hover table-dark">
@@ -33,7 +36,8 @@
     </div>
     <br>
     <br>
-    <div *ngIf="cantidadesCobroImprimir && disponible" class="table-responsive" style="top: 0; background-color: #343a40; z-index: 1; max-width: 400px;float: left;">
+    <div *ngIf="cantidadesCobroImprimir && disponible" class="table-responsive"
+        style="top: 0; background-color: #343a40; z-index: 1; max-width: 400px;float: left;">
         <table class="table table-hover table-dark" style="table-layout: fixed; width: 100%;">
             <thead>
                 <tr>
@@ -48,7 +52,7 @@
                 </tr>
             </tbody>
         </table>
-      
+
     </div>
     <br>
     <br>
