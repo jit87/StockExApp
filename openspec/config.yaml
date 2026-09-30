@@ -66,18 +66,18 @@ testing:
     - path: serverBolsa
       stack: 'Node.js (ESM, "type": "module") / Express 4.17 / Mongoose 8 / Socket.IO 4'
       package_manager: npm
-      test_command: null          # no `test` script exists
-      test_framework: null        # no test runner installed
+      test_command: "npm test"    # -> node --test
+      test_framework: node:test   # Node built-in runner
       build_command: ""
       dev_command: "npm run dev"  # -> nodemon .
-      test_files_present: 0
+      test_files_present: 3
       test_layers:
-        unit: { available: false, tool: null }
+        unit: { available: true, tool: "node:test" }
         integration: { available: false, tool: null }
         e2e: { available: false, tool: null }
       coverage:
-        available: false
-        command: ""
+        available: true
+        command: "node --experimental-test-coverage"  # experimental; not enforced
       quality:
         linter: { available: false, command: "" }
         type_checker: { available: false, command: "" }
@@ -87,13 +87,13 @@ testing:
     - { path: clientBolsa, layer: Unit,        available: true,  tool: "Karma + Jasmine" }
     - { path: clientBolsa, layer: Integration, available: true,  tool: "Karma + Jasmine" }
     - { path: clientBolsa, layer: E2E,         available: false, tool: null }
-    - { path: serverBolsa, layer: Unit,        available: false, tool: null }
+    - { path: serverBolsa, layer: Unit,        available: true,  tool: "node:test" }
     - { path: serverBolsa, layer: Integration, available: false, tool: null }
     - { path: serverBolsa, layer: E2E,         available: false, tool: null }
 
   coverage:
     - { path: clientBolsa,  available: true,  command: "npx ng test --code-coverage" }
-    - { path: serverBolsa, available: false, command: "" }
+    - { path: serverBolsa, available: true,  command: "node --experimental-test-coverage" }
 
   quality_tools:
     - { path: clientBolsa,  linter: { available: false, command: "" }, type_checker: { available: false, command: "" }, formatter: { available: false, command: "" } }
@@ -132,7 +132,7 @@ rules:
     test_command: ""      # no workspace-level command exists; use per-project commands from testing.projects
     project_test_commands:
       clientBolsa: "npm test"
-      serverBolsa: ""     # no runner yet
+      serverBolsa: "npm test"
 
   verify:
     test_command: ""                # workspace-level: none exists
@@ -143,9 +143,9 @@ rules:
         test: "npm test"
         build: "npm run build"
       serverBolsa:
-        test: ""                    # no runner yet
+        test: "npm test"
         build: ""
 
   archive:
     - Warn before merging destructive deltas.
-    - When `serverBolsa` gains its first test runner, revisit `strict_tdd` in this file; flipping it requires a root-level command covering both projects.
+    - `serverBolsa` already has a test runner (see `testing.projects.serverBolsa`), and `strict_tdd` remains `false` as a conscious decision: flipping it still requires a single root-level command covering both `clientBolsa` and `serverBolsa`, and none exists.
