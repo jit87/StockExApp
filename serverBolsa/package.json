@@ -4,11 +4,15 @@
   "description": "backend de StockApp",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "test": "node --test"
   },
   "type": "module",
   "author": "Ignacio",
   "license": "ISC",
+  "engines": {
+    "node": ">=20.11.1"
+  },
   "devDependencies": {
     "nodemon": "^3.1.4"
   },
