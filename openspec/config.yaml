@@ -1,0 +1,151 @@
+schema: spec-driven
+
+# SDD configuration for StockExApp.
+# Detected by sdd-init on 2026-09-29. Repo-local planning home: openspec/.
+
+context: |
+  Stack: MEAN, two independent npm projects (no root package.json, no workspaces).
+  clientBolsa: Angular 18 + TypeScript 5.4 + RxJS 7.8, tested with Karma/Jasmine.
+  serverBolsa: Node.js ESM + Express 4.17 + Mongoose 8 + Socket.IO 4.
+  Architecture: 2-tier SPA -> Express REST/Socket.IO -> MongoDB, plus external market-data APIs (Polygon, Finnhub, AlphaVantage).
+  Testing: frontend has a runner (npm test -> ng test); backend has NO runner, NO test script, NO test files.
+  No workspace-level command runs the complete in-scope set from the repo root, so strict_tdd is false.
+  Quality: no linter, no formatter, no type-check script, and no CI in either project.
+  Style: Spanish source comments; root README is bilingual (Spanish first, then English).
+
+# ---------------------------------------------------------------------------
+# Strict TDD
+# ---------------------------------------------------------------------------
+# Resolved to FALSE by the sdd-init decision gate: no explicit workspace-level
+# test command exists that covers every in-scope project. Enabling this requires
+# a single command runnable from the repository root that executes the complete
+# in-scope set (frontend + backend). Project-local commands below are preserved
+# for reference but do NOT override this workspace-level requirement.
+strict_tdd: false
+
+strict_tdd_rationale: >
+  Two in-scope projects were discovered and evaluated. `clientBolsa` has
+  `npm test` -> `ng test`. `serverBolsa` has no test script and no test runner at
+  all, so the in-scope set cannot be covered by any single workspace-level
+  command. Strict TDD fails closed to false.
+
+# ---------------------------------------------------------------------------
+# Testing capabilities (detected 2026-09-29)
+# ---------------------------------------------------------------------------
+testing:
+  detected: 2026-09-29
+  strict_tdd: false
+  workspace_test_command: ""   # none exists; do not synthesize one
+  projects:
+    - path: clientBolsa
+      stack: Angular 18 / TypeScript 5.4 / RxJS 7.8
+      package_manager: npm
+      test_command: "npm test"   # -> ng test
+      test_framework: Karma 6.4 + Jasmine 5.1
+      build_command: "npm run build"   # -> ng build
+      dev_command: "npm start"    # -> ng serve
+      test_files_present: 1        # src/app/guards/auth.guard.spec.ts
+      test_layers:
+        unit: { available: true, tool: "Karma + Jasmine" }
+        integration: { available: true, tool: "Karma + Jasmine (HttpClientTestingModule)" }
+        e2e: { available: false, tool: null }
+      coverage:
+        available: true
+        command: "npx ng test --code-coverage"
+        note: >-
+          `karma-coverage` is installed and the Angular karma builder supports
+          the flag, but no coverage script and no threshold are configured.
+      quality:
+        linter: { available: false, command: "" }
+        type_checker: { available: false, command: "" }
+        formatter: { available: false, command: "" }
+        note: >-
+          TypeScript and @angular/compiler-cli are installed, but no type-check
+          script is declared, so no verified command is recorded here.
+
+    - path: serverBolsa
+      stack: 'Node.js (ESM, "type": "module") / Express 4.17 / Mongoose 8 / Socket.IO 4'
+      package_manager: npm
+      test_command: null          # no `test` script exists
+      test_framework: null        # no test runner installed
+      build_command: ""
+      dev_command: "npm run dev"  # -> nodemon .
+      test_files_present: 0
+      test_layers:
+        unit: { available: false, tool: null }
+        integration: { available: false, tool: null }
+        e2e: { available: false, tool: null }
+      coverage:
+        available: false
+        command: ""
+      quality:
+        linter: { available: false, command: "" }
+        type_checker: { available: false, command: "" }
+        formatter: { available: false, command: "" }
+
+  test_layers:
+    - { path: clientBolsa, layer: Unit,        available: true,  tool: "Karma + Jasmine" }
+    - { path: clientBolsa, layer: Integration, available: true,  tool: "Karma + Jasmine" }
+    - { path: clientBolsa, layer: E2E,         available: false, tool: null }
+    - { path: serverBolsa, layer: Unit,        available: false, tool: null }
+    - { path: serverBolsa, layer: Integration, available: false, tool: null }
+    - { path: serverBolsa, layer: E2E,         available: false, tool: null }
+
+  coverage:
+    - { path: clientBolsa,  available: true,  command: "npx ng test --code-coverage" }
+    - { path: serverBolsa, available: false, command: "" }
+
+  quality_tools:
+    - { path: clientBolsa,  linter: { available: false, command: "" }, type_checker: { available: false, command: "" }, formatter: { available: false, command: "" } }
+    - { path: serverBolsa, linter: { available: false, command: "" }, type_checker: { available: false, command: "" }, formatter: { available: false, command: "" } }
+
+# ---------------------------------------------------------------------------
+# Phase rules
+# ---------------------------------------------------------------------------
+rules:
+  proposal:
+    - State the affected project explicitly (`clientBolsa` or `serverBolsa`); there is no root-level package to build or test.
+    - Include a rollback plan for risky changes.
+    - Flag dependency additions to `serverBolsa` explicitly, since it currently has zero tests to catch regressions.
+
+  specs:
+    - Use Given/When/Then for scenarios.
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY).
+    - Name the owning project in every requirement so apply/verify can target the right runner.
+
+  design:
+    - Include sequence diagrams for complex flows.
+    - Document architecture decisions with rationale.
+    - Do not assume a backend test runner exists; introducing one is a first-class design decision.
+
+  tasks:
+    - Group by phase, use hierarchical numbering.
+    - Keep tasks completable in one session.
+    - Run every command from the project directory it belongs to, never from the repository root.
+
+  apply:
+    guidelines:
+      - Follow existing code patterns.
+      - Match the existing Spanish source-comment style when editing `serverBolsa` or `clientBolsa` source.
+      - Do not add a dependency to `serverBolsa` without also declaring it in `package.json`; `express-session` is currently used but undeclared.
+    tdd: false
+    test_command: ""      # no workspace-level command exists; use per-project commands from testing.projects
+    project_test_commands:
+      clientBolsa: "npm test"
+      serverBolsa: ""     # no runner yet
+
+  verify:
+    test_command: ""                # workspace-level: none exists
+    build_command: ""               # workspace-level: none exists
+    coverage_threshold: 0
+    project_commands:
+      clientBolsa:
+        test: "npm test"
+        build: "npm run build"
+      serverBolsa:
+        test: ""                    # no runner yet
+        build: ""
+
+  archive:
+    - Warn before merging destructive deltas.
+    - When `serverBolsa` gains its first test runner, revisit `strict_tdd` in this file; flipping it requires a root-level command covering both projects.
