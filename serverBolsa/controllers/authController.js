@@ -63,8 +63,7 @@ export async function login(req, res) {
 export async function getUsuarioByEmail(req, res) {
 
     try {
-        const email = req.params.email;
-        const user = await Usuario.findOne({ email: email }).exec();
+        const user = await Usuario.findById(req.usuarioId).select('-password').exec();
 
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -81,10 +80,10 @@ export async function getUsuarioByEmail(req, res) {
 export async function modificarPassword(req, res) {
 
     try {
-        const { email, actualPassword, nuevaPassword } = req.body;
+        const { actualPassword, nuevaPassword } = req.body; 
 
-        //Busca al usuario por email
-        const usuario = await Usuario.findOne({ email });
+        //Busca al usuario por id
+        const usuario = await Usuario.findById(req.usuarioId);
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
@@ -102,8 +101,7 @@ export async function modificarPassword(req, res) {
         //Actualiza la contraseña
         usuario.password = hashedPassword;
         await usuario.save();
-        console.log("Contraseña modificada");
-        res.json({ nuevaPassword: nuevaPassword });
+        res.json({ message: 'Contraseña modificada' });
     } catch (err) {
         res.status(500).send(err);
     }
@@ -114,10 +112,10 @@ export async function modificarPassword(req, res) {
 export async function modificarNombre(req, res) {
 
     try {
-        const { email, nuevoNombre } = req.body;
+        const { nuevoNombre } = req.body;
 
-        //Busca al usuario por email
-        const usuario = await Usuario.findOne({ email });
+        //Busca al usuario por id
+        const usuario = await Usuario.findById(req.usuarioId);
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
@@ -137,10 +135,10 @@ export async function modificarNombre(req, res) {
 export async function modificarEmail(req, res) {
 
     try {
-        const { email, nuevoEmail } = req.body;
+        const { nuevoEmail } = req.body;
 
-        //Busca al usuario por email
-        const usuario = await Usuario.findOne({ email });
+        //Busca al usuario por id
+        const usuario = await Usuario.findById(req.usuarioId);
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
