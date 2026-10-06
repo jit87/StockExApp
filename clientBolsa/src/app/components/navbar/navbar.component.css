@@ -1,7 +1,7 @@
 .active {
-    font-weight: bold;  
-    position: relative; 
-    text-decoration: none;  
+    font-weight: bold;
+    position: relative;
+    text-decoration: none;
 }
 
 .active::after {
@@ -12,7 +12,7 @@
     bottom: -15px;
     height: 4px;
     background-color: white;
-    transition: width 0.3s ease;  
+    transition: width 0.3s ease;
 }
 
 .active:hover::after {
@@ -23,7 +23,5 @@
 
 .salir {
     position: absolute;
-    right: 2%; 
+    right: 2%;
 }
-
-
