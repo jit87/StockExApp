@@ -4,7 +4,7 @@ import Empresa from "../models/Empresa.js";
 
 export async function agregarEmpresa(req, res) {
 
-  const { nombre, ticker, precio, cantidad, capitalInvertido, industria, usuarioId, valoracion } = req.body;
+  const { nombre, ticker, precio, cantidad, capitalInvertido, industria, valoracion } = req.body;
 
   const nuevaEmpresa = new Empresa({
     nombre,
@@ -13,7 +13,7 @@ export async function agregarEmpresa(req, res) {
     cantidad,
     capitalInvertido,
     industria,
-    usuarioId,
+    usuarioId: req.usuarioId,
     valoracion
   });
   
@@ -24,9 +24,6 @@ export async function agregarEmpresa(req, res) {
     res.status(400).json({ message: err.message });
   }
 }
-
-
-
 
 export async function obtenerEmpresas(req, res) {
 
@@ -39,9 +36,6 @@ export async function obtenerEmpresas(req, res) {
   }
   
 }
-
-
-
 
 export async function actualizarEmpresa(req, res) {
 
@@ -78,9 +72,6 @@ export async function actualizarEmpresa(req, res) {
   
 }
 
-
-
-
 export async function eliminarEmpresa(req, res) {
 
    try {
@@ -99,8 +90,6 @@ export async function eliminarEmpresa(req, res) {
   }
   
 }
-
-
 
 export async function obtenerEmpresa(req, res) {
 

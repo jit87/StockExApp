@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv';
 import { registro, login, getUsuarioByEmail, modificarEmail, modificarNombre, modificarPassword } from '../controllers/authController.js';
+import authenticate from '../middlewares/authenticate.js';
 
 dotenv.config();
 
@@ -11,6 +12,9 @@ router.post('/registro', registro);
 
 //Ruta login
 router.post('/login', login);
+
+//Autenticamos todas las rutas después de loguearnos/registrarnos
+router.use(authenticate);
 
 //Ruta para obtener usuario en función del email
 router.get('/usuario/:email', getUsuarioByEmail);
