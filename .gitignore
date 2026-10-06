@@ -1,5 +1,6 @@
 .atl/
 .gga
 
-# Informes de auditoría (snapshots locales, no se versionan)
+# Informes de auditoría y tableros de trabajo (snapshots locales, no se versionan)
 docs/
+odd/
